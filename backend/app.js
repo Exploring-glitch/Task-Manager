@@ -1,9 +1,7 @@
 import express from "express";
 const app = express();
-
 import dotenv from "dotenv";
 dotenv.config({path: "./.env"});
-
 import cors from "cors"; 
 import path from "path";
 import { connectDb } from "./src/config/mongoConfig.js";
@@ -20,17 +18,17 @@ app.use(cors({
 app.use(express.json)
 
 
-//Routes
+/*//Routes
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/tasks", taskRoutes)
-app.use("/api/reports", reportRoutes)
+app.use("/api/reports", reportRoutes)*/
 
 
 //server start
 const PORT = process.env.PORT || 3000;
     app.listen( PORT, () => {
-        connectDb;
+        connectDb();
         console.log(`Server is running on port ${PORT}`);
     }
 )
