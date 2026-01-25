@@ -1,5 +1,5 @@
 import { findUserById } from "../dao/userDao.js";
-import { verifyToken } from "../utils/helper";
+import { verifyToken } from "../utils/helper.js";
 
 //authentication middleware for all
 export const authMiddleware = async(req, res, next) => {
@@ -22,8 +22,8 @@ export const authMiddleware = async(req, res, next) => {
     }
 }
 
-//middleware for admin-only access
 
+//middleware for admin-only access
 const adminOnly = async(req,res,next) =>{
     try{
         if( req.user && req.user.role === "admin"){

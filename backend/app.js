@@ -7,6 +7,8 @@ import path from "path";
 import { connectDb } from "./src/config/mongoConfig.js";
 import authRouter from "./src/routes/authRoutes.js";
 
+import bcrypt from "bcrypt";
+
 
 app.use(cors({
     origin: process.env.CLIENT_URL || "*",
