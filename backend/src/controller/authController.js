@@ -1,9 +1,11 @@
+import { createNewUser } from "../dao/userDao.js";
 import { signToken } from "../utils/helper.js"
 
 
 export const userSignup = async(req, res) => {
-    const newUser = createNewUser(); //....
+    const newUser = await createNewUser(); //....
     const token = signToken({id: newUser._id})
+    return token;
 }
 
 export const userLogin = async(req, res) => {
