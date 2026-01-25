@@ -10,8 +10,8 @@ export const verifyToken = (token) => {
     return (decoded.id);
 }
 
-export const hashPassword = (password) =>{
-    const salt = bcrypt.genSalt(10);
-    const hashedPassword = bcrypt.hash(password, salt);
+export const hashPassword = async(password) =>{
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     return hashedPassword;
 }
