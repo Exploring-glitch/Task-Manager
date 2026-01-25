@@ -6,6 +6,7 @@ dotenv.config({path: "./.env"});
 
 import cors from "cors"; 
 import path from "path";
+import { connectDb } from "./src/config/mongoConfig.js";
 
 
 app.use(cors({
@@ -29,5 +30,7 @@ app.use("/api/reports", reportRoutes)
 //server start
 const PORT = process.env.PORT || 3000;
     app.listen( PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-})
+        connectDb;
+        console.log(`Server is running on port ${PORT}`);
+    }
+)
