@@ -9,7 +9,7 @@ export const userSignup = async (req, res) => {
         //check if user already exists 
         const userExist = await findUserByEmail(email);
         if (userExist) {
-            return res.status(404).json({ message: "User already exists" });
+            return res.status(409).json({ message: "User already exists" });
         }
 
         //check if the user is admin: if he/she has adminInviteToken
@@ -20,12 +20,11 @@ export const userSignup = async (req, res) => {
 
         //hashing password: its already done in user schema before saving the schema
 
-
         //create new user
-        const newUser = await createNewUser(name, email, hashedPassword, profileImageUrl, role);
+        const newUser = await createNewUser(name, email, password, profileImageUrl, role);
         const token = signToken({ id: newUser._id })
 
-        res.status(200).json({ message: "Sign up success", token: token })
+        res.status(200).json({ "message": "Sign up success", "user": newUser, "token": token })
     } 
     catch (error) {
         console.error(error);
@@ -36,13 +35,19 @@ export const userSignup = async (req, res) => {
 export const userLogin = async (req, res) => {
     try{
         const {email, password} = req.body;
-        const user = await findUserByEmailAndPassword(email, password) 
-
+      
+        const user = await findUserByEmailAndPassword(email) 
         if(!user){
-            req.status(404).json({message: "User not found"})
+            return res.status(401).json({message: "User not found"})
         } 
+        
+        const isPassValid = await user.comparePassword(password) //using the comparePassword method from the userSchema directly here
+        if(!isPassValid){
+            return res.status(401).json({message: "Invalid credentials"})
+        }
 
-        const isPassValid = await comparePassword(password)
+        const token = signToken({ id: user._id })
+        res.status(200).json({"message" : "Login success", "user" : user, "token" : token})
     }
     catch (error) {
         console.error(error);
