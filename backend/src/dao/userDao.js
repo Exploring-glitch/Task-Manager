@@ -20,3 +20,7 @@ export const findUserById = async(decodedId) =>{
 export const findUserByEmail = async(email) =>{
     return await User.findOne({email});
 }
+
+export const findUserByEmailAndPassword = async(email, password) =>{
+    return await User.findOne({email}).select("+password"); //select the hashed password (which is automatically not selected)
+}

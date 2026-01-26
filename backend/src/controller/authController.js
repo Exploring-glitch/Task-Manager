@@ -1,4 +1,4 @@
-import { createNewUser, findUserByEmail } from "../dao/userDao.js";
+import { createNewUser, findUserByEmail, findUserByEmailAndPassword } from "../dao/userDao.js";
 import { hashPassword, signToken } from "../utils/helper.js"
 
 
@@ -35,7 +35,20 @@ export const userSignup = async (req, res) => {
 }
 
 export const userLogin = async (req, res) => {
+    try{
+        const {email, password} = req.body;
+        const user = await findUserByEmailAndPassword(email, password) 
 
+        if(!user){
+            req.status(404).json({message: "User not found"})
+        } 
+
+        const isPassValid = await comparePassword(password)
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 }
 
 export const userLogout = async (req, res) => {
