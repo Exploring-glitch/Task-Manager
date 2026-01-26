@@ -27,7 +27,6 @@ export const userSignup = async (req, res) => {
         res.status(200).json({ "message": "Sign up success", "user": newUser, "token": token })
     }
     catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
@@ -50,14 +49,12 @@ export const userLogin = async (req, res) => {
         res.status(200).json({ "message": "Login success", "user": user, "token": token })
     }
     catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
 
 export const getUserProfile = async (req, res) => {
     try {
-        console.log(req.user.id)
         const user = await findUserByIdAndPassword(req.user.id)
         if (!user) {
             return res.status(404).json({ "message": "User not found" })
@@ -66,7 +63,6 @@ export const getUserProfile = async (req, res) => {
         res.status(200).json(user)
     }
     catch (error) {
-        console.error(error);
         res.status(500).json({ message: "Internal server error" });
     }
 }
