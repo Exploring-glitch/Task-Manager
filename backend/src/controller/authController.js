@@ -1,5 +1,5 @@
 import { createNewUser, findUserByEmail, findUserByEmailAndPassword } from "../dao/userDao.js";
-import { hashPassword, signToken } from "../utils/helper.js"
+import { signToken } from "../utils/helper.js"
 
 
 export const userSignup = async (req, res) => {
@@ -18,8 +18,7 @@ export const userSignup = async (req, res) => {
             role = "admin"
         }
 
-        //hash password
-        const hashedPassword = await hashPassword(password);
+        //hashing password: its already done in user schema before saving the schema
 
 
         //create new user

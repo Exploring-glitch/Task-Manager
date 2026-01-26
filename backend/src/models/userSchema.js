@@ -45,6 +45,22 @@ userSchema.methods.comparePassword = async function (password){
 }
 
 
+//this removes the password from json so that its not visible to anyone
+userSchema.set('toJSON', { 
+  transform: function (doc, ret) {
+    delete ret.password;
+    delete ret.__v;
+    return ret;
+  }
+});
+
+//hasing password
+userSchema.pre("save", async function (next) { //this function always runs before saving the original schema 
+  if (!this.isModified("password")) return next(); 
+  this.password = await bcrypt.hash(this.password, 10); //hashing the raw password //runs only if the pass is modified
+  next();
+});
+
 
 
 const userModel = mongoose.model("user", userSchema);
