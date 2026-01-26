@@ -24,3 +24,7 @@ export const findUserByEmail = async(email) =>{
 export const findUserByEmailAndPassword = async(email) =>{
     return await User.findOne({email}).select("+password"); //select the hashed password (which is automatically not selected)
 }
+
+export const findUserByIdAndPassword = async(id) =>{
+    return await User.findById(id).select("+password")
+}

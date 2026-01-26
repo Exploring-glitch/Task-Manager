@@ -1,4 +1,4 @@
-import { createNewUser, findUserByEmail, findUserByEmailAndPassword } from "../dao/userDao.js";
+import { createNewUser, findUserByEmail, findUserByEmailAndPassword, findUserByIdAndPassword } from "../dao/userDao.js";
 import { signToken } from "../utils/helper.js"
 
 
@@ -25,7 +25,7 @@ export const userSignup = async (req, res) => {
         const token = signToken({ id: newUser._id })
 
         res.status(200).json({ "message": "Sign up success", "user": newUser, "token": token })
-    } 
+    }
     catch (error) {
         console.error(error);
         res.status(500).json({ message: "Internal server error" });
@@ -33,21 +33,21 @@ export const userSignup = async (req, res) => {
 }
 
 export const userLogin = async (req, res) => {
-    try{
-        const {email, password} = req.body;
-      
-        const user = await findUserByEmailAndPassword(email) 
-        if(!user){
-            return res.status(401).json({message: "User not found"})
-        } 
-        
+    try {
+        const { email, password } = req.body;
+
+        const user = await findUserByEmailAndPassword(email)
+        if (!user) {
+            return res.status(404).json({ message: "User not found" })
+        }
+
         const isPassValid = await user.comparePassword(password) //using the comparePassword method from the userSchema directly here
-        if(!isPassValid){
-            return res.status(401).json({message: "Invalid credentials"})
+        if (!isPassValid) {
+            return res.status(401).json({ message: "Invalid credentials" })
         }
 
         const token = signToken({ id: user._id })
-        res.status(200).json({"message" : "Login success", "user" : user, "token" : token})
+        res.status(200).json({ "message": "Login success", "user": user, "token": token })
     }
     catch (error) {
         console.error(error);
@@ -55,15 +55,27 @@ export const userLogin = async (req, res) => {
     }
 }
 
-export const userLogout = async (req, res) => {
-
-}
-
 export const getUserProfile = async (req, res) => {
+    try {
+        console.log(req.user.id)
+        const user = await findUserByIdAndPassword(req.user.id)
+        if (!user) {
+            return res.status(404).json({ "message": "User not found" })
+        }
 
+        res.status(200).json(user)
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 }
 
 export const updateUserProfile = async (req, res) => {
+
+}
+
+export const userLogout = async (req, res) => {
 
 }
 
