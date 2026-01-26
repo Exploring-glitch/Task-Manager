@@ -68,10 +68,30 @@ export const getUserProfile = async (req, res) => {
 }
 
 export const updateUserProfile = async (req, res) => {
+    try {
+        const user = await findUserByIdAndPassword(req.user.id)
+        if (!user) {
+            return res.status(404).json({ "message": "User not found" })
+        }
+        console.log(user)
 
-}
+        //updating logic
+        if (req.body.name) {  //if user passes a new name, then update prev stored name with the new name passed
+            user.name = req.body.name;
+        }
+        if (req.body.email) { //if user passes a new email, then update prev stored email with the new email passed
+            user.email = req.body.email;
+        }
+        if (req.body.password){
+            user.password = req.body.password;
+        }
 
-export const userLogout = async (req, res) => {
+        await user.save();
 
+        res.status(200).json({ message: "Profile updated successfully", user: user });
+    }
+    catch (error) {
+        res.status(500).json({ message: "Internal server error" });
+    }
 }
 
