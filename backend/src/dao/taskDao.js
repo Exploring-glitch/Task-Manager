@@ -1,5 +1,7 @@
 import Task from "../models/taskSchema.js"
 
+
+//used in userController.js
 export const memberInfo = async (users) => {
     return Promise.all(
         users.map(async (user) => {
@@ -24,4 +26,22 @@ export const memberInfo = async (users) => {
             }
         })
     )
+}
+
+
+
+export const createTaskDao = async(title, description, priority, status, dueDate, assignedTo, attachments, todoCheckLists) => {
+    const newTask = new Task({
+        title: title,
+        description: description,
+        priority: priority,
+        status: status,
+        dueDate: dueDate,
+        assignedTo: assignedTo,
+        attachments: attachments,
+        todoCheckLists: todoCheckLists
+    })
+
+    await newTask.save();
+    return newTask;
 }
