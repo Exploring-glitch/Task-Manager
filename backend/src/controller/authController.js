@@ -73,8 +73,7 @@ export const updateUserProfile = async (req, res) => {
         if (!user) {
             return res.status(404).json({ "message": "User not found" })
         }
-        console.log(user)
-
+        
         //updating logic
         if (req.body.name) {  //if user passes a new name, then update prev stored name with the new name passed
             user.name = req.body.name;

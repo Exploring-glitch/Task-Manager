@@ -45,3 +45,7 @@ export const createTaskDao = async(title, description, priority, status, dueDate
     await newTask.save();
     return newTask;
 }
+
+export const findTaskById = async(id) =>{
+    return await Task.findById(id);
+}
