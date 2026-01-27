@@ -58,7 +58,7 @@ export const updateTaskById = async (req, res) => {
         console.log(task.title)
         console.log("hello", req.body.title)
 
-        //if (req.body.title) { task.title = req.body.title }
+        if (req.body.title) { task.title = req.body.title }
         if (req.body.description) { task.description = req.body.description }
         if (req.body.priority) { task.priority = req.body.priority }
         if (req.body.dueDate) { task.dueDate = req.body.dueDate }
