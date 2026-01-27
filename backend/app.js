@@ -19,7 +19,7 @@ app.use(cors({
 
 
 //middleware
-app.use(express.json())
+app.use(express.json());
 
 
 //Routes
