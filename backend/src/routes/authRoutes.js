@@ -8,7 +8,6 @@ authRouter.post("/signup", userSignup)
 authRouter.post("/login", userLogin)
 authRouter.get("/profile", authMiddleware, getUserProfile)
 authRouter.put("/profile", authMiddleware, updateUserProfile)
-
 authRouter.post("/upload-image", uploadMiddleware.single("image"), uploadProfileImage)
 
 
