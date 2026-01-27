@@ -9,7 +9,7 @@ export const getAllUsers = async (req, res) => {
             return res.status(404).json({ "message": "User not found" })
         }
 
-        //return user info along with the current task count of each user
+        //return user info along with the current task count and status of each user
         const userWithTaskCount = await memberInfo(users);
 
         res.status(200).json( userWithTaskCount )
