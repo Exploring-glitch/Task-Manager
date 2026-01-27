@@ -19,7 +19,7 @@ export const userSignup = async (req, res) => {
         }
 
         //hashing password: its already done in user schema before saving the schema
-
+        
         //create new user
         const newUser = await createNewUser(name, email, password, profileImageUrl, role);
         const token = signToken({ id: newUser._id })
