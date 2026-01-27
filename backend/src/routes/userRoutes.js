@@ -1,15 +1,15 @@
 import express from 'express';
 const userRouter = express.Router();
 import { adminOnly, authMiddleware } from "../middleware/authMiddleware.js";
-import { deleteUser, getAllUsers } from '../controller/adminController.js';
+import { deleteUser, getAllUsers, getUserById } from '../controller/userController.js';
 
 
 
-userRouter.get("/",authMiddleware ,adminOnly, getAllUsers) //get all users (admin only)
+userRouter.get("/",authMiddleware ,adminOnly, getAllUsers) //get all members (access: admin only)
 
-userRouter.delete("/delete-user",authMiddleware ,adminOnly, deleteUser) //delete user (admin only)
+userRouter.delete("/delete-user",authMiddleware ,adminOnly, deleteUser) //delete member (access: admin only)
 
-userRouter.get("/getUser", authMiddleware , getUserById) //get a specific user
+userRouter.get("/get-user", authMiddleware , getUserById) //get a specific user
 
 
 

@@ -14,7 +14,6 @@ export const createNewUser = async(name, email, hashedPassword, profileImageUrl,
 
 export const findUserById = async(decodedId) =>{
     return await User.findById(decodedId)
-
 }
 
 export const findUserByEmail = async(email) =>{
@@ -25,6 +24,12 @@ export const findUserByEmailAndPassword = async(email) =>{
     return await User.findOne({email}).select("+password"); //select the hashed password (which is automatically not selected)
 }
 
-export const findUserByIdAndPassword = async(id) =>{
-    return await User.findById(id).select("+password")
+export const findUserByIdAndPassword = async(id) =>{ 
+    return await User.findById(id).select("+password") //while returning data, also include the password
+}
+
+
+
+export const getAllMembers = async() =>{
+    return await User.find({role: "member"})
 }
