@@ -1,5 +1,4 @@
 import Task from "../models/taskSchema.js"
-import "../models/userSchema.js";
 
 
 //used in userController.js
@@ -71,20 +70,23 @@ export const allTaskDao = async(role, id) =>{
         role === "admin" ? {} : {assignedTo: id}
     )
 }
-export const pendingTasksDao = async(role,id)=>{
+export const pendingTasksDao = async(filter,role, id) =>{
     return await Task.countDocuments({
+        ...filter,
         status: "Pending",
         ...(role != "admin" && {assignedTo: id})
     })
 }
-export const inProgressTasksDao = async(role, id) =>{
+export const inProgressTasksDao = async(filter, role, id) =>{
     return await Task.countDocuments({
+        ...filter,
         status: "In Progress",
         ...(role != "admin" && {assignedTo: id})
     })
 }
-export const completeTasksDao = async(role, id) =>{
+export const completeTasksDao = async(filter, role, id) =>{
     return await Task.countDocuments({
+        ...filter,
         status: "Completed",
         ...(role != "admin" && {assignedTo: id})
     })

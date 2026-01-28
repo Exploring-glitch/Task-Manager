@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import "../models/userSchema.js";
 
 const todoSchema = new mongoose.Schema(
     {

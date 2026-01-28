@@ -1,5 +1,5 @@
 import { allTaskDao, completeTasksDao, createTaskDao, findTaskById, findTasksForAdminDao, findTasksForMemberDao, inProgressTasksDao, pendingTasksDao } from "../dao/taskDao.js";
-
+import Task from "../models/taskSchema.js"
 
 export const createTask = async (req, res) => { //access: admin
     try {
@@ -23,7 +23,7 @@ export const updateTaskById = async (req, res) => {
         if (!task) {
             return res.status(404).json({ "message": "Task not found" })
         }
-        console.log(req.body.title)
+
         if (req.body.title) { task.title = req.body.title }
         if (req.body.description) { task.description = req.body.description }
         if (req.body.priority) { task.priority = req.body.priority }
@@ -49,40 +49,55 @@ export const updateTaskById = async (req, res) => {
 
 export const getTasks = async (req, res) => { //get all tasks. access: admin(all tasks), member(only assigned task))
     try {
-        console.log("hello")
         const { status } = req.query;
         let filter = {}
-        if(status){
+        if (status) {
             filter.status = status
         }
 
         let tasks;
-        if(req.user.role === "admin" ){
+        if (req.user.role === "admin") {
             tasks = await findTasksForAdminDao(filter);
-        } 
-        else{
-            tasks = await findTasksForMemberDao(filter, req.user._id);
         }
-        
-
+        else {
+            tasks = await Task.find({ ...filter, assignedTo: req.body._id }).populate(
+                "assignedTo",
+                "name email profileImgUrl"
+            );
+        }
+        console.log(req.user._id)
         //completed todoCheckList count to each task
         tasks = await Promise.all(
-            tasks.map(async(task) =>{
+            tasks.map(async (task) => {
                 const completedCount = task.todoCheckLists.filter(
                     (item) => item.completed
                 ).length
-                return{ ...task._doc, completedTodoCount: completedCount }
+                return { ...task._doc, completedTodoCount: completedCount }
             })
         )
 
         //status summary count
-        const allTasks = await allTaskDao(req.user.role, req.user._id);
-        const pendingTasks = await pendingTasksDao(filter,req.user.role, req.user._id);
-        const inProgressTasks = await inProgressTasksDao(filter,req.user.role, req.user._id);
-        const completedTasks = await completeTasksDao(filter,req.user.role, req.user._id);
+        const allTasks = await Task.countDocuments(
+            req.user.role === "admin" ? {} : { assignedTo: req.user._id }
+        );
+        const pendingTasks = await Task.countDocuments({
+            ...filter,
+            status: "Pending",
+            ...(req.user.role != "admin" && { assignedTo: req.user._id })
+        })
+        const inProgressTasks = await Task.countDocuments({
+            ...filter,
+            status: "In Progress",
+            ...(req.user.role != "admin" && { assignedTo: req.user._id })
+        })
+        const completedTasks = await Task.countDocuments({
+            ...filter,
+            status: "Completed",
+            ...(req.user.role != "admin" && { assignedTo: req.user._id })
+        })
 
         res.status(200).json({
-            "tasks" : tasks,
+            "tasks": tasks,
             "statusSummary": {
                 "all": allTasks,
                 "pending": pendingTasks,
