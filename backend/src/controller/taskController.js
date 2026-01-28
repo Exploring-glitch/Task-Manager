@@ -60,12 +60,12 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
             tasks = await findTasksForAdminDao(filter);
         }
         else {
-            tasks = await Task.find({ ...filter, assignedTo: req.body._id }).populate(
+            tasks = await Task.find({ ...filter, assignedTo: req.user._id }).populate(
                 "assignedTo",
                 "name email profileImgUrl"
             );
         }
-        console.log(req.user._id)
+        
         //completed todoCheckList count to each task
         tasks = await Promise.all(
             tasks.map(async (task) => {
