@@ -1,4 +1,4 @@
-import { allTaskDao, completeTasksDao, createTaskDao, findTaskById, findTasksForAdminDao, findTasksForMemberDao, inProgressTasksDao, pendingTasksDao } from "../dao/taskDao.js";
+import { allTaskDao, completeTasksDao, createTaskDao, findTaskById, findTaskByIdWithUser, findTasksForAdminDao, findTasksForMemberDao, inProgressTasksDao, pendingTasksDao } from "../dao/taskDao.js";
 import Task from "../models/taskSchema.js"
 
 export const createTask = async (req, res) => { //access: admin
@@ -57,7 +57,10 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
 
         let tasks;
         if (req.user.role === "admin") {
-            tasks = await findTasksForAdminDao(filter);
+            tasks = await Task.find(filter).populate(
+                "assignedTo",
+                "name email profileImgUrl"
+            )
         }
         else {
             tasks = await Task.find({ ...filter, assignedTo: req.user._id }).populate(
@@ -65,7 +68,7 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
                 "name email profileImgUrl"
             );
         }
-        
+
         //completed todoCheckList count to each task
         tasks = await Promise.all(
             tasks.map(async (task) => {
@@ -114,7 +117,12 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
 
 export const getTaskById = async (req, res) => { //get tsk by id. access: users(admin & member)
     try {
+        const task = await findTaskByIdWithUser(req.params.id);
+        if(!task){
+            res.status(404).json({ "message": "Task not found" })
+        }
 
+        res.json(task)
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error" });

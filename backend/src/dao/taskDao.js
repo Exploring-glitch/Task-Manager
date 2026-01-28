@@ -50,6 +50,13 @@ export const findTaskById = async(id) =>{
     return await Task.findById(id);
 }
 
+export const findTaskByIdWithUser = async(id) =>{
+    return await Task.findById(id).populate(
+        "assignedTo" , 
+        "name email profileImageUrl"
+    );
+}
+
 
 export const findTasksForAdminDao = async(filter) =>{
     return await Task.find(filter).populate(
