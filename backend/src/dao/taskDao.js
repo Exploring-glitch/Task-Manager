@@ -1,5 +1,6 @@
 import Task from "../models/taskSchema.js"
-import User from "../models/userSchema.js"
+import "../models/userSchema.js";
+
 
 //used in userController.js
 export const memberInfo = async (users) => {
@@ -58,6 +59,8 @@ export const findTasksForAdminDao = async(filter) =>{
     )
 }
 export const findTasksForMemberDao = async(filter, id) =>{
+    console.log("hi from dao")
+    console.log(id)
     return await Task.find({ ...filter, assignedTo : id }).populate(
         "assignedTo",
         "name email profileImgUrl" 
@@ -68,23 +71,20 @@ export const allTaskDao = async(role, id) =>{
         role === "admin" ? {} : {assignedTo: id}
     )
 }
-export const pendingTasksDao = async(filter,role, id) =>{
+export const pendingTasksDao = async(role,id)=>{
     return await Task.countDocuments({
-        ...filter,
         status: "Pending",
         ...(role != "admin" && {assignedTo: id})
     })
 }
-export const inProgressTasksDao = async(filter, role, id) =>{
+export const inProgressTasksDao = async(role, id) =>{
     return await Task.countDocuments({
-        ...filter,
         status: "In Progress",
         ...(role != "admin" && {assignedTo: id})
     })
 }
-export const completeTasksDao = async(filter, role, id) =>{
+export const completeTasksDao = async(role, id) =>{
     return await Task.countDocuments({
-        ...filter,
         status: "Completed",
         ...(role != "admin" && {assignedTo: id})
     })

@@ -23,7 +23,7 @@ export const updateTaskById = async (req, res) => {
         if (!task) {
             return res.status(404).json({ "message": "Task not found" })
         }
-
+        console.log(req.body.title)
         if (req.body.title) { task.title = req.body.title }
         if (req.body.description) { task.description = req.body.description }
         if (req.body.priority) { task.priority = req.body.priority }
@@ -49,6 +49,7 @@ export const updateTaskById = async (req, res) => {
 
 export const getTasks = async (req, res) => { //get all tasks. access: admin(all tasks), member(only assigned task))
     try {
+        console.log("hello")
         const { status } = req.query;
         let filter = {}
         if(status){
@@ -62,6 +63,7 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
         else{
             tasks = await findTasksForMemberDao(filter, req.user._id);
         }
+        
 
         //completed todoCheckList count to each task
         tasks = await Promise.all(

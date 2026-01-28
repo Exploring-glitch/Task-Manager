@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const todoSchema = new mongoose.Schema(
     {
         text : {
@@ -14,7 +13,6 @@ const todoSchema = new mongoose.Schema(
         }
     }
 )
-
 
 const taskSchema = new mongoose.Schema(
     {
