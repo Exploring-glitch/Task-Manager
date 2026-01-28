@@ -55,19 +55,15 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
             filter.status = status
         }
 
+
         let tasks;
         if (req.user.role === "admin") {
-            tasks = await Task.find(filter).populate(
-                "assignedTo",
-                "name email profileImgUrl"
-            )
+            tasks = await findTasksForAdminDao(filter)
         }
         else {
-            tasks = await Task.find({ ...filter, assignedTo: req.user._id }).populate(
-                "assignedTo",
-                "name email profileImgUrl"
-            );
+            tasks = await findTasksForMemberDao(filter, req.user._id)
         }
+
 
         //completed todoCheckList count to each task
         tasks = await Promise.all(
@@ -78,7 +74,8 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
                 return { ...task._doc, completedTodoCount: completedCount }
             })
         )
-
+       
+        
         //status summary count
         const allTasks = await Task.countDocuments(
             req.user.role === "admin" ? {} : { assignedTo: req.user._id }
@@ -128,6 +125,8 @@ export const getTaskById = async (req, res) => { //get tsk by id. access: users(
         res.status(500).json({ message: "Internal server error" });
     }
 }
+
+
 
 export const deleteTaskById = async (req, res) => { //access: admin 
     try {
