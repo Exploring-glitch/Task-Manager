@@ -152,7 +152,7 @@ export const updateTaskStatusById = async (req, res) => { //update a task. acces
             return res.status(403).json({ "message": "Unauthorized" })
         }
 
-        
+
         if (req.body.status) { task.status = req.body.status }
 
 
@@ -177,12 +177,51 @@ export const updateTaskStatusById = async (req, res) => { //update a task. acces
 
 export const updateTaskChecklist = async (req, res) => {
     try {
+        const {todoCheckLists} = req.body;
 
+        const task = await findTaskById(req.params.id);
+        if (!task) {
+            return res.status(404).json({ "message": "Task not found" })
+        }
+
+        if(!task.assignedTo.includes(req.user._id) && req.user.role !== "admin"){
+            return res.status(403).json({ "message": "Unauthorized" })
+        }
+
+        task.todoCheckLists = todoCheckLists
+
+
+        //auto generate progress based on checklist completion and mark the status based on the progress 
+        const completedTaskcount = task.todoCheckLists.filter(
+            (item) => item.completed
+        ).length;
+        const totalItems = task.todoCheckLists.length
+
+        task.progress = totalItems > 0 ? Math.round((completedTaskcount / totalItems) * 100) : 0
+
+        if (task.progress == 100){
+            task.status = "Completed"
+        } 
+        else if(task.progress > 0 ){
+            task.status = "In Progress"
+        }
+        else{
+            task.status = "Pending"
+        }
+
+
+        await task.save();
+        const updatedTask = await findTaskByIdWithUser(req.params.id);
+        res.status(200).json({ "message": "Task updated successfully", "tasks": updatedTask })
+        
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
+
+
+
 
 export const getDashboardData = async (req, res) => { //access: admin
     try {
@@ -192,7 +231,6 @@ export const getDashboardData = async (req, res) => { //access: admin
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
-
 export const getUserDashboardData = async (req, res) => {
     try {
 
