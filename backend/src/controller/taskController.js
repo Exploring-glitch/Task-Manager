@@ -37,16 +37,13 @@ export const updateTaskById = async (req, res) => {
             task.assignedTo = req.body.assignedTo
         }
 
-        await task.save();
-        res.json({ "message": "Task updated successfully", "task": task })
+        const updatedTask = await task.save();
+        res.json({ "message": "Task updated successfully", "task": updatedTask })
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
-
-
-
 export const getTasks = async (req, res) => { //get all tasks. access: admin(all tasks), member(only assigned task))
     try {
         const { status } = req.query;
@@ -111,7 +108,6 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
-
 export const getTaskById = async (req, res) => { //get tsk by id. access: users(admin & member)
     try {
         const task = await findTaskByIdWithUser(req.params.id);

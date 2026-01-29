@@ -65,7 +65,6 @@ export const findTasksForAdminDao = async(filter) =>{
     )
 }
 export const findTasksForMemberDao = async(filter, id) =>{
-    console.log("hi from dao")
     return await Task.find({ ...filter, assignedTo : id }).populate(
         "assignedTo",
         "name email profileImgUrl" 
