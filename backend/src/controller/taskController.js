@@ -137,27 +137,30 @@ export const deleteTaskById = async (req, res) => { //access: admin
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
-export const updateTaskStatusById = async (req, res) => {
+export const updateTaskStatusById = async (req, res) => { //update a task. access: admin(all tasks), member(only assigned task))
     try {
         const task = await findTaskById(req.params.id);
         if (!task) {
             return res.status(404).json({ "message": "Task not found" })
         }
 
-        const isAssigned = task.assignedTo.some(
-            (userId) => userId.toString() === req.user._id.toString()
+
+        const isAssigned = task.assignedTo.some( //.some(): checks if current logged-in user is in that array (of assignedTo)
+            (userId) => userId.toString() === req.user._id.toString() //if user is a member, it checks if the task is assigned to that member or not
         );
-        if (!isAssigned && req.user.role !== "admin") {
+        if (!isAssigned && req.user.role !== "admin") { 
             return res.status(403).json({ "message": "Unauthorized" })
         }
 
+        
         if (req.body.status) { task.status = req.body.status }
 
-        if (task.status === "Completed") {
+
+        if (task.status === "Completed") { //if status is completed then mark completed as true to all todo checklists
             task.todoCheckLists.forEach((item) => (item.completed = true))
             task.progress = 100;
         }
-        else {
+        else { 
             task.todoCheckLists.forEach(item => item.completed = false);
             task.progress = 0;
         }
