@@ -73,8 +73,8 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
                 return { ...task._doc, completedTodoCount: completedCount }
             })
         )
-       
-        
+
+
         //status summary count
         const allTasks = await Task.countDocuments(
             req.user.role === "admin" ? {} : { assignedTo: req.user._id }
@@ -113,7 +113,7 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
 export const getTaskById = async (req, res) => { //get tsk by id. access: users(admin & member)
     try {
         const task = await findTaskByIdWithUser(req.params.id);
-        if(!task){
+        if (!task) {
             return res.status(404).json({ "message": "Task not found" })
         }
 
@@ -126,7 +126,7 @@ export const getTaskById = async (req, res) => { //get tsk by id. access: users(
 export const deleteTaskById = async (req, res) => { //access: admin 
     try {
         const task = await findTaskById(req.params.id);
-        if(!task){
+        if (!task) {
             return res.status(404).json({ "message": "Task not found" })
         }
 
@@ -140,26 +140,30 @@ export const deleteTaskById = async (req, res) => { //access: admin
 export const updateTaskStatusById = async (req, res) => {
     try {
         const task = await findTaskById(req.params.id);
-        if(!task){
+        if (!task) {
             return res.status(404).json({ "message": "Task not found" })
         }
 
         const isAssigned = task.assignedTo.some(
             (userId) => userId.toString() === req.user._id.toString()
         );
-        if(!isAssigned && req.user.role !== "admin"){
+        if (!isAssigned && req.user.role !== "admin") {
             return res.status(403).json({ "message": "Unauthorized" })
         }
 
-        if(req.body.status){ task.status = req.body.status }
+        if (req.body.status) { task.status = req.body.status }
 
-        if(task.status == "Completed"){
+        if (task.status === "Completed") {
             task.todoCheckLists.forEach((item) => (item.completed = true))
             task.progress = 100;
         }
+        else {
+            task.todoCheckLists.forEach(item => item.completed = false);
+            task.progress = 0;
+        }
 
         await task.save();
-        res.status(200).json({ "message": "Task status updated successfully", "task": task})
+        res.status(200).json({ "message": "Task status updated successfully", "task": task })
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error", "error": error.message });
