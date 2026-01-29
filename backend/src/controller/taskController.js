@@ -126,7 +126,13 @@ export const getTaskById = async (req, res) => { //get tsk by id. access: users(
 
 export const deleteTaskById = async (req, res) => { //access: admin 
     try {
+        const task = await findTaskById(req.params.id);
+        if(!task){
+            res.status(404).json({ "message": "Task not found" })
+        }
 
+        await task.deleteOne();
+        res.status(200).json({ "message": "Task deleted successfully" })
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error", "error": error.message });
