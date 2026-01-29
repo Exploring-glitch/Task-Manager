@@ -114,7 +114,7 @@ export const getTaskById = async (req, res) => { //get tsk by id. access: users(
     try {
         const task = await findTaskByIdWithUser(req.params.id);
         if(!task){
-            res.status(404).json({ "message": "Task not found" })
+            return res.status(404).json({ "message": "Task not found" })
         }
 
         res.json(task)
@@ -127,7 +127,7 @@ export const deleteTaskById = async (req, res) => { //access: admin
     try {
         const task = await findTaskById(req.params.id);
         if(!task){
-            res.status(404).json({ "message": "Task not found" })
+            return res.status(404).json({ "message": "Task not found" })
         }
 
         await task.deleteOne();
@@ -137,13 +137,11 @@ export const deleteTaskById = async (req, res) => { //access: admin
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
-
-
 export const updateTaskStatusById = async (req, res) => {
     try {
         const task = await findTaskById(req.params.id);
         if(!task){
-            res.status(404).json({ "message": "Task not found" })
+            return res.status(404).json({ "message": "Task not found" })
         }
 
         const isAssigned = task.assignedTo.some(
@@ -167,6 +165,8 @@ export const updateTaskStatusById = async (req, res) => {
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
+
+
 
 export const updateTaskChecklist = async (req, res) => {
     try {
