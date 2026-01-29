@@ -1,6 +1,8 @@
 import { allTaskDao, completeTasksDao, createTaskDao, findTaskById, findTaskByIdWithUser, findTasksForAdminDao, findTasksForMemberDao, inProgressTasksDao, pendingTasksDao } from "../dao/taskDao.js";
 import Task from "../models/taskSchema.js"
 
+
+
 export const createTask = async (req, res) => { //access: admin
     try {
         const { title, description, priority, status, dueDate, assignedTo, attachments, todoCheckLists } = req.body
@@ -121,9 +123,6 @@ export const getTaskById = async (req, res) => { //get tsk by id. access: users(
         res.status(500).json({ message: "Internal server error" });
     }
 }
-
-
-
 export const deleteTaskById = async (req, res) => { //access: admin 
     try {
         const task = await findTaskById(req.params.id);
@@ -139,9 +138,30 @@ export const deleteTaskById = async (req, res) => { //access: admin
     }
 }
 
+
 export const updateTaskStatusById = async (req, res) => {
     try {
+        const task = await findTaskById(req.params.id);
+        if(!task){
+            res.status(404).json({ "message": "Task not found" })
+        }
 
+        const isAssigned = task.assignedTo.some(
+            (userId) => userId.toString() === req.user._id.toString()
+        );
+        if(!isAssigned && req.user.role !== "admin"){
+            return res.status(403).json({ "message": "Unauthorized" })
+        }
+
+        if(req.body.status){ task.status = req.body.status }
+
+        if(task.status == "Completed"){
+            task.todoCheckLists.forEach((item) => (item.completed = true))
+            task.progress = 100;
+        }
+
+        await task.save();
+        res.status(200).json({ "message": "Task status updated successfully", "task": task})
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error", "error": error.message });
