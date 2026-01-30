@@ -14,7 +14,7 @@ taskRouter.put("/update-task/:id", authMiddleware, updateTaskById)
 taskRouter.put("/update-task-status/:id", authMiddleware, updateTaskStatusById)
 taskRouter.put("/update-task-todo/:id", authMiddleware, updateTaskChecklist)
 
-taskRouter.get("/dashboard-data",authMiddleware, getDashboardData) //access: admin 
+taskRouter.get("/dashboard-data",authMiddleware, adminOnly, getDashboardData) //access: admin 
 taskRouter.get("/dashboard-user-data", authMiddleware, getUserDashboardData)
 
 

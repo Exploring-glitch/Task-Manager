@@ -271,14 +271,15 @@ export const getDashboardData = async (req, res) => { //access: admin
         const recentTasks = await Task.find()
             .sort({ createdAt: -1 })
             .limit(10)
-            .select("title status priority dueDate createdSAt")
+            .select("title status priority dueDate createdAt")
 
         res.status(200).json({
             "statistics": {
                 totalTask,
                 pendingTasks,
                 inProgressTasks,
-                completeTasksDao
+                completedTasks,
+                overDueTasks
             },
             "charts": {
                 taskDistributions,
@@ -291,6 +292,7 @@ export const getDashboardData = async (req, res) => { //access: admin
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
+
 export const getUserDashboardData = async (req, res) => {
     try {
 
