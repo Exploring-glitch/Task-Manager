@@ -223,13 +223,14 @@ export const getDashboardData = async (req, res) => { //access: admin
         const inProgressTasks = await Task.countDocuments({ "status": "In Progress" })
         const completedTasks = await Task.countDocuments({ "status": "Completed" })
 
+        //count tasks whose status is not completed and due date is earlier than today.
         const overDueTasks = await Task.countDocuments({
-            status: { $ne: "Completed" },
-            dueDate: { $lt: new Date() }
+            status: { $ne: "Completed" }, //$ne means not: status not equal to completed
+            dueDate: { $lt: new Date() } //$lt means less than: dueDate less than today's date
         });
 
 
-        //ensure all statuses are included
+        //task distribution by status
         const taskStatuses = ["Pending", "In Progress", "Completed"];
         const taskDistributionsRaw = await Task.aggregate([
             {
@@ -247,7 +248,7 @@ export const getDashboardData = async (req, res) => { //access: admin
         taskDistributions["All"] = totalTask //add total count to taskDistribution
 
 
-        //ensure all priority levels are included
+        //task distribution by priority
         const taskPriorities = ["Low", "Medium", "High"];
         const taskPriorityLevelsRaw = await Task.aggregate([
             {
@@ -265,9 +266,9 @@ export const getDashboardData = async (req, res) => { //access: admin
 
         //fetch recent 10 tasks
         const recentTasks = await Task.find()
-            .sort({ createdAt: -1 })
-            .limit(10)
-            .select("title status priority dueDate createdAt")
+            .sort({ createdAt: -1 }) //-1 means descenting order i.e newest tasks first 
+            .limit(10) //only 10 tasks
+            .select("title status priority dueDate createdAt") //select and return only these fields
 
         res.status(200).json({
             "statistics": {
