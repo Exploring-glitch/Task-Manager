@@ -148,7 +148,7 @@ export const updateTaskStatusById = async (req, res) => { //update a task. acces
         const isAssigned = task.assignedTo.some( //.some(): checks if current logged-in user is in that array (of assignedTo)
             (userId) => userId.toString() === req.user._id.toString() //if user is a member, it checks if the task is assigned to that member or not
         );
-        if (!isAssigned && req.user.role !== "admin") { 
+        if (!isAssigned && req.user.role !== "admin") {
             return res.status(403).json({ "message": "Unauthorized" })
         }
 
@@ -160,7 +160,7 @@ export const updateTaskStatusById = async (req, res) => { //update a task. acces
             task.todoCheckLists.forEach((item) => (item.completed = true))
             task.progress = 100;
         }
-        else { 
+        else {
             task.todoCheckLists.forEach(item => item.completed = false);
             task.progress = 0;
         }
@@ -172,19 +172,16 @@ export const updateTaskStatusById = async (req, res) => { //update a task. acces
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
-
-
-
 export const updateTaskChecklist = async (req, res) => {
     try {
-        const {todoCheckLists} = req.body;
+        const { todoCheckLists } = req.body;
 
         const task = await findTaskById(req.params.id);
         if (!task) {
             return res.status(404).json({ "message": "Task not found" })
         }
 
-        if(!task.assignedTo.includes(req.user._id) && req.user.role !== "admin"){
+        if (!task.assignedTo.includes(req.user._id) && req.user.role !== "admin") {
             return res.status(403).json({ "message": "Unauthorized" })
         }
 
@@ -199,13 +196,13 @@ export const updateTaskChecklist = async (req, res) => {
 
         task.progress = totalItems > 0 ? Math.round((completedTaskcount / totalItems) * 100) : 0
 
-        if (task.progress == 100){
+        if (task.progress == 100) {
             task.status = "Completed"
-        } 
-        else if(task.progress > 0 ){
+        }
+        else if (task.progress > 0) {
             task.status = "In Progress"
         }
-        else{
+        else {
             task.status = "Pending"
         }
 
@@ -213,7 +210,7 @@ export const updateTaskChecklist = async (req, res) => {
         await task.save();
         const updatedTask = await findTaskByIdWithUser(req.params.id);
         res.status(200).json({ "message": "Task updated successfully", "tasks": updatedTask })
-        
+
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error", "error": error.message });
@@ -225,7 +222,70 @@ export const updateTaskChecklist = async (req, res) => {
 
 export const getDashboardData = async (req, res) => { //access: admin
     try {
+        const totalTask = await Task.countDocuments();
+        const pendingTasks = await Task.countDocuments({ "status": "Pending" })
+        const inProgressTasks = await Task.countDocuments({ "status": "In Progress" })
+        const completedTasks = await Task.countDocuments({ "status": "Completed" })
 
+        const overDueTasks = await Task.countDocuments({
+            status: { $ne: "Completed" },
+            dueDate: { $lt: new Date() }
+        });
+
+
+        //ensure all statuses are included
+        const taskStatuses = ["Pending", "In Progress", "Completed"];
+        const taskDistributionsRaw = await Task.aggregate([
+            {
+                $group: {
+                    _id: "$status",
+                    count: { $sum: 1 }
+                },
+            },
+        ]);
+        const taskDistributions = taskStatuses.reduce((acc, status) => {
+            const formattedKey = status.replace(/\s+/g, ""); //to remove spaces from response Key
+            acc[formattedKey] = taskDistributionsRaw.find((item) => item._id === status)?.count || 0;
+            return acc;
+        }, {});
+        taskDistributions["All"] = totalTask //add total count to taskDistribution
+
+
+        //ensure all priority levels are included
+        const taskPriorities = ["Low", "Medium", "High"];
+        const taskPriorityLevelsRaw = await Task.aggregate([
+            {
+                $group: {
+                    _id: "$priority",
+                    count: { $sum: 1 }
+                },
+            },
+        ]);
+        const taskPriorityLevels = taskPriorities.reduce((acc, priority) => {
+            acc[priority] = taskPriorityLevelsRaw.find((item) => item._id === priority)?.count || 0;
+            return acc;
+        }, {});
+
+
+        //fetch recent 10 tasks
+        const recentTasks = await Task.find()
+            .sort({ createdAt: -1 })
+            .limit(10)
+            .select("title status priority dueDate createdSAt")
+
+        res.status(200).json({
+            "statistics": {
+                totalTask,
+                pendingTasks,
+                inProgressTasks,
+                completeTasksDao
+            },
+            "charts": {
+                taskDistributions,
+                taskPriorityLevels
+            },
+            "recentTasks": recentTasks
+        });
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error", "error": error.message });
