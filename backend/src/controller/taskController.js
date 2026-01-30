@@ -288,9 +288,7 @@ export const getDashboardData = async (req, res) => { //access: admin
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }
-
-
-export const getUserDashboardData = async (req, res) => {
+export const getUserDashboardData = async (req, res) => { //access: logged-in users(members)
     try {
         const userId = req.user._id;
 

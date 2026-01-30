@@ -5,7 +5,7 @@ const taskRouter = express.Router();
 
 
 taskRouter.get("/dashboard",authMiddleware, adminOnly, getDashboardData) //access: admin 
-taskRouter.get("/dashboard-user-data", authMiddleware, getUserDashboardData)
+taskRouter.get("/dashboard-user-data", authMiddleware, getUserDashboardData) //access: logged-in users(members)
 
 taskRouter.get("/", authMiddleware, getTasks) //get all the tasks. //access: admin, member(only assigned task)
 taskRouter.get("/:id", authMiddleware, getTaskById)
