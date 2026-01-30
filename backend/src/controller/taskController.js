@@ -221,6 +221,7 @@ export const updateTaskChecklist = async (req, res) => {
 
 
 export const getDashboardData = async (req, res) => { //access: admin
+    console.log("INSIDE DASHBOARD CONTROLLER");
     try {
         const totalTask = await Task.countDocuments();
         const pendingTasks = await Task.countDocuments({ "status": "Pending" })
@@ -289,6 +290,7 @@ export const getDashboardData = async (req, res) => { //access: admin
         });
     }
     catch (error) {
+        console.log("Dashboard Error:", error);
         res.status(500).json({ message: "Internal server error", "error": error.message });
     }
 }

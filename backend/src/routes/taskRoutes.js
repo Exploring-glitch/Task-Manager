@@ -4,6 +4,9 @@ import { createTask, deleteTaskById, getDashboardData, getTaskById, getTasks, ge
 const taskRouter = express.Router();
 
 
+taskRouter.get("/dashboard",authMiddleware, adminOnly, getDashboardData) //access: admin 
+taskRouter.get("/dashboard-user-data", authMiddleware, getUserDashboardData)
+
 taskRouter.get("/", authMiddleware, getTasks) //get all the tasks. //access: admin, member(only assigned task)
 taskRouter.get("/:id", authMiddleware, getTaskById)
 
@@ -14,8 +17,7 @@ taskRouter.put("/update-task/:id", authMiddleware, updateTaskById)
 taskRouter.put("/update-task-status/:id", authMiddleware, updateTaskStatusById)
 taskRouter.put("/update-task-todo/:id", authMiddleware, updateTaskChecklist)
 
-taskRouter.get("/dashboard-data",authMiddleware, adminOnly, getDashboardData) //access: admin 
-taskRouter.get("/dashboard-user-data", authMiddleware, getUserDashboardData)
+
 
 
 
