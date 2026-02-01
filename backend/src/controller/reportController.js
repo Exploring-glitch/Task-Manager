@@ -6,10 +6,10 @@ export const exportTasksReport = async(req,res) => {
     try{
         const tasks = await Task.find().populate("assignedTo", "name email");
 
-        const workBook = new excelJs.Workbook();
-        const workSheet = workBook.addWorksheet("Task Report");
-        workSheet.columns = [
-            {header : "Task Id", key : "._id", width : 25},
+        const workBook = new excelJs.Workbook(); //creates a new excel file
+        const workSheet = workBook.addWorksheet("Task Report"); //adds a sheet inside the workbook named Task Report
+        workSheet.columns = [ //defines the column names //header: title of the column, Key: field name used while adding rows
+            {header : "Task Id", key : "_id", width : 25}, 
             {header : "Title", key : "title", width : 30},
             {header : "Description", key : "description", width : 50},
             {header : "Priority", key : "priority", width : 15},
@@ -20,23 +20,24 @@ export const exportTasksReport = async(req,res) => {
         ]
         tasks.forEach((task) => {
             const assignedTo = task.assignedTo
-                .map((user) => `${user.name} (${user.email})`)
-                .join(", ");
-            workSheet.addRow({
+                .map((user) => `${user.name} ( ${user.email} )`) //example- sreeja (sreejahere@gmail.com)
+                .join(", "); //example- sreeja (sreejahere@gmail.com), yash (yashhere@gmail.com, ...)
+
+            workSheet.addRow({ //add one row per task using key (defined in columns)
                 _id : task._id,
                 title : task.title,
                 description : task.description,
                 priority : task.priority,
                 status: task.status,
-                dueDate : task.dueDate.toISOString().split("T")[0],
+                dueDate : task.dueDate.toISOString().split("T")[0], //example- coverts 2026-01-30T00:00:00.000Z to 2026-01-30
                 assignedTo : assignedTo || "Unassigned",
             });
         });
-        res.setHeader(
+        res.setHeader( //tells the browser that it is an excel file
             "Content-Type",
             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         );
-        res.setHeader(
+        res.setHeader( //to download and set the file name
             "Content-Disposition",
             'attachment; filename="tasks_report.xlsx"'
         );
@@ -46,15 +47,15 @@ export const exportTasksReport = async(req,res) => {
         });
     }
     catch(error){
-        resizeBy.status(500).json({ "message": "Error exporting tasks", "error": error.message })
+        res.status(500).json({ "message": "Error exporting tasks", "error": error.message })
     }
 }
 
-export const exportUsersReport = async() =>{
+export const exportUsersReport = async(req, res) =>{
     try{
 
     }
     catch(error){
-        resizeBy.status(500).json({ "message": "Error exporting tasks", "error": error.message})
+        res.status(500).json({ "message": "Error exporting tasks", "error": error.message})
     }
 }
