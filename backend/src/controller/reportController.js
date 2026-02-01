@@ -4,7 +4,7 @@ import excelJs from "exceljs";
 
 export const exportTasksReport = async(req,res) => {
     try{
-        const tasks = await Task.find().populate("assignedTo", "name email");
+        const tasks = await Task.find().populate("assignedTo", "name email"); //populate: replaces the user ids with name,email in assignedTo 
 
         const workBook = new excelJs.Workbook(); //creates a new excel file
         const workSheet = workBook.addWorksheet("Task Report"); //adds a sheet inside the workbook named Task Report
@@ -53,7 +53,7 @@ export const exportTasksReport = async(req,res) => {
 
 export const exportUsersReport = async(req, res) =>{
     try{
-
+        
     }
     catch(error){
         res.status(500).json({ "message": "Error exporting tasks", "error": error.message})
