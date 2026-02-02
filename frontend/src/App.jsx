@@ -4,7 +4,7 @@ import {
   Route
 } from 'react-router-dom';
 
-import Login from './pages/Auth/Login.jsx';
+
 import Signup from './pages/Auth/Signup.jsx';
 import PrivateRoute from './routes/PrivateRoute.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
@@ -14,6 +14,7 @@ import ManageUsers from './pages/Admin/ManageUsers.jsx';
 import UserDashboard from './pages/User/UserDashboard.jsx';
 import MyTask from './pages/User/MyTask.jsx';
 import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
+import LoginPage from './pages/Auth/LoginPage.jsx';
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
    <div>
     <Router>
       <Routes>
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<Signup />} />
 
         {/*Admin Routes*/}
