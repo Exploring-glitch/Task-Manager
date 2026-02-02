@@ -97,9 +97,23 @@ export const exportUsersReport = async(req, res) =>{
             {header: "In Progress Tasks", key: "inProgressTasks", width: 20},
             {header: "Completed Tasks", key: "completedTasks", width: 20}
         ];
-
         
+        Object.values(userTaskMap).forEach((user) => {
+            workSheet.addRow(user);
+        });
 
+        res.setHeader( //tells the browser that it is an excel file
+            "Content-Type",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        );
+        res.setHeader( //to download and set the file name
+            "Content-Disposition",
+            'attachment; filename="tasks_report.xlsx"'
+        );
+
+        return workBook.xlsx.write(res).then(() =>{
+            res.end();
+        });
     }
     catch(error){
         res.status(500).json({ "message": "Error exporting tasks", "error": error.message})
