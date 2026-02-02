@@ -1,8 +1,9 @@
 import React from 'react'
+import AuthLayout from '../../components/layout/AuthLayout.jsx'
 
 const Login = () => {
   return (
-    <div>Login</div>
+    <AuthLayout>Login</AuthLayout>
   )
 }
 
