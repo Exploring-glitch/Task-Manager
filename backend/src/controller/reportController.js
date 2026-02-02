@@ -53,7 +53,53 @@ export const exportTasksReport = async(req,res) => {
 
 export const exportUsersReport = async(req, res) =>{
     try{
+        const users = await User.find().select("name email _id").lean();
+        const userTasks = await Task.findOne().populate( "assignedTo", "name email _id" );
+        const userTaskMap = {};
+        users.forEach((user) =>{ 
+            userTaskMap[user._id] = {
+                name: user.name,
+                email: user.email,
+                tasKCount: 0,
+                pendingTasks: 0,
+                inProgressTasks: 0,
+                completedTasks: 0,
+            };
+        });
+        userTasks.forEach((task) => {
+            if(task.assignedTo){
+                task.assignedTo.forEach((assignedUser) => {
+
+                    if(userTaskMap[assignedUser._id]){
+                        userTaskMap[assignedUser._id].tasKCount += 1;
+
+                        if(task.status === "Pending"){
+                            userTaskMap[assignedUser._id].pendingTasks += 1;
+                        } 
+                        else if(task.status === "In Progress"){
+                            userTaskMap[assignedUser._id].inProgressTasks += 1;
+                        } 
+                        else if(task.status === "Completed"){
+                            userTaskMap[assignedUser._id].completedTasks += 1;
+                        }
+                    }
+                });
+            }
+        });
+
+        const workBook = new excelJs.Workbook();
+        const workSheet = workBook.addWorksheet("User Tasks Report");
+        workSheet.columns = [
+            {header: "User Name", key: "name", width: 30},
+            {header: "Email", key: "email", width: 40},
+            {header: "Total Assigned Tasks", key: "tasKCount", width: 20},
+            {header: "Pending Tasks", key: "pendingTasks", width: 20},
+            {header: "In Progress Tasks", key: "inProgressTasks", width: 20},
+            {header: "Completed Tasks", key: "completedTasks", width: 20}
+        ];
+
         
+
     }
     catch(error){
         res.status(500).json({ "message": "Error exporting tasks", "error": error.message})
