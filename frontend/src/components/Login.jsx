@@ -16,7 +16,6 @@ const Login = () => {
     setError('');
 
     try {
-      console.log("Hello")
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         setError("Please enter a valid email address")
         setLoading(false)
@@ -43,7 +42,7 @@ const Login = () => {
   }
 
   return (
-    <div className='mt-52 p-2 w-2xl'>
+    <div className='mt-40 p-2 w-2xl'>
       <h2 className="text-3xl font-bold text-[#1E63E6]">Welcome Back</h2>
       <h6 className='text-gray-600 mb-8'>Please enter your details to login</h6>
 
@@ -77,7 +76,7 @@ const Login = () => {
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="bg-[#1D4ED8] hover:bg-[#1E63E6] text-white cursor-pointer transition-colors duration-200 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          className="bg-[#1D4ED8] hover:bg-[#1E40AF] text-white cursor-pointer transition-colors duration-200 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
         >
           {loading ? 'ᯓ ✈︎' : 'LOGIN'}
         </button>

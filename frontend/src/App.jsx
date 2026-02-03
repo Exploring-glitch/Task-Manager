@@ -16,8 +16,8 @@ function App() {
    <div>
     <Router>
       <Routes>
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/signup' element={<Signup />} />
+        <Route path='/auth/login' element={<LoginPage />} />
+        <Route path='/auth/signup' element={<Signup />} />
 
         {/*Admin Routes*/}
         <Route element={<PrivateRoute allowedRoles={["admin"]} />} />
