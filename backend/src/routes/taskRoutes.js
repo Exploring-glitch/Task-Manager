@@ -19,6 +19,4 @@ taskRouter.put("/update-task-todo/:id", authMiddleware, updateTaskChecklist)
 
 
 
-
-
 export default taskRouter;

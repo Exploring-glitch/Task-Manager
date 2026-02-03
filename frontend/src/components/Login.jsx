@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom"
+import { login_User } from '../api/userApi.js';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,6 +16,7 @@ const Login = () => {
     setError('');
 
     try {
+      console.log("Hello")
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         setError("Please enter a valid email address")
         return;
@@ -23,6 +25,13 @@ const Login = () => {
         setError("Please enter the password")
       }
 
+      const data = await login_User(email, password);
+      console.log(data)
+
+      navigate({to : "/api/tasks/dashboard-user-data"}) //this means, when user login, go to the dashboard page
+
+      setLoading(false);
+      console.log("signin success")
     }
     catch (e) {
       setLoading(false);
