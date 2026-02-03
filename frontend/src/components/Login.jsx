@@ -25,8 +25,9 @@ const Login = () => {
 
   return (
     <div>
-      <div className='p-3 border-black border-2 w-80'>
-        <h2 className="text-center underline text-lg font-bold mb-6">Login</h2>
+      <div className='p-2 w-2xl'>
+        <h2 className="text-3xl font-bold text-[#1E63E6]">Welcome Back</h2>
+        <h6 className='text-gray-600 mb-8'>Please enter your details to login</h6>
 
         {error && (
           <div className="mb-4 p-2 sm:p-3 bg-[#2B0D0D] text-[#FF6B6B] rounded-md">
@@ -39,7 +40,7 @@ const Login = () => {
           <input
             value={email}
             onInput={(c) => { setEmail(c.target.value) }}
-            type="email" placeholder='example: alex@example.com'
+            type="email" placeholder='Example: alex@example.com'
             className='placeholder:text-sm border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]'
           />
         </div>
@@ -58,15 +59,15 @@ const Login = () => {
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="bg-[#2979FF] hover:bg-[#1E63E6] text-white transition-colors duration-200 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            className="bg-[#1D4ED8] hover:bg-[#1E63E6] text-white cursor-pointer transition-colors duration-200 font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
           >
-            {loading ? 'Logging in..' : 'Login'}
+            {loading ? 'Logging in..' : 'LOGIN'}
           </button>
         </div>
 
         <div className="text-center mt-3">
           <p className="cursor-pointer text-sm text-gray-600">
-            Don't have an account? <span className="text-[#2979FF] hover:text-[#2168ec]"><u>Sign Up</u></span>
+            Don't have an account? <span className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold"><u>SignUp</u></span>
           </p>
         </div>
       </div>

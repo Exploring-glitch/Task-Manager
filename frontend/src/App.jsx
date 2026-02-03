@@ -1,10 +1,4 @@
-import {
-  BrowserRouter as Router, 
-  Routes, 
-  Route
-} from 'react-router-dom';
-
-
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Signup from './pages/Auth/Signup.jsx';
 import PrivateRoute from './routes/PrivateRoute.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
