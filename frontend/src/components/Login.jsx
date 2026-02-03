@@ -4,20 +4,25 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
 
   function handleSubmit() {
 
   }
 
   return (
-    <div className='p-3'>
-      <h2 className="text-4xl font-bold mb-6">Task Manager</h2>
-
+    <div>
       <div className='p-3 border-black border-2 w-80'>
         <h2 className="text-center underline text-lg font-bold mb-6">Login</h2>
 
+        {error && (
+          <div className="mb-4 p-2 sm:p-3 bg-[#2B0D0D] text-[#FF6B6B] rounded-md">
+            {error}
+          </div>
+        )}
 
-        <div className='mb-4'> 
+        <div className='mb-4'>
           <label className="text-sm font-semibold" htmlFor="email"> Enter your email here </label>
           <input
             value={email}
