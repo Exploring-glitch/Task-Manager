@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {useNavigate} from "react-router-dom"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -6,9 +7,20 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const navigate = useNavigate();
 
-  function handleSubmit() {
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
+    try{
+
+    } 
+    catch(e){
+      setLoading(false);
+      setError(e.message || 'Login failed. Please check your credentials.');
+    }
   }
 
   return (
@@ -27,8 +39,8 @@ const Login = () => {
           <input
             value={email}
             onInput={(c) => { setEmail(c.target.value) }}
-            type="email" placeholder='example: alex@gmail.com'
-            className='border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]'
+            type="email" placeholder='example: alex@example.com'
+            className='placeholder:text-sm border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]'
           />
         </div>
 
@@ -37,8 +49,8 @@ const Login = () => {
           <input
             value={password}
             onInput={(c) => { setPassword(c.target.value) }}
-            type="email" placeholder='example: **********'
-            className='border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]'
+            type="password" placeholder='Minimum 8 characters needed'
+            className='placeholder:text-sm border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]'
           />
         </div>
 
