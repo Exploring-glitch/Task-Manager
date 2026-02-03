@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { login_User } from '../api/userApi.js';
 
 const Login = () => {
@@ -19,16 +19,19 @@ const Login = () => {
       console.log("Hello")
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         setError("Please enter a valid email address")
+        setLoading(false)
         return;
       }
       if (!password) {
         setError("Please enter the password")
+        setLoading(false)
+        return;
       }
 
       const data = await login_User(email, password);
       console.log(data)
 
-      navigate({to : "/api/tasks/dashboard-user-data"}) //this means, when user login, go to the dashboard page
+      navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
 
       setLoading(false);
       console.log("signin success")
@@ -82,7 +85,7 @@ const Login = () => {
 
       <div className="text-center">
         <p className="cursor-pointer text-sm text-gray-600">
-          Don't have an account? <span className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold"><u>SignUp</u></span>
+          Don't have an account? <Link className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold"><u>SignUp</u></Link>
         </p>
       </div>
     </div>
