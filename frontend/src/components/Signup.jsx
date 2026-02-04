@@ -110,7 +110,7 @@ const Signup = () => {
         <input
           ref={nameRef}
           value={fullName}
-          onInput={(c) => setEmail(c.target.value)}
+          onInput={(c) => setFullName(c.target.value)}
           type="text"
           placeholder="Example: Alex Zen"
           className="
@@ -198,9 +198,7 @@ const Signup = () => {
         </p>
       </div>
     </div>
-
   )
-
 }
 
 export default Signup
