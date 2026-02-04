@@ -27,7 +27,7 @@ const Signup = () => {
         return;
       }
 
-      const data = await signup_User(email, password);
+      const data = await signup_User(name, email, password, profileImageUrl, adminInviteToken);
       console.log(data)
 
       navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
