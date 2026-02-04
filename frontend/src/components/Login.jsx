@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { login_User } from '../api/userApi.js';
 
@@ -8,6 +8,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const emailRef = useRef(null);
+  const passRef = useRef(null);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,18 +18,27 @@ const Login = () => {
     setLoading(true);
     setError('');
 
-    try {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setError("Please enter a valid email address")
-        setLoading(false)
-        return;
-      }
-      if (!password) {
-        setError("Please enter the password")
-        setLoading(false)
-        return;
-      }
+  
+    if (!email.trim()) {
+      setError("Please enter your email")
+      emailRef.current?.focus()
+      setLoading(false)
+      return;
+    }
+    if (!password.trim()) {
+      setError("Please enter your password")
+      passRef.current?.focus()
+      setLoading(false)
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid email address")
+      setLoading(false)
+      return;
+    }
 
+
+    try {
       const data = await login_User(email, password);
       console.log(data)
 
@@ -82,6 +94,7 @@ const Login = () => {
         </label>
 
         <input
+          ref={emailRef}
           value={email}
           onInput={(c) => setEmail(c.target.value)}
           type="email"
@@ -107,6 +120,7 @@ const Login = () => {
         </label>
 
         <input
+          ref={passRef}
           value={password}
           onInput={(c) => setPassword(c.target.value)}
           type="password"

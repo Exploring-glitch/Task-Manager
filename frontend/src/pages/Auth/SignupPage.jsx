@@ -5,48 +5,50 @@ import Signup from '../../components/Signup.jsx'
 const SignupPage = () => {
   return (
     <div className="bg-linear-to-br from-[#F8FAFC] via-[#EEF4FF] to-[#E8F0FF] min-h-screen overflow-hidden">
-      <Header />
+    <Header />
 
-      <div className="p-4 flex items-center justify-center relative min-h-[calc(100vh-64px)] 
-        sm:p-8
-        lg:hidden"
+    <div className="relative min-h-[calc(100vh-64px)] p-4 sm:p-8">
+
+    
+      <img
+        src="https://i.pinimg.com/736x/82/16/34/82163432e70009ce3c4707ec7e36f4e1.jpg"
+        alt=""
+        className="
+          hidden md:block
+          bg-[#EEF4FF] mix-blend-multiply
+
+          /* md: background-style */
+          md:absolute md:inset-0 md:bg-center md:bg-no-repeat md:bg-contain
+
+          /* lg and above: fixed right */
+          lg:fixed lg:inset-auto lg:top-0 lg:right-0
+          lg:h-screen lg:bg-cover
+          lg:w-[50%] xl:w-[43%]
+        "
+      />
+
+      {/* Image blurring (md only) */}
+      <div className="hidden md:block lg:hidden absolute inset-0 bg-white/20 backdrop-blur-sm" />
+
+      {/* Signup form */}
+      <div
+        className="
+          relative z-10
+          flex items-center justify-center min-h-[calc(100vh-64px)] 
+
+          /* lg positioning */
+          lg:block
+          lg:ml-20 lg:mt-20
+          lg:max-w-md
+          lg:mr-[50%]
+          xl:mt-44
+        "
       >
-        <img
-          src="https://i.pinimg.com/736x/82/16/34/82163432e70009ce3c4707ec7e36f4e1.jpg"
-          alt=""
-          className="hidden bg-[#EEF4FF] mix-blend-multiply w-full rounded-lg
-              md:block md:absolute md:inset-0 md:bg-center md:bg-no-repeat md:bg-contain"
-        />
-        <div className="hidden md:block absolute inset-0 bg-white/20 backdrop-blur-sm" /> {/*for background blurring in md*/}
-        <div className='relative z-10'>
-          <Signup />
-        </div>
-      </div>
-
-      <div className="hidden lg:block pl-5">
-        <div className="flex">
-
-          <div className="relative max-w-md mt-20
-          lg:mt-20
-          xl:mt-44 ml-20"
-          >
-            <Signup />
-          </div>
-
-          <div className="">
-            <img
-              src="https://i.pinimg.com/736x/82/16/34/82163432e70009ce3c4707ec7e36f4e1.jpg"
-              alt=""
-              className="bg-[#EEF4FF] mix-blend-multiply fixed top-0 right-0 h-screen bg-center bg-no-repeat bg-cover
-              lg:w-[50%]
-              xl:w-[43%]"
-            />
-          </div>
-
-        </div>
+        <Signup />
       </div>
 
     </div>
+  </div>
   )
 
 }
