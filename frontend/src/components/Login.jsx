@@ -42,7 +42,10 @@ const Login = () => {
   }
 
   return (
-    <div className="mt-20 sm:mt-32 md:mt-40 px-4 sm:px-6 w-full max-w-md sm:max-w-lg md:max-w-2xl mx-auto">
+    <div className="mt-20 px-4 sm:px-6 w-full max-w-md mx-auto
+      sm:mt-32 sm:max-w-lg
+      md:mt-15 md:max-w-4xl">
+
       <h2 className="text-3xl font-bold text-[#1E63E6] text-center lg:text-left">Welcome Back</h2>
       <h6 className="text-gray-600 mb-8 text-center lg:text-left">Please enter your details to login</h6>
 
