@@ -1,0 +1,55 @@
+import React from 'react'
+import Header from '../../components/Header.jsx'
+import Signup from '../../components/Signup.jsx'
+
+const SignupPage = () => {
+  return (
+    <div className="bg-linear-to-br from-[#F8FAFC] via-[#EEF4FF] to-[#E8F0FF] min-h-screen overflow-hidden">
+      <Header />
+
+      <div className="p-4 flex items-center justify-center relative min-h-[calc(100vh-64px)] 
+        sm:p-8
+        lg:hidden"
+      >
+        <img
+          src="https://i.pinimg.com/736x/82/16/34/82163432e70009ce3c4707ec7e36f4e1.jpg"
+          alt=""
+          className="hidden bg-[#EEF4FF] mix-blend-multiply w-full rounded-lg
+              md:block md:absolute md:inset-0 md:bg-center md:bg-no-repeat md:bg-contain"
+        />
+        <div className="hidden md:block absolute inset-0 bg-white/20 backdrop-blur-sm" /> {/*for background blurring in md*/}
+        <div className='relative z-10'>
+          <Signup />
+        </div>
+      </div>
+
+      <div className="hidden lg:block pl-5">
+        <div className="flex">
+
+          <div className="relative max-w-md mt-20
+          lg:mt-20
+          xl:mt-44 ml-20"
+          >
+            <Signup />
+          </div>
+
+          <div className="">
+            <img
+              src="https://i.pinimg.com/736x/82/16/34/82163432e70009ce3c4707ec7e36f4e1.jpg"
+              alt=""
+              className="bg-[#EEF4FF] mix-blend-multiply fixed top-0 right-0 h-screen bg-center bg-no-repeat bg-cover
+              lg:w-[50%]
+              xl:w-[43%]"
+            />
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  )
+
+}
+
+
+export default SignupPage

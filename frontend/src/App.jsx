@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Signup from './pages/Auth/Signup.jsx';
+import Signup from './pages/Auth/SignupPage.jsx';
 import PrivateRoute from './routes/PrivateRoute.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import ManageTasks from './pages/Admin/ManageTasks.jsx';
@@ -9,6 +9,7 @@ import UserDashboard from './pages/User/UserDashboard.jsx';
 import MyTask from './pages/User/MyTask.jsx';
 import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
 import LoginPage from './pages/Auth/LoginPage.jsx';
+import SignupPage from './pages/Auth/SignupPage.jsx';
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
     <Router>
       <Routes>
         <Route path='/auth/login' element={<LoginPage />} />
-        <Route path='/auth/signup' element={<Signup />} />
+        <Route path='/auth/signup' element={<SignupPage />} />
 
         {/*Admin Routes*/}
         <Route element={<PrivateRoute allowedRoles={["admin"]} />} />
