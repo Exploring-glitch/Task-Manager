@@ -43,9 +43,10 @@ const Login = () => {
 
   return (
 
-    <div className="px-4 w-full max-w-md mx-auto
+    <div className="px-4 w-full max-w-md mx-auto 
       sm:max-w-lg sm:px-6
-      md: md:max-w-2xl
+      md:max-w-2xl
+      xl:w-[140%]
       ">
 
       <h2 className="text-3xl font-bold text-[#1D4ED8] text-center 

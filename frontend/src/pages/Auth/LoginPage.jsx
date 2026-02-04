@@ -24,13 +24,11 @@ const LoginPage = () => {
       </div>
 
       <div className="hidden lg:block pl-5">
-        <div className="flex
-          lg:gap-16
-          xl:gap-5
-        ">
+        <div className="flex">
 
           <div className="relative max-w-md mt-20
-          xl:mt-60"
+          lg:mt-20
+          xl:mt-44 ml-20"
           >
             <Login />
           </div>
@@ -39,9 +37,9 @@ const LoginPage = () => {
             <img
               src="https://i.pinimg.com/736x/82/16/34/82163432e70009ce3c4707ec7e36f4e1.jpg"
               alt=""
-              className="absolute mt-20 max-w-md bg-[#EEF4FF] mix-blend-multiply
-              xl:max-w-xl
-              2xl:max-w-2xl"
+              className="bg-[#EEF4FF] mix-blend-multiply fixed top-0 right-0 h-screen bg-center bg-no-repeat bg-cover
+              lg:w-[53%]
+              xl:w-[43%]"
             />
           </div>
 
