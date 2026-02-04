@@ -42,12 +42,23 @@ const Login = () => {
   }
 
   return (
-    <div className="mt-20 px-4 sm:px-6 w-full max-w-md mx-auto
-      sm:mt-32 sm:max-w-lg
-      md:mt-15 md:max-w-4xl">
 
-      <h2 className="text-3xl font-bold text-[#1E63E6] text-center lg:text-left">Welcome Back</h2>
-      <h6 className="text-gray-600 mb-8 text-center lg:text-left">Please enter your details to login</h6>
+    <div className="px-4 w-full max-w-md mx-auto
+      sm:max-w-lg sm:px-6
+      md: md:max-w-4xl
+      2xl:mt-80">
+
+      <h2 className="text-3xl font-bold text-[#1D4ED8] text-center 
+        md:text-5xl md:font-extrabold
+        lg:text-left 
+        2xl:text-6xl"
+      > Welcome Back </h2>
+
+      <h6 className="text-gray-600 mb-8 text-center 
+        md:text-lg md:text-gray-700 md:font-semibold
+        lg:text-left
+        2xl:text-xl 2xl:mt-2"
+      > Please enter your details to login </h6>
 
       {error && (
         <div className="mb-4 p-2 sm:p-3 bg-[#FFF1F2] text-[#E11D48] border border-[#FECDD3] rounded-md">
@@ -56,9 +67,12 @@ const Login = () => {
       )}
 
       <div className="mb-4">
-        <label className="text-sm font-semibold" htmlFor="email">
-          Enter your email adress
-        </label>
+        <label className="text-sm font-semibold
+          md:text-xl md:text-gray-800
+          2xl:text-2xl" 
+          htmlFor="email"
+        > Enter your email adress </label>
+
         <input
           value={email}
           onInput={(c) => {
@@ -66,14 +80,18 @@ const Login = () => {
           }}
           type="email"
           placeholder="Example: alex@example.com"
-          className="mt-2 placeholder:text-sm text-sm bg-[#F5F8FF] border-2 border-[#D6E0FF] rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+          className="mt-2 placeholder:text-sm text-sm bg-[#F5F8FF] border-2 border-[#D6E0FF] rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]
+          md:placeholder:text-md md:text-md md:p-3"
         />
       </div>
 
       <div className="mb-4">
-        <label className="text-sm font-semibold" htmlFor="password">
-          Enter your password here
-        </label>
+        <label className="text-sm font-semibold
+          md:text-xl md:text-gray-800
+          2xl:text-2xl" 
+          htmlFor="password"
+        > Enter your password heare </label>
+
         <input
           value={password}
           onInput={(c) => {
@@ -81,7 +99,8 @@ const Login = () => {
           }}
           type="password"
           placeholder="Minimum 8 characters needed"
-          className="mt-2 placeholder:text-sm text-sm bg-[#F5F8FF] border-2 border-[#D6E0FF] rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+          className="mt-2 placeholder:text-sm text-sm bg-[#F5F8FF] border-2 border-[#D6E0FF] rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]
+          md:placeholder:text-md md:text-md md:p-3"
         />
       </div>
 
