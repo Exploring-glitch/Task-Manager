@@ -38,7 +38,7 @@ const SignupPage = () => {
 
           /* lg positioning */
           lg:block
-          lg:ml-20 lg:mt-20
+          lg:ml-20
           lg:max-w-md
           lg:mr-[50%]
           xl:mt-44
