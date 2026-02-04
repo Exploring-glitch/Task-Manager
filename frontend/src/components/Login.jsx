@@ -45,17 +45,17 @@ const Login = () => {
 
     <div className="px-4 w-full max-w-md mx-auto
       sm:max-w-lg sm:px-6
-      md: md:max-w-4xl
-      2xl:">
+      md: md:max-w-2xl
+      ">
 
       <h2 className="text-3xl font-bold text-[#1D4ED8] text-center 
-        md:text-5xl md:font-extrabold
+        md:text-3xl
         lg:text-left lg:text-4xl lg:mb-1 
         2xl:text-6xl"
       > Welcome Back </h2>
 
       <h6 className="text-gray-600 mb-8 text-center 
-        md:text-lg md:text-gray-700 md:font-semibold
+        md:text-md md:text-gray-700
         lg:text-left
         2xl:text-xl 2xl:mt-2"
       > Please enter your details to login </h6>
@@ -68,7 +68,7 @@ const Login = () => {
 
       <div className="mb-4">
         <label className="text-sm font-semibold
-          md:text-xl md:text-gray-800
+          md:text-md md:text-gray-700
           2xl:text-2xl" 
           htmlFor="email"
         > Enter your email adress </label>
@@ -80,14 +80,13 @@ const Login = () => {
           }}
           type="email"
           placeholder="Example: alex@example.com"
-          className="mt-2 placeholder:text-sm text-sm bg-[#F5F8FF] border-2 border-[#D6E0FF] rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]
-          md:placeholder:text-md md:text-md md:p-3"
+          className="mt-2 placeholder:text-sm text-sm bg-[#F5F8FF] border-2 border-[#D6E0FF] rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
         />
       </div>
 
       <div className="mb-4">
         <label className="text-sm font-semibold
-          md:text-xl md:text-gray-800
+          md:text-md md:text-gray-700
           2xl:text-2xl" 
           htmlFor="password"
         > Enter your password heare </label>
@@ -99,8 +98,7 @@ const Login = () => {
           }}
           type="password"
           placeholder="Minimum 8 characters needed"
-          className="mt-2 placeholder:text-sm text-sm bg-[#F5F8FF] border-2 border-[#D6E0FF] rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]
-          md:placeholder:text-md md:text-md md:p-3"
+          className="mt-2 placeholder:text-sm text-sm bg-[#F5F8FF] border-2 border-[#D6E0FF] rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
         />
       </div>
 

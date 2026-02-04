@@ -5,19 +5,17 @@ import { Link } from 'react-router-dom'
 const Header = () => {
     return (
         <header className="sticky top-0 z-50 max-w-screen bg-[#F5F8FF] border-b border-[#E3E8FF]">
-            <div className="w-full px-3 py-3 flex items-center justify-between
-                sm:px-10 
-                md:py-4
-                2xl:py-5">
+            <div className="w-full px-3 py-2 flex items-center justify-between
+                sm:px-7 
+                2xl:py-3">
                     
                 <h1 className="text-lg font-bold text-[#1D4ED8]
                 sm:text-xl
-                md:text-2xl
                 lg:text-3xl
                 2xl:text-4xl"> TaskManger </h1>
 
                 <nav className="flex items-center gap-3 
-                    sm:gap-6
+                    sm:gap-4
                     2xl:gap-8">
 
                     <Link
