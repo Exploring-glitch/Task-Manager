@@ -46,11 +46,11 @@ const Login = () => {
     <div className="px-4 w-full max-w-md mx-auto
       sm:max-w-lg sm:px-6
       md: md:max-w-4xl
-      2xl:mt-80">
+      2xl:">
 
       <h2 className="text-3xl font-bold text-[#1D4ED8] text-center 
         md:text-5xl md:font-extrabold
-        lg:text-left 
+        lg:text-left lg:text-4xl lg:mb-1 
         2xl:text-6xl"
       > Welcome Back </h2>
 
@@ -115,7 +115,9 @@ const Login = () => {
       </div>
 
       <div className="text-center">
-        <p className="cursor-pointer text-sm text-gray-600">
+        <p className="cursor-pointer text-sm text-gray-600 
+          2xl:text-lg"
+        >
           Don't have an account?{" "}
           <Link className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold">
             <u>SignUp</u>
