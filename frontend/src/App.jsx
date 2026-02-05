@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import PrivateRoute from './routes/PrivateRoute.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import ManageTasks from './pages/Admin/ManageTasks.jsx';
@@ -9,12 +9,14 @@ import MyTask from './pages/User/MyTask.jsx';
 import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
 import LoginPage from './pages/Auth/LoginPage.jsx';
 import SignupPage from './pages/Auth/SignupPage.jsx';
+import NavBar from './components/NavBar.jsx';
 
 function App() {
 
   return (
-   <div>
-    <Router>
+    <>
+      <NavBar />
+
       <Routes>
         <Route path='/auth/login' element={<LoginPage />} />
         <Route path='/auth/signup' element={<SignupPage />} />
@@ -33,8 +35,7 @@ function App() {
         <Route path='/user/task-details' element={<ViewTaskDetails />} />
 
       </Routes>
-    </Router>
-   </div>
+    </>
   )
 }
 

@@ -1,11 +1,10 @@
 import React from 'react'
 import Login from '../../components/Login.jsx'
-import Header from '../../components/Header.jsx'
+
 
 const LoginPage = () => {
   return (
   <div className="bg-linear-to-br from-[#F8FAFC] via-[#EEF4FF] to-[#E8F0FF] min-h-screen overflow-hidden">
-    <Header />
 
     <div className="relative min-h-[calc(100vh-64px)] p-4 sm:p-8">
 
