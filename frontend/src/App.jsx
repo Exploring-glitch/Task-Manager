@@ -1,5 +1,4 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Signup from './pages/Auth/SignupPage.jsx';
 import PrivateRoute from './routes/PrivateRoute.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import ManageTasks from './pages/Admin/ManageTasks.jsx';

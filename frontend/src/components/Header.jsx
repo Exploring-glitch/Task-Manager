@@ -22,15 +22,15 @@ const Header = () => {
                     <Link
                         to="/home"
                         className="text-gray-600 hover:text-[#1D4ED8] font-medium transition text-xs 
-                        sm:text-lg
-                        md:text-xl
-                        2xl:text-3xl"
+                        sm:text-md
+                        md:text-lg
+                        2xl:text-2xl"
                     >Home</Link>
 
                     <Link
                         to="/auth/login"
                         className="hover:text-[#1D4ED8] font-medium transition text-white bg-[#1D4ED8] px-4 py-1.5 rounded text-xs 
-                        sm:text-lg sm:text-gray-600 sm:bg-transparent sm:px-0 sm:py-0 sm:rounded-none
+                        sm:text-md sm:text-gray-600 sm:bg-transparent sm:px-0 sm:py-0 sm:rounded-none
                         md:text-xl
                         2xl:text-3xl"
                     >Login</Link>

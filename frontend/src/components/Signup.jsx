@@ -22,7 +22,7 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    
+
     if (!fullName) {
       setError("Please enter your full name")
       nameRef.current?.focus()
@@ -69,10 +69,10 @@ const Signup = () => {
 
   return (
     <div className="px-4 w-full max-w-md mx-auto
-        sm:max-w-lg sm:px-6
-        md:max-w-2xl
-        xl:max-w-3xl
-        2xl:max-w-4xl"
+      sm:max-w-lg sm:px-6
+      md:max-w-2xl
+      xl:max-w-3xl
+      2xl:max-w-4xl"
     >
       <h2
         className="
