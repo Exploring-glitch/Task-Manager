@@ -10,15 +10,16 @@ import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
 import LoginPage from './pages/Auth/LoginPage.jsx';
 import SignupPage from './pages/Auth/SignupPage.jsx';
 import NavBar from './components/NavBar.jsx';
+import Login_Page from './pages/Auth/Login_Page.jsx';
 
 function App() {
 
   return (
-    <>
+    <div className='h-screen flex flex-col'>
       <NavBar />
 
       <Routes>
-        <Route path='/auth/login' element={<LoginPage />} />
+        <Route path='/auth/login' element={<Login_Page />} />
         <Route path='/auth/signup' element={<SignupPage />} />
 
         {/*Admin Routes*/}
@@ -35,7 +36,7 @@ function App() {
         <Route path='/user/task-details' element={<ViewTaskDetails />} />
 
       </Routes>
-    </>
+    </div>
   )
 }
 

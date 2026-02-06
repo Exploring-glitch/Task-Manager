@@ -6,7 +6,7 @@ const NavBar = (props) => {
     const path = location.pathname;
 
     return (
-        <header className="sticky top-0 z-50 max-w-screen bg-[#F5F8FF] border-b border-[#E3E8FF]">
+        <header className="sticky top-0 z-50 w-screen bg-[#F5F8FF] border-b border-[#E3E8FF] overflow-hidden">
             <div className="w-full px-3 py-2 flex items-center justify-between
                 sm:px-7 
                 lg:py-2">
