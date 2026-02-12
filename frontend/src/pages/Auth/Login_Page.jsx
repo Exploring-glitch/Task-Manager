@@ -19,7 +19,6 @@ const Login_Page = () => {
         setLoading(true);
         setError('');
 
-
         if (!email.trim()) {
             setError("Please enter your email")
             emailRef.current?.focus()
@@ -38,10 +37,8 @@ const Login_Page = () => {
             return;
         }
 
-
         try {
             const data = await login_User(email, password);
-            console.log(data)
 
             navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
 
@@ -53,31 +50,29 @@ const Login_Page = () => {
             setError(e.message || 'Login failed. Please check your credentials.');
         }
     }
-
-
+    
     return (
         <AuthLayout>
-
             <div className="px-4 w-full max-w-md mx-auto
-      sm:max-w-lg sm:px-6
-      md:max-w-2xl
-      xl:max-w-3xl
-      2xl:max-w-4xl"
+                sm:max-w-lg sm:px-6
+                md:max-w-2xl
+                xl:max-w-3xl
+                2xl:max-w-4xl"
             >
                 <h2
                     className="
-        text-3xl font-bold text-[#1D4ED8] text-center
-        md:text-3xl
-        lg:text-left lg:text-4xl lg:mb-1
-        2xl:text-5xl"
+                    text-3xl font-bold text-[#1D4ED8] text-center
+                    md:text-3xl
+                    lg:text-left lg:text-4xl lg:mb-1
+                    2xl:text-5xl"
                 > Welcome Back </h2>
 
                 <h6
                     className="
-        text-gray-600 mb-8 text-center
-        md:text-md md:text-gray-700
-        lg:text-left
-        2xl:text-xl 2xl:mt-4"
+                    text-gray-600 mb-8 text-center
+                    md:text-md md:text-gray-700
+                    lg:text-left
+                    2xl:text-xl 2xl:mt-4"
                 > Please enter your details to login </h6>
 
                 {error && (
@@ -89,9 +84,9 @@ const Login_Page = () => {
                 <div className="mb-4">
                     <label
                         className="
-          text-sm font-semibold
-          md:text-md md:text-gray-700
-          2xl:text-2xl"
+                        text-sm font-semibold
+                        md:text-md md:text-gray-700
+                        2xl:text-2xl"
                         htmlFor="email"
                     >
                         Enter your email address
@@ -104,20 +99,20 @@ const Login_Page = () => {
                         type="email"
                         placeholder="Example: alex@example.com"
                         className="
-          mt-2 w-full p-2 rounded
-          text-sm md:text-base
-          placeholder:text-sm md:placeholder:text-base
-          bg-[#F5F8FF] border-2 border-[#D6E0FF]
-          focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                        mt-2 w-full p-2 rounded
+                        text-sm md:text-base
+                        placeholder:text-sm md:placeholder:text-base
+                        bg-[#F5F8FF] border-2 border-[#D6E0FF]
+                        focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
                     />
                 </div>
 
                 <div className="mb-4">
                     <label
                         className="
-          text-sm font-semibold
-          md:text-md md:text-gray-700
-          2xl:text-2xl"
+                        text-sm font-semibold
+                        md:text-md md:text-gray-700
+                        2xl:text-2xl"
                         htmlFor="password"
                     >
                         Enter your password here
@@ -130,11 +125,11 @@ const Login_Page = () => {
                         type="password"
                         placeholder="Minimum 8 characters needed"
                         className="
-          mt-2 w-full p-2 rounded
-          text-sm md:text-base
-          placeholder:text-sm md:placeholder:text-base
-          bg-[#F5F8FF] border-2 border-[#D6E0FF]
-          focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                        mt-2 w-full p-2 rounded
+                        text-sm md:text-base
+                        placeholder:text-sm md:placeholder:text-base
+                        bg-[#F5F8FF] border-2 border-[#D6E0FF]
+                        focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
                     />
                 </div>
 
@@ -143,11 +138,11 @@ const Login_Page = () => {
                         onClick={handleSubmit}
                         disabled={loading}
                         className="
-          w-full py-2 px-4 rounded
-          font-semibold text-white
-          bg-[#1D4ED8] hover:bg-[#1E40AF]
-          transition-colors duration-200
-          focus:outline-none focus:shadow-outline"
+                        w-full py-2 px-4 rounded
+                        font-semibold text-white
+                        bg-[#1D4ED8] hover:bg-[#1E40AF]
+                        transition-colors duration-200
+                        focus:outline-none focus:shadow-outline"
                     >
                         {loading ? "ᯓ ✈︎" : "LOGIN"}
                     </button>
@@ -162,8 +157,6 @@ const Login_Page = () => {
                     </p>
                 </div>
             </div>
-
-
         </AuthLayout>
     )
 }
