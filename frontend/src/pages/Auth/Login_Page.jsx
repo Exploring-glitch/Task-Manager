@@ -50,14 +50,10 @@ const Login_Page = () => {
             setError(e.message || 'Login failed. Please check your credentials.');
         }
     }
-    
+
     return (
         <AuthLayout>
-            <div className="px-4 w-full max-w-md mx-auto
-                sm:max-w-lg sm:px-6
-                md:max-w-2xl
-                xl:max-w-3xl
-                2xl:max-w-4xl"
+            <div className="px-4 w-full flex flex-col items-center justify-center"
             >
                 <h2
                     className="
