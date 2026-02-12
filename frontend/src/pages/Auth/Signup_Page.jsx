@@ -119,7 +119,7 @@ const Signup_Page = () => {
                         focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
                     />
                 </div>
-
+                
                 <div className="mb-4">
                     <label
                         className="

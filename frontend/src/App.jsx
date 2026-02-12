@@ -7,10 +7,9 @@ import ManageUsers from './pages/Admin/ManageUsers.jsx';
 import UserDashboard from './pages/User/UserDashboard.jsx';
 import MyTask from './pages/User/MyTask.jsx';
 import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
-import LoginPage from './pages/Auth/LoginPage.jsx';
-import SignupPage from './pages/Auth/SignupPage.jsx';
 import NavBar from './components/NavBar.jsx';
 import Login_Page from './pages/Auth/Login_Page.jsx';
+import Signup_Page from './pages/Auth/Signup_page.jsx';
 
 function App() {
 
@@ -20,7 +19,7 @@ function App() {
 
       <Routes>
         <Route path='/auth/login' element={<Login_Page />} />
-        <Route path='/auth/signup' element={<SignupPage />} />
+        <Route path='/auth/signup' element={<Signup_Page />} />
 
         {/*Admin Routes*/}
         <Route element={<PrivateRoute allowedRoles={["admin"]} />} />
