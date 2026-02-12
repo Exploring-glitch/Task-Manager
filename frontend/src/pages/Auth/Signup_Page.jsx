@@ -69,7 +69,7 @@ const Signup_Page = () => {
 
     return (
         <AuthLayout>
-            <div className="w-full h-full 
+            <div className="w-full h-full bg-amber-200 
                 flex flex-col items-center justify-center 
                 px-3"
             >
@@ -102,7 +102,7 @@ const Signup_Page = () => {
                         2xl:text-2xl"
                         htmlFor="fullName"
                     >
-                        Enter your full name
+                        Enter your full name here
                     </label>
 
                     <input
