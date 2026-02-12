@@ -60,16 +60,15 @@ const Login_Page = () => {
                 <h2
                     className="
                     text-4xl font-bold text-[#1D4ED8]
-                    md:text-3xl
-                    lg:text-left lg:text-4xl lg:mb-1
+                    md:text-4xl
+                    lg:text-4xl lg:mb-1
                     2xl:text-5xl"
                 > Welcome Back </h2>
 
                 <h6
                     className="
                     text-gray-600 mb-7
-                    md:text-md md:text-gray-700
-                    lg:text-left
+                    md:text- md:text-gray-700
                     2xl:text-xl 2xl:mt-4"
                 > Please enter your details to login </h6>
 
