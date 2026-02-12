@@ -2,8 +2,10 @@ import React from 'react'
 
 const AuthLayout = ({ children }) => {
   return (
-    <div className='w-screen h-full overflow-hidden bg-linear-to-br from-[#F8FAFC] via-[#EEF4FF] to-[#E8F0FF]'>
-      <div className='md:w-1/2'>
+    <div className='min-h-[calc(100vh-64px)] w-screen overflow-hidden {/*min-h-[calc(100vh-64px)] means take the full height of the screen except the navbar (whose height is 64px*/}
+      bg-linear-to-br from-[#F8FAFC] via-[#EEF4FF] to-[#E8F0FF]'> 
+
+      <div className='h-full w-full md:w-1/2'>
         {children}
       </div>
 
@@ -15,7 +17,7 @@ const AuthLayout = ({ children }) => {
           hidden md:block
           mix-blend-multiply 
           
-          md:fixed {/*img as background (center)*/}
+          md:fixed {/*(blur and centralized)*/}
           md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 
           md:h-[50vh] md:w-auto
         
@@ -24,6 +26,7 @@ const AuthLayout = ({ children }) => {
           lg:h-screen lg:w-[50%]"
         />
       </div>
+
     </div>
   )
 }

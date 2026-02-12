@@ -53,11 +53,13 @@ const Login_Page = () => {
 
     return (
         <AuthLayout>
-            <div className="px-4 w-full flex flex-col items-center justify-center"
+            <div className="w-full h-full 
+                flex flex-col items-center justify-center 
+                px-3"
             >
                 <h2
                     className="
-                    text-3xl font-bold text-[#1D4ED8] text-center
+                    text-4xl font-bold text-[#1D4ED8]
                     md:text-3xl
                     lg:text-left lg:text-4xl lg:mb-1
                     2xl:text-5xl"
@@ -65,7 +67,7 @@ const Login_Page = () => {
 
                 <h6
                     className="
-                    text-gray-600 mb-8 text-center
+                    text-gray-600 mb-7
                     md:text-md md:text-gray-700
                     lg:text-left
                     2xl:text-xl 2xl:mt-4"

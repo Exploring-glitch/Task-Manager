@@ -8,8 +8,8 @@ const NavBar = (props) => {
     return (
         <header className="sticky top-0 z-50 w-screen bg-[#F5F8FF] border-b border-[#E3E8FF] overflow-hidden">
             <div className="w-full px-3 py-2 flex items-center justify-between
-                sm:px-7 
-                lg:py-2">
+                md:px-4 
+                lg:py-4">
 
                 <h1 className="text-lg font-bold text-[#1D4ED8]
                 sm:text-xl
