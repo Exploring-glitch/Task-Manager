@@ -70,9 +70,10 @@ const Signup_Page = () => {
 
     return (
         <AuthLayout>
-            <div className="w-full h-full 
-                flex flex-col items-center justify-center 
-                px-3"
+            <div className="w-full h-full
+                flex flex-col items-center
+                md:justify-center 
+                px-4 py-4 md:py-0"
             >
                 <h2
                     className="
@@ -97,8 +98,10 @@ const Signup_Page = () => {
 
                 <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
-                <div className='grid grid-col-1 md:grid-cols-2 '>
-                    <div className="mb-4">
+                <div className='grid grid-col-1 gap-0
+                    md:grid-cols-2 md:gap-4'
+                >
+                    <div>
                         <label
                             className="
                             text-sm font-semibold
@@ -116,7 +119,7 @@ const Signup_Page = () => {
                             type="type"
                             placeholder="Example: Alex Zen"
                             className="
-                            mt-2 w-full p-2 rounded
+                            mt-0 md:mt-2 w-full p-2 rounded
                             text-sm md:text-base
                             placeholder:text-sm md:placeholder:text-base
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
@@ -124,7 +127,7 @@ const Signup_Page = () => {
                         />
                     </div>
 
-                    <div className="mb-4">
+                    <div>
                         <label
                             className="
                             text-sm font-semibold
@@ -142,7 +145,7 @@ const Signup_Page = () => {
                             type="email"
                             placeholder="Example: alex@example.com"
                             className="
-                            mt-2 w-full p-2 rounded
+                            mt-0 md:mt-2 w-full p-2 rounded
                             text-sm md:text-base
                             placeholder:text-sm md:placeholder:text-base
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
@@ -150,7 +153,7 @@ const Signup_Page = () => {
                         />
                     </div>
 
-                    <div className="mb-4">
+                    <div>
                         <label
                             className="
                             text-sm font-semibold
@@ -168,7 +171,7 @@ const Signup_Page = () => {
                             type="password"
                             placeholder="Minimum 8 characters needed"
                             className="
-                            mt-2 w-full p-2 rounded
+                            mt-0 md:mt-2 w-full p-2 rounded
                             text-sm md:text-base
                             placeholder:text-sm md:placeholder:text-base
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
@@ -176,7 +179,7 @@ const Signup_Page = () => {
                         />
                     </div>
 
-                    <div className="mb-4">
+                    <div className='mb-4'>
                         <label
                             className="
                             text-sm font-semibold
@@ -194,7 +197,7 @@ const Signup_Page = () => {
                             type="password"
                             placeholder="Minimum 8 characters needed"
                             className="
-                            mt-2 w-full p-2 rounded
+                            mt-0 md:mt-2 w-full p-2 rounded
                             text-sm md:text-base
                             placeholder:text-sm md:placeholder:text-base
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
@@ -203,8 +206,7 @@ const Signup_Page = () => {
                     </div>
                 </div>
 
-
-                <div className="mb-3">
+                <div className="mb-2 md:3">
                     <button
                         onClick={handleSubmit}
                         disabled={loading}
@@ -218,8 +220,9 @@ const Signup_Page = () => {
                         {loading ? "ᯓ ✈︎" : "SIGNUP"}
                     </button>
                 </div>
+
                 <div className="text-center">
-                    <p className="cursor-pointer text-sm text-gray-600 2xl:text-lg">
+                    <p className="mb-2 cursor-pointer text-sm text-gray-600 2xl:text-lg">
                         Already have an account?{" "}
                         <Link to={"/auth/login"} className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold">
                             <u>Login</u>
