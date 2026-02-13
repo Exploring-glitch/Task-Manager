@@ -69,7 +69,7 @@ const Signup_Page = () => {
 
     return (
         <AuthLayout>
-            <div className="w-full h-full bg-amber-200 
+            <div className="w-full h-full 
                 flex flex-col items-center justify-center 
                 px-3"
             >
