@@ -95,87 +95,114 @@ const Signup_Page = () => {
                     </div>
                 )}
 
-                <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}>
-                    <div className='grid grid-col-1 md:grid-cols-2 gap-4'></div>
-                </ProfilePhotoSelector>
-                
-                <div className="mb-4">
-                    <label
-                        className="
-                        text-sm font-semibold
-                        md:text-md md:text-gray-700
-                        2xl:text-2xl"
-                        htmlFor="fullName"
-                    >
-                        Enter your full name here
-                    </label>
+                <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
-                    <input
-                        ref={nameRef}
-                        value={fullName}
-                        onInput={(c) => setFullName(c.target.value)}
-                        type="type"
-                        placeholder="Example: Alex Zen"
-                        className="
-                        mt-2 w-full p-2 rounded
-                        text-sm md:text-base
-                        placeholder:text-sm md:placeholder:text-base
-                        bg-[#F5F8FF] border-2 border-[#D6E0FF]
-                        focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
-                    />
+                <div className='grid grid-col-1 md:grid-cols-2 '>
+                    <div className="mb-4">
+                        <label
+                            className="
+                            text-sm font-semibold
+                            md:text-md md:text-gray-700
+                            2xl:text-2xl"
+                            htmlFor="fullName"
+                        >
+                            Enter your full name here
+                        </label>
+
+                        <input
+                            ref={nameRef}
+                            value={fullName}
+                            onInput={(c) => setFullName(c.target.value)}
+                            type="type"
+                            placeholder="Example: Alex Zen"
+                            className="
+                            mt-2 w-full p-2 rounded
+                            text-sm md:text-base
+                            placeholder:text-sm md:placeholder:text-base
+                            bg-[#F5F8FF] border-2 border-[#D6E0FF]
+                            focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label
+                            className="
+                            text-sm font-semibold
+                            md:text-md md:text-gray-700
+                            2xl:text-2xl"
+                            htmlFor="email"
+                        >
+                            Enter your email address
+                        </label>
+
+                        <input
+                            ref={emailRef}
+                            value={email}
+                            onInput={(c) => setEmail(c.target.value)}
+                            type="email"
+                            placeholder="Example: alex@example.com"
+                            className="
+                            mt-2 w-full p-2 rounded
+                            text-sm md:text-base
+                            placeholder:text-sm md:placeholder:text-base
+                            bg-[#F5F8FF] border-2 border-[#D6E0FF]
+                            focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label
+                            className="
+                            text-sm font-semibold
+                            md:text-md md:text-gray-700
+                            2xl:text-2xl"
+                            htmlFor="password"
+                        >
+                            Enter your password here
+                        </label>
+
+                        <input
+                            ref={passRef}
+                            value={password}
+                            onInput={(c) => setPassword(c.target.value)}
+                            type="password"
+                            placeholder="Minimum 8 characters needed"
+                            className="
+                            mt-2 w-full p-2 rounded
+                            text-sm md:text-base
+                            placeholder:text-sm md:placeholder:text-base
+                            bg-[#F5F8FF] border-2 border-[#D6E0FF]
+                            focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label
+                            className="
+                            text-sm font-semibold
+                            md:text-md md:text-gray-700
+                            2xl:text-2xl"
+                            htmlFor="password"
+                        >
+                            Enter your password here
+                        </label>
+
+                        <input
+                            ref={passRef}
+                            value={password}
+                            onInput={(c) => setPassword(c.target.value)}
+                            type="password"
+                            placeholder="Minimum 8 characters needed"
+                            className="
+                            mt-2 w-full p-2 rounded
+                            text-sm md:text-base
+                            placeholder:text-sm md:placeholder:text-base
+                            bg-[#F5F8FF] border-2 border-[#D6E0FF]
+                            focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                        />
+                    </div>
                 </div>
 
-                <div className="mb-4">
-                    <label
-                        className="
-                        text-sm font-semibold
-                        md:text-md md:text-gray-700
-                        2xl:text-2xl"
-                        htmlFor="email"
-                    >
-                        Enter your email address
-                    </label>
-
-                    <input
-                        ref={emailRef}
-                        value={email}
-                        onInput={(c) => setEmail(c.target.value)}
-                        type="email"
-                        placeholder="Example: alex@example.com"
-                        className="
-                        mt-2 w-full p-2 rounded
-                        text-sm md:text-base
-                        placeholder:text-sm md:placeholder:text-base
-                        bg-[#F5F8FF] border-2 border-[#D6E0FF]
-                        focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label
-                        className="
-                        text-sm font-semibold
-                        md:text-md md:text-gray-700
-                        2xl:text-2xl"
-                        htmlFor="password"
-                    >
-                        Enter your password here
-                    </label>
-
-                    <input
-                        ref={passRef}
-                        value={password}
-                        onInput={(c) => setPassword(c.target.value)}
-                        type="password"
-                        placeholder="Minimum 8 characters needed"
-                        className="
-                        mt-2 w-full p-2 rounded
-                        text-sm md:text-base
-                        placeholder:text-sm md:placeholder:text-base
-                        bg-[#F5F8FF] border-2 border-[#D6E0FF]
-                        focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
-                    />
-                </div>
 
                 <div className="mb-3">
                     <button
@@ -191,7 +218,6 @@ const Signup_Page = () => {
                         {loading ? "ᯓ ✈︎" : "SIGNUP"}
                     </button>
                 </div>
-
                 <div className="text-center">
                     <p className="cursor-pointer text-sm text-gray-600 2xl:text-lg">
                         Already have an account?{" "}
