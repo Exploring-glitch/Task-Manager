@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { signup_User } from '../../api/userApi.js';
 import AuthLayout from '../../components/AuthLayout.jsx'
+import ProfilePhotoSelector from '../../components/ProfilePhotoSelector.jsx';
 
 const Signup_Page = () => {
     const [profilePic, setProfilePic] = useState(null);
