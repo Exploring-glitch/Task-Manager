@@ -17,8 +17,23 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
         }
     };
 
+    const handleRemoveImage = () => {
+        setImage(null);
+        setPreviewUrl(null);
+    };
+
+    const onChooseFile = () => {
+        inputRef.current.click();
+    };
+
     return (
-        <div className=''>ProfilePhotoSelector</div>
+        <div className=''>
+            <input 
+                type="file"
+                accept='image/*'
+                ref={inputRef}
+                onChange={handleImageChange} />
+        </div>
     )
 }
 

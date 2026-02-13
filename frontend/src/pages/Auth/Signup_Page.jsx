@@ -95,6 +95,10 @@ const Signup_Page = () => {
                     </div>
                 )}
 
+                <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}>
+                    <div className='grid grid-col-1 md:grid-cols-2 gap-4'></div>
+                </ProfilePhotoSelector>
+                
                 <div className="mb-4">
                     <label
                         className="
@@ -196,10 +200,6 @@ const Signup_Page = () => {
                         </Link>
                     </p>
                 </div>
-
-                <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}>
-                    <div className='grid grid-col-1 md:grid-cols-2 gap-4'></div>
-                </ProfilePhotoSelector>
             </div>
         </AuthLayout>
     )
