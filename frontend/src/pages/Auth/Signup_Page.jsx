@@ -119,7 +119,7 @@ const Signup_Page = () => {
                         focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
                     />
                 </div>
-                
+
                 <div className="mb-4">
                     <label
                         className="
@@ -195,6 +195,10 @@ const Signup_Page = () => {
                         </Link>
                     </p>
                 </div>
+
+                <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}>
+                    <div className='grid grid-col-1 md:grid-cols-2 gap-4'></div>
+                </ProfilePhotoSelector>
             </div>
         </AuthLayout>
     )
