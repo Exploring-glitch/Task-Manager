@@ -37,13 +37,23 @@ const Login_Page = () => {
             return;
         }
 
+
         try {
-            const data = await login_User(email, password);
+            const response = await login_User(email, password);
 
-            navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
+            const { token } = response;
 
-            setLoading(false);
-            console.log("signin success")
+            if (token) {
+                localStorage.setItem("token", token);
+
+                if (response.user.role == "member") {
+                    navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
+                    setLoading(false);
+                } else{
+                    navigate("/api/tasks/dashboard") //this means, when user login, go to the dashboard page (only accessible for admins)
+                    setLoading(false);
+                }
+            }
         }
         catch (e) {
             setLoading(false);

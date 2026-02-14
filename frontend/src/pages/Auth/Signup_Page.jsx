@@ -55,6 +55,7 @@ const Signup_Page = () => {
             return;
         }
 
+        
         try {
             const data = await signup_User(fullName, email, password, profilePic, adminInviteToken);
 
