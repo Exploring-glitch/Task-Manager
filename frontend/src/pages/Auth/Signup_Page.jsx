@@ -17,6 +17,7 @@ const Signup_Page = () => {
     const nameRef = useRef(null);
     const emailRef = useRef(null);
     const passRef = useRef(null);
+    const adminTokenRef = useRef(null);
 
     const navigate = useNavigate();
 
@@ -48,8 +49,8 @@ const Signup_Page = () => {
             setLoading(false)
             return;
         }
-        if (password.length < 8) {
-            setError('Password must contain at least 8 characters');
+        if (password.length < 6) {
+            setError('Password must contain at least 6 characters');
             setLoading(false)
             return;
         }
@@ -121,7 +122,7 @@ const Signup_Page = () => {
                             className="
                             mt-0 md:mt-2 w-full p-2 rounded
                             text-sm md:text-base
-                            placeholder:text-sm md:placeholder:text-base
+                            placeholder:text-sm md:placeholder:text-sm
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
                             focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
                         />
@@ -147,7 +148,7 @@ const Signup_Page = () => {
                             className="
                             mt-0 md:mt-2 w-full p-2 rounded
                             text-sm md:text-base
-                            placeholder:text-sm md:placeholder:text-base
+                            placeholder:text-sm md:placeholder:text-sm
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
                             focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
                         />
@@ -169,11 +170,11 @@ const Signup_Page = () => {
                             value={password}
                             onInput={(c) => setPassword(c.target.value)}
                             type="password"
-                            placeholder="Minimum 6 characters needed"
+                            placeholder="Min 6 characters needed"
                             className="
                             mt-0 md:mt-2
                             w-full p-2 rounded text-sm 
-                            placeholder:text-sm md:placeholder:text-base
+                            placeholder:text-sm md:placeholder:text-sm
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
                             focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
                         />
@@ -185,21 +186,21 @@ const Signup_Page = () => {
                             text-sm font-semibold
                             md:text-md md:text-gray-700
                             2xl:text-2xl"
-                            htmlFor="password"
+                            htmlFor="adminToken"
                         >
                             Enter the admin invite token
                         </label>
 
                         <input
-                            ref={passRef}
-                            value={password}
-                            onInput={(c) => setPassword(c.target.value)}
-                            type="password"
-                            placeholder="Minimum 8 characters needed"
+                            ref={adminTokenRef}
+                            value={adminInviteToken}
+                            onInput={(c) => setAdminInviteToken(c.target.value)}
+                            type="text"
+                            placeholder="6 Digit Code"
                             className="
                             mt-0 md:mt-2 w-full p-2 rounded
                             text-sm md:text-base
-                            placeholder:text-sm md:placeholder:text-base
+                            placeholder:text-sm md:placeholder:text-sm
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
                             focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
                         />
