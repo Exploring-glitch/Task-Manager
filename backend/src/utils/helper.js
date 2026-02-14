@@ -1,5 +1,4 @@
 import jsonwebtoken from 'jsonwebtoken';
-import bcrypt from "bcrypt";
 
 export const signToken = (payload) =>{
     return jsonwebtoken.sign(payload, process.env.JWT_SECRET, {expiresIn: "7d"})

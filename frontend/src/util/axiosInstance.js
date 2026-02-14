@@ -3,27 +3,8 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:3000",
-    timeout: 10000,
-    headers: {
-        "Content-Type" : "application/json",
-        Accept: "application/json"
-    }
+    withCredentials: true //to set cookies
 });
-
-
-//Request Interceptors
-axiosInstance.interceptors.request.use(
-    (config) => {
-        const accessToken = localStorage.getItem("token");
-        if(accessToken){
-            config.headers.Authorization = `Bearer ${accessToken}`
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-)
 
 
 // Response interceptor

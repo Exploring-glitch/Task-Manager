@@ -40,12 +40,9 @@ const Login_Page = () => {
 
         try {
             const response = await login_User(email, password);
-
             const { token } = response;
 
             if (token) {
-                localStorage.setItem("token", token);
-
                 if (response.user.role == "member") {
                     navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
                     setLoading(false);
