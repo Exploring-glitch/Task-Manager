@@ -77,16 +77,16 @@ const Signup_Page = () => {
             >
                 <h2
                     className="
-                    text-4xl font-bold text-[#1D4ED8]
-                    md:text-4xl
+                    text-3xl font-bold text-[#1D4ED8]
+                    sd:text-4xl
                     lg:text-4xl lg:mb-1
                     2xl:text-5xl"
                 > Create an Account </h2>
 
                 <h6
                     className="
-                    text-gray-600 mb-7
-                    md:text- md:text-gray-700
+                    text-gray-600 text-xs mb-7
+                    md:text-gray-700 md:text-lg
                     2xl:text-xl 2xl:mt-4"
                 > Join us today by entering your details below </h6>
 
@@ -169,10 +169,10 @@ const Signup_Page = () => {
                             value={password}
                             onInput={(c) => setPassword(c.target.value)}
                             type="password"
-                            placeholder="Minimum 8 characters needed"
+                            placeholder="Minimum 6 characters needed"
                             className="
-                            mt-0 md:mt-2 w-full p-2 rounded
-                            text-sm md:text-base
+                            mt-0 md:mt-2
+                            w-full p-2 rounded text-sm 
                             placeholder:text-sm md:placeholder:text-base
                             bg-[#F5F8FF] border-2 border-[#D6E0FF]
                             focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
@@ -187,7 +187,7 @@ const Signup_Page = () => {
                             2xl:text-2xl"
                             htmlFor="password"
                         >
-                            Enter your password here
+                            Enter the admin invite token
                         </label>
 
                         <input
@@ -222,7 +222,7 @@ const Signup_Page = () => {
                 </div>
 
                 <div className="text-center">
-                    <p className="mb-2 cursor-pointer text-sm text-gray-600 2xl:text-lg">
+                    <p className="cursor-pointer text-sm text-gray-600 2xl:text-lg">
                         Already have an account?{" "}
                         <Link to={"/auth/login"} className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold">
                             <u>Login</u>

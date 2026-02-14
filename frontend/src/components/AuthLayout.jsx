@@ -2,7 +2,7 @@ import React from 'react'
 
 const AuthLayout = ({ children }) => {
   return (
-    <div className='min-h-[calc(100vh-64px)] w-screen overflow-x-hidden {/*min-h-[calc(100vh-64px)] means take the full height of the screen except the navbar (whose height is 64px*/}
+    <div className='min-h-[calc(100vh-52px)] w-screen overflow-x-hidden {/*min-h-[calc(100vh-64px)] means take the full height of the screen except the navbar (whose height is 64px*/}
       bg-linear-to-br from-[#F8FAFC] via-[#EEF4FF] to-[#E8F0FF]'> 
 
       <div className='h-full w-full lg:w-1/2'>
