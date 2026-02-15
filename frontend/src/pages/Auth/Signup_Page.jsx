@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { signup_User } from '../../api/userApi.js';
 import AuthLayout from '../../components/AuthLayout.jsx'
 import ProfilePhotoSelector from '../../components/ProfilePhotoSelector.jsx';
+import { UserContext } from '../../context/userContext.jsx';
 
 const Signup_Page = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -19,6 +20,7 @@ const Signup_Page = () => {
     const passRef = useRef(null);
     const adminTokenRef = useRef(null);
 
+    const { updateUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -55,14 +57,23 @@ const Signup_Page = () => {
             return;
         }
 
-        
+
         try {
-            const data = await signup_User(fullName, email, password, profilePic, adminInviteToken);
+            const response = await signup_User(fullName, email, password, profilePic, adminInviteToken);
+            const { token } = response;
 
-            navigate("/api/tasks/dashboard") //this means, when user login, go to the dashboard page (only accessible for admins)
+            if (token) {
 
-            setLoading(false);
-            console.log("signup success")
+                updateUser(response);
+
+                if (response.user.role == "member") {
+                    navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
+                    setLoading(false);
+                } else {
+                    navigate("/api/tasks/dashboard") //this means, when user login, go to the dashboard page (only accessible for admins)
+                    setLoading(false);
+                }
+            }
         }
         catch (e) {
             setLoading(false);

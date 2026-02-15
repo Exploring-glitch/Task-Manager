@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import PrivateRoute from './routes/PrivateRoute.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import ManageTasks from './pages/Admin/ManageTasks.jsx';
@@ -10,7 +10,8 @@ import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
 import NavBar from './components/NavBar.jsx';
 import Login_Page from './pages/Auth/Login_Page.jsx';
 import Signup_Page from './pages/Auth/Signup_page.jsx';
-import { UserProvider } from './context/userContext.jsx';
+import { UserContext, UserProvider } from './context/userContext.jsx';
+import { useContext } from 'react';
 
 function App() {
 
@@ -36,6 +37,8 @@ function App() {
           <Route path='/user/tasks' element={<MyTask />} />
           <Route path='/user/task-details' element={<ViewTaskDetails />} />
 
+          {/*Default Route*/}
+          <Route path='/' element={<Root/>}></Route>
         </Routes>
       </div>
     </UserProvider>
@@ -43,3 +46,16 @@ function App() {
 }
 
 export default App
+
+
+const Root = () => {
+  const { user, loading } = useContext(UserContext);
+
+  if(loading) return <Outlet />
+
+  if(!user){
+    return <Navigate to="/auth/login" />
+  }
+
+  return user.role === "admin" ? <Navigate to="/tasks/dashboard" /> : <Navigate to="/tasks/dashboard-user-data" />
+}
