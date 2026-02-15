@@ -61,7 +61,9 @@ const Signup_Page = () => {
         //signup API call
         try {
             if(profilePic){
+                console.log(profilePic)
                 const imgUploadResponse = await uploadImg(profilePic);
+                console.log(imgUploadResponse)
                 profileImageUrl = imgUploadResponse.imageUrl || "";
             }
 

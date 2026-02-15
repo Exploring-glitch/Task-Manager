@@ -101,7 +101,7 @@ export const updateUserProfile = async (req, res) => {
 export const uploadProfileImage = (req,res) =>{
     try{
         if(!req.file){
-            return res.status(400).json({ "message":"No file uploaded" });
+            return res.status(400).json({ "message":"File not uploaded for Profile Image" });
         }
 
         const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`

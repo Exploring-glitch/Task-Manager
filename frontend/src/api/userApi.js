@@ -11,6 +11,6 @@ export const signup_User = async (fullName, email, password, profileImageUrl, ad
     return data;
 }
 
-export const upload_image = async (profilePic) => {
-    const {data} = await axiosInstance.post("api/auth/upload-image", {})
+export const upload_image = async (formData) => {
+    const {data} = await axiosInstance.post("api/auth/upload-image", formData)
 }

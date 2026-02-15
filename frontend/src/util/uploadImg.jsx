@@ -5,17 +5,13 @@ export const uploadImg = async (imageFile) => {
     const formData = new FormData();
 
     //append imageFile to formData
-    formData.append('image', imageFile);
+    formData.append("image", imageFile);
 
-    try{
-        const response = await upload_image(formData, {
-            headers: {
-                'Content-type' : 'multipart/form-data', //set jheader for file upload
-            },
-        }); 
-        return response.data
+    try {
+        const response = await upload_image(formData);
+        return response;
     }
-    catch(e){
+    catch (e) {
         console.log('Error uploading the image. Error: ', e);
         throw e;
     }

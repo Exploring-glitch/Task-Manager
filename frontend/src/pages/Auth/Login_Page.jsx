@@ -160,7 +160,7 @@ const Login_Page = () => {
                 <div className="text-center">
                     <p className="cursor-pointer text-sm text-gray-600 2xl:text-lg">
                         Don't have an account?{" "}
-                        <Link to={"/auth/signup"} className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold">
+                        <Link to={"/auth/signup"} className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold cursor-pointer">
                             <u>SignUp</u>
                         </Link>
                     </p>
