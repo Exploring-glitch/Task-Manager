@@ -10,3 +10,7 @@ export const signup_User = async (fullName, email, password, profileImageUrl, ad
     const {data} = await axiosInstance.post("api/auth/signup", {name:fullName, email, password, profileImageUrl, adminInviteToken})
     return data;
 }
+
+export const upload_image = async (profilePic) => {
+    const {data} = await axiosInstance.post("api/auth/upload-image", {})
+}

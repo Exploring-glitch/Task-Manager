@@ -4,6 +4,7 @@ import { signup_User } from '../../api/userApi.js';
 import AuthLayout from '../../components/AuthLayout.jsx'
 import ProfilePhotoSelector from '../../components/ProfilePhotoSelector.jsx';
 import { UserContext } from '../../context/userContext.jsx';
+import { uploadImg } from '../../util/uploadImg.jsx';
 
 const Signup_Page = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -59,10 +60,12 @@ const Signup_Page = () => {
 
         //signup API call
         try {
+            if(profilePic){
+                const imgUploadResponse = await uploadImg(profilePic);
+                profileImageUrl = imgUploadResponse.imageUrl || "";
+            }
 
-
-
-            const response = await signup_User(fullName, email, password, profilePic, adminInviteToken);
+            const response = await signup_User(fullName, email, password, profileImageUrl, adminInviteToken);
             const { token } = response;
 
             if (token) {
