@@ -9,10 +9,14 @@ export const uploadImg = async (imageFile) => {
 
     try{
         const response = await upload_image(formData, {
-            
-        }) 
+            headers: {
+                'Content-type' : 'multipart/form-data', //set jheader for file upload
+            },
+        }); 
+        return response.data
     }
-    catch{
-
+    catch(e){
+        console.log('Error uploading the image. Error: ', e);
+        throw e;
     }
 }
