@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import { login_User } from '../../api/userApi.js';
 import AuthLayout from '../../components/AuthLayout.jsx'
+import { UserContext } from '../../context/userContext.jsx';
 
 const Login_Page = () => {
     const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ const Login_Page = () => {
     const emailRef = useRef(null);
     const passRef = useRef(null);
 
+    const { updateUser } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -41,8 +43,11 @@ const Login_Page = () => {
         try {
             const response = await login_User(email, password);
             const { token } = response;
-
+            
             if (token) {
+
+                updateUser(response);
+
                 if (response.user.role == "member") {
                     navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
                     setLoading(false);

@@ -8,6 +8,6 @@ export const login_User = async (email, password) => {
 }
 
 export const signup_User = async (name, email, password, profileImageUrl, adminInviteToken) => {
-    const {data} = await axiosInstance.post("api/auth/login", {name, email, password, profileImageUrl, adminInviteToken})
+    const {data} = await axiosInstance.post("api/auth/signup", {name, email, password, profileImageUrl, adminInviteToken})
     return data;
 }
