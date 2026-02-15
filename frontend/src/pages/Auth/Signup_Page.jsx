@@ -57,8 +57,11 @@ const Signup_Page = () => {
             return;
         }
 
-
+        //signup API call
         try {
+
+
+
             const response = await signup_User(fullName, email, password, profilePic, adminInviteToken);
             const { token } = response;
 
