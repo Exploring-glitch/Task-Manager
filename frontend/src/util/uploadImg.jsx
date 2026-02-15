@@ -4,7 +4,7 @@ import { upload_image } from "../api/userApi.js"
 export const uploadImg = async (imageFile) => {
     const formData = new FormData();
 
-    //append imageFile to formData
+    //append the imageFile to formData
     formData.append("image", imageFile);
 
     try {
