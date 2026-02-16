@@ -7,14 +7,11 @@ export const login_User = async (email, password) => {
 }
 
 export const signup_User = async (fullName, email, password, profileImageUrl, adminInviteToken) => {
-    console.log("heyo")
     const { data } = await axiosInstance.post("api/auth/signup", { name: fullName, email, password, profileImageUrl, adminInviteToken })
     return data;
 }
 
 export const upload_image = async (formData) => {
-    console.log("formdata:", formData)
-
     const { data } = await axiosInstance.post("api/auth/upload-image", formData,
         {
             headers: {
@@ -23,6 +20,5 @@ export const upload_image = async (formData) => {
             withCredentials: true // keep cookies
         }
     )
-    console.log("data",data)
     return data;
 }

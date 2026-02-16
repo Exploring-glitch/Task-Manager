@@ -25,7 +25,6 @@ const Signup_Page = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        console.log("Hiiiii")
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -63,14 +62,10 @@ const Signup_Page = () => {
 
         //signup API call
         try {
-            console.log("api call")
             if(profilePic){
-                console.log("hello inside profilePic")
                 const imgUploadResponse = await uploadImg(profilePic);
 
-                console.log("this",imgUploadResponse)
                 profileImageUrl = imgUploadResponse.imageUrl || "";
-                console.log(profileImageUrl)
             }
 
             const response = await signup_User(fullName, email, password, profileImageUrl, adminInviteToken);
