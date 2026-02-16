@@ -2,15 +2,27 @@ import { axiosInstance } from "../util/axiosInstance.js";
 
 
 export const login_User = async (email, password) => {
-    const {data} = await axiosInstance.post("api/auth/login", {email, password})
+    const { data } = await axiosInstance.post("api/auth/login", { email, password })
     return data;
 }
 
 export const signup_User = async (fullName, email, password, profileImageUrl, adminInviteToken) => {
-    const {data} = await axiosInstance.post("api/auth/signup", {name:fullName, email, password, profileImageUrl, adminInviteToken})
+    console.log("heyo")
+    const { data } = await axiosInstance.post("api/auth/signup", { name: fullName, email, password, profileImageUrl, adminInviteToken })
     return data;
 }
 
 export const upload_image = async (formData) => {
-    const {data} = await axiosInstance.post("api/auth/upload-image", formData)
+    console.log("formdata:", formData)
+
+    const { data } = await axiosInstance.post("api/auth/upload-image", formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            withCredentials: true // keep cookies
+        }
+    )
+    console.log("data",data)
+    return data;
 }

@@ -25,9 +25,12 @@ const Signup_Page = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
+        console.log("Hiiiii")
         e.preventDefault();
         setLoading(true);
         setError('');
+
+        let profileImageUrl = '';
 
         if (!fullName) {
             setError("Please enter your full name")
@@ -60,11 +63,14 @@ const Signup_Page = () => {
 
         //signup API call
         try {
+            console.log("api call")
             if(profilePic){
-                console.log(profilePic)
+                console.log("hello inside profilePic")
                 const imgUploadResponse = await uploadImg(profilePic);
-                console.log(imgUploadResponse)
+
+                console.log("this",imgUploadResponse)
                 profileImageUrl = imgUploadResponse.imageUrl || "";
+                console.log(profileImageUrl)
             }
 
             const response = await signup_User(fullName, email, password, profileImageUrl, adminInviteToken);
@@ -91,7 +97,8 @@ const Signup_Page = () => {
 
     return (
         <AuthLayout>
-            <div className="w-full h-full
+            <form onSubmit={handleSubmit}
+                className="w-full h-full
                 flex flex-col items-center
                 md:justify-center 
                 px-4 py-4 md:py-0"
@@ -227,9 +234,9 @@ const Signup_Page = () => {
                     </div>
                 </div>
 
-                <div className="mb-2 md:3">
+                <div className="mb-2 md:mb-3">
                     <button
-                        onClick={handleSubmit}
+                        type='submit'
                         disabled={loading}
                         className="
                         w-full py-2 px-4 rounded
@@ -250,7 +257,7 @@ const Signup_Page = () => {
                         </Link>
                     </p>
                 </div>
-            </div>
+            </form>
         </AuthLayout>
     )
 }

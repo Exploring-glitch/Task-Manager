@@ -17,7 +17,7 @@ const AuthLayout = ({ children }) => {
           hidden md:block
           mix-blend-multiply 
           
-          md:fixed {/*(blur and centralized)*/}
+          md:fixed
           md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 
           md:w-[60vw] md:h-[60vh] md:object-cover  
           md:blur-sm
