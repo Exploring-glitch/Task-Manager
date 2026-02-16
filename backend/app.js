@@ -3,13 +3,12 @@ const app = express();
 import dotenv from "dotenv";
 dotenv.config({path: "./.env"});
 import cors from "cors"; 
-import path from "path";
 import { connectDb } from "./src/config/mongoConfig.js";
 import authRouter from "./src/routes/authRoutes.js";
 import userRouter from "./src/routes/userRoutes.js";
 import taskRouter from "./src/routes/taskRoutes.js";
 import reportRouter from "./src/routes/reportRoutes.js"
-
+import path from "path";
 import { fileURLToPath } from "url";
 
 
@@ -24,11 +23,12 @@ app.use(cors({
 app.use(express.json());
 
 
-//Serve uploads folder
+//Serve uploads folder: to make the folder publicly accessible eg.-http://localhost:3000/uploads/1769529726273-sampleimg1.jpg
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
+
 
 //Routes
 app.use("/api/auth", authRouter)
