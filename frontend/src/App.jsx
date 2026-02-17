@@ -25,23 +25,24 @@ function App() {
           <Route path='/auth/signup' element={<Signup_Page />} />
 
           {/*Admin Routes*/}
-          <Route element={<PrivateRoute allowedRoles={["admin"]} />} />
-          <Route path='/admin/dashboard' element={<AdminDashboard />} />
-          <Route path='/admin/tasks' element={<ManageTasks />} />
-          <Route path='/admin/create-tasks' element={<CreateTask />} />
-          <Route path='/admin/users' element={<ManageUsers />} />
+          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+            <Route path='/api/tasks/dashboard' element={<AdminDashboard />} />
+            <Route path='/admin/tasks' element={<ManageTasks />} />
+            <Route path='/admin/create-tasks' element={<CreateTask />} />
+          </Route>
 
           {/*User Routes*/}
-          <Route element={<PrivateRoute allowedRoles={["user"]} />} />
-          <Route path='/user/dashboard' element={<UserDashboard />} />
-          <Route path='/user/tasks' element={<MyTask />} />
-          <Route path='/user/task-details' element={<ViewTaskDetails />} />
+          <Route element={<PrivateRoute allowedRoles={["user"]} />}>
+            <Route path='/api/tasks/dashboard-user-data' element={<UserDashboard />} />
+            <Route path='/user/tasks' element={<MyTask />} />
+            <Route path='/user/task-details' element={<ViewTaskDetails />} />
+          </Route>
 
           {/*Default Route*/}
-          <Route path='/' element={<Root/>}></Route>
+          <Route path='/' element={<Root />}></Route>
         </Routes>
       </div>
-    </UserProvider>
+    </UserProvider >
   )
 }
 
@@ -51,9 +52,9 @@ export default App
 const Root = () => {
   const { user, loading } = useContext(UserContext);
 
-  if(loading) return <Outlet />
+  if (loading) return <Outlet />
 
-  if(!user){
+  if (!user) {
     return <Navigate to="/auth/login" />
   }
 
