@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { UserContext } from '../context/userContext.jsx';
 
 const NavBar = (props) => {
     const location = useLocation();
     const path = location.pathname;
 
+    const { user } = useContext(UserContext);
     return (
         <header className="sticky top-0 z-50 w-screen bg-[#F5F8FF] border-b border-[#E3E8FF] overflow-hidden">
             <div className="w-full px-3 py-2 flex items-center justify-between
@@ -35,6 +37,10 @@ const NavBar = (props) => {
                         </Link>
                     )}
                 </nav>
+
+                {user && (
+                    HELLO
+                )}
             </div>
         </header>
     )
