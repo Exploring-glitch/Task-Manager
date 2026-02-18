@@ -7,31 +7,31 @@ export const SIDE_MENU_DATA = [
         id: "01",
         label: "Dashboard",
         icon: LuLayoutDashboard,
-        path: "/"
+        path: "/tasks/dashboard"
     },
     {
         id: "02",
         label: "Manage Task",
         icon: LuClipboardCheck,
-        path: "/"
+        path: "/tasks"
     },
     {
         id: "03",
         label: "Create Task",
         icon: LuSquarePlus,
-        path: "/"
+        path: "/tasks/create-task"
     },
     {
         id: "04",
         label: "Team Members",
         icon: LuUsers,
-        path: "/"
+        path: "/users/"
     },
     {
         id: "05",
         label: "Logout",
         icon: LuLogOut,
-        path: "/"
+        path: "/auth/logout"
     }
 ]
 
@@ -41,19 +41,19 @@ export const SIDE_MENU_USER_DATA = [
         id: "01",
         label: "Dashboard",
         icon: LuLayoutDashboard,
-        path: "/"
+        path: "/tasks/dashboard-user-data"
     },
     {
         id: "02",
         label: "My Tasks",
         icon: LuClipboardCheck,
-        path: "/"
+        path: "/tasks/"
     },
     {
         id: "05",
         label: "Logout",
         icon: LuLogOut,
-        path: "/"
+        path: "/auth/logout"
     },
 ];
 
