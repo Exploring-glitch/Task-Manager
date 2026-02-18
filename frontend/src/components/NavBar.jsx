@@ -39,7 +39,8 @@ const NavBar = (props) => {
                 </nav>
 
                 {user && (
-                    HELLO
+                    <div>
+                    </div>
                 )}
             </div>
         </header>
