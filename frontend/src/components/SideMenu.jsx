@@ -18,15 +18,15 @@ const SideMenu = () => {
                 console.log(response);
                 toast.success("Logged out successfully");
 
-                clearUser();
-                navigate("/auth/login");
+                clearUser(); // remove user from context
+                navigate("/auth/login"); // redirect to login
             } 
             catch (error) {
                 console.error("Logout failed:", error);
             }
-            return;
+            return; //after redirecting, return from the function i.e navigate(route) dosen't run
         }
-        navigate(route)
+        navigate(route) //if the route is not "logout" then this will run: redirect to the given route
     }
 
 
