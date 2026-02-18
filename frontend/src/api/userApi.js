@@ -22,3 +22,7 @@ export const upload_image = async (formData) => {
     )
     return data;
 }
+
+export const logout_user = async () => {
+    const { data } = await axiosInstance.post("api/auth/logout", {}, { withCredentials: true })
+}

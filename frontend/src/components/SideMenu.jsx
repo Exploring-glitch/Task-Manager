@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../context/userContext.jsx'
 import { useNavigate } from 'react-router-dom';
+import { logout_user } from '../api/userApi.js';
 
 const SideMenu = () => {
     const { user, clearUser } = useContext(UserContext);
@@ -8,22 +9,31 @@ const SideMenu = () => {
 
     const navigate = useNavigate();
 
-    const handleLogout = () => {
-        
-    }
-    const handleClick = (route) => {
-        if(route == "/logout"){
-            handleLogout();
+
+    const handleClick = async (route) => {
+        if (route == "/logout") {
+            try {
+
+                const response = await logout_user();
+                console.log(response);
+                toast.success("Logged out successfully");
+
+                clearUser();
+                navigate("/auth/login");
+            } 
+            catch (error) {
+                console.error("Logout failed:", error);
+            }
             return;
         }
-        navigate(route);
+        navigate(route)
     }
 
 
 
-  return (
-    <div>SideMenu</div>
-  )
+    return (
+        <div>SideMenu</div>
+    )
 }
 
 export default SideMenu

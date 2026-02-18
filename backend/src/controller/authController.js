@@ -20,7 +20,7 @@ export const userSignup = async (req, res) => {
         }
 
         //hashing password: its already done in user schema before saving the schema
-        
+
         //create new user
         const newUser = await createNewUser(name, email, password, profileImageUrl, role);
         const token = signToken({ id: newUser._id })
@@ -41,14 +41,14 @@ export const userLogin = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" })
         }
-        
+
         const isPassValid = await user.comparePassword(password) //using the comparePassword method from the userSchema directly here
         if (!isPassValid) {
             return res.status(401).json({ message: "Invalid credentials" })
         }
 
         const token = signToken({ id: user._id });
-        
+
         res.cookie("token", token, cookieOptions);
         res.status(200).json({ "message": "Login success", "user": user, "token": token });
     }
@@ -77,7 +77,7 @@ export const updateUserProfile = async (req, res) => {
         if (!user) {
             return res.status(404).json({ "message": "User not found" })
         }
-        
+
         //updating logic
         if (req.body.name) {  //if user passes a new name, then update prev stored name with the new name passed
             user.name = req.body.name;
@@ -85,7 +85,7 @@ export const updateUserProfile = async (req, res) => {
         if (req.body.email) { //if user passes a new email, then update prev stored email with the new email passed
             user.email = req.body.email;
         }
-        if (req.body.password){
+        if (req.body.password) {
             user.password = req.body.password;
         }
 
@@ -98,10 +98,10 @@ export const updateUserProfile = async (req, res) => {
     }
 }
 
-export const uploadProfileImage = (req,res) =>{
-    try{
-        if(!req.file){
-            return res.status(400).json({ "message":"File not uploaded for Profile Image" });
+export const uploadProfileImage = (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ "message": "File not uploaded for Profile Image" });
         }
 
         const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
@@ -110,4 +110,9 @@ export const uploadProfileImage = (req,res) =>{
     catch (error) {
         res.status(500).json({ message: "Internal server error" });
     }
+}
+
+export const userLogout = (req, res) => {
+    res.clearCookie("token");
+    res.status(200).json({ message: "Logged out successfully" });
 }
