@@ -65,9 +65,9 @@ const Login_Page = () => {
 
     return (
         <AuthLayout>
-            <div className="w-full h-full 
+            <div className="w-full h-full px-3
                 flex flex-col items-center justify-center 
-                px-3"
+                md:relative md:z-10"
             >
                 <h2
                     className="

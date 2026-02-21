@@ -93,10 +93,9 @@ const Signup_Page = () => {
     return (
         <AuthLayout>
             <form onSubmit={handleSubmit}
-                className="w-full h-full
+                className="w-full h-full px-4 py-4 
                 flex flex-col items-center
-                md:justify-center 
-                px-4 py-4 md:py-0"
+                md:py-0 md:justify-center md:relative md:z-10"
             >
                 <h2
                     className="

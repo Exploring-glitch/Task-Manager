@@ -23,8 +23,8 @@ const AuthLayout = ({ children }) => {
           
           md:fixed
           md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 
-          md:w-[60vw] md:h-[60vh] md:object-cover  
-          md:blur-sm
+          md:w-[90vw] md:h-[60vh] md:object-cover  
+          md:blur-xs md:z-0
         
           lg:blur-none lg:fixed lg:top-0 lg:right-0 
           lg:translate-x-0 lg:translate-y-0
