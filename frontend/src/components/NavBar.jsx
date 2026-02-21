@@ -5,7 +5,7 @@ import SideMenu from './SideMenu.jsx';
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 
 
-const NavBar = ({activeMenu}) => {
+const NavBar = ({ activeMenu }) => {
     const location = useLocation();
     const path = location.pathname;
 
@@ -51,19 +51,23 @@ const NavBar = ({activeMenu}) => {
                                 setOpenSideMenu(!openSideMenu);
                             }}
                         >
-                            {openSideMenu 
-                                ? ( <HiOutlineX className="text-2xl" />)
-                                : ( <HiOutlineMenu className="text-2xl" /> )
+                            {openSideMenu
+                                ? (<HiOutlineX className="text-2xl" />)
+                                : (<HiOutlineMenu className="text-2xl" />)
                             }
                         </button>
 
                         <h2 className='text-lg font-medium'> Expense Tracker</h2>
 
                         {openSideMenu && (
-                            <div className='fixed top-13 left-0 '>
+                            <div className='lg:hidden fixed top-13 left-0'>
                                 <SideMenu activeMenu={activeMenu} />
                             </div>
                         )}
+
+                        <div className='hidden lg:block lg:fixed lg:top-13 lg:left-0 '>
+                            <SideMenu activeMenu={activeMenu} />
+                        </div>
                     </div>
                 )}
             </div>
