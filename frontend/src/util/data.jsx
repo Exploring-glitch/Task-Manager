@@ -7,7 +7,7 @@ export const SIDE_MENU_DATA = [
         id: "01",
         label: "Dashboard",
         icon: LuLayoutDashboard,
-        path: "/tasks/dashboard"
+        path: "/"
     },
     {
         id: "02",
@@ -41,7 +41,7 @@ export const SIDE_MENU_USER_DATA = [
         id: "01",
         label: "Dashboard",
         icon: LuLayoutDashboard,
-        path: "/tasks/dashboard-user-data"
+        path: "/"
     },
     {
         id: "02",

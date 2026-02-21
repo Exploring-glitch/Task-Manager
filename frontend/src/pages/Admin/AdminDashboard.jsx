@@ -9,7 +9,7 @@ const AdminDashboard = () => {
 
 
   return (
-    <DashboardLayout>
+    <DashboardLayout activeMenu="Dashboard">
       Admin Dashboard
     </DashboardLayout>
   )
