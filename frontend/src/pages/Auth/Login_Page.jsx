@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { login_User } from '../../api/userApi.js';
+import { login_user } from '../../api/userApi.js';
 import AuthLayout from '../../components/AuthLayout.jsx'
 import { UserContext } from '../../context/userContext.jsx';
 
@@ -41,7 +41,7 @@ const Login_Page = () => {
 
         //login API call
         try {
-            const response = await login_User(email, password);
+            const response = await login_user(email, password);
             const { token } = response;
             
             if (token) {

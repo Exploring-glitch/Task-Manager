@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
-import { signup_User } from '../../api/userApi.js';
+import { signup_user } from '../../api/userApi.js';
 import AuthLayout from '../../components/AuthLayout.jsx'
 import ProfilePhotoSelector from '../../components/ProfilePhotoSelector.jsx';
 import { UserContext } from '../../context/userContext.jsx';
@@ -68,7 +68,7 @@ const Signup_Page = () => {
                 profileImageUrl = imgUploadResponse.imageUrl || "";
             }
 
-            const response = await signup_User(fullName, email, password, profileImageUrl, adminInviteToken);
+            const response = await signup_user(fullName, email, password, profileImageUrl, adminInviteToken);
             const { token } = response;
 
             if (token) {
