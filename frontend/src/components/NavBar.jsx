@@ -64,10 +64,6 @@ const NavBar = ({ activeMenu }) => {
                                 <SideMenu activeMenu={activeMenu} />
                             </div>
                         )}
-
-                        <div className='hidden lg:block lg:fixed lg:top-13 lg:left-0 '>
-                            <SideMenu activeMenu={activeMenu} />
-                        </div>
                     </div>
                 )}
             </div>
