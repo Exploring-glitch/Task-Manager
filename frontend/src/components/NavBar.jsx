@@ -5,8 +5,6 @@ import SideMenu from './SideMenu.jsx';
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 
 
-
-
 const NavBar = ({activeMenu}) => {
     const location = useLocation();
     const path = location.pathname;
@@ -62,7 +60,7 @@ const NavBar = ({activeMenu}) => {
                         <h2 className='text-lg font-medium'> Expense Tracker</h2>
 
                         {openSideMenu && (
-                            <div className='w-64 h-[calc(100vh-52px)]'>
+                            <div className='fixed top-13 left-0 '>
                                 <SideMenu activeMenu={activeMenu} />
                             </div>
                         )}

@@ -11,7 +11,7 @@ const AdminDashboard = () => {
 
   return (
     <DashboardLayout>
-      {JSON.stringify(user)}
+      
     </DashboardLayout>
   )
 }

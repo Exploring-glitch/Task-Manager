@@ -15,7 +15,7 @@ const DashboardLayout = ({ children, activeMenu }) => {
                     <div className='max-[1080px]:hidden'>
                         <SideMenu activeMenu={activeMenu}></SideMenu>
                     </div>
-                    <div className='grow mx-5'>
+                    <div className='h-[calc(100vh-52px)] w-screen overflow-x-hidden'>
                         {children}
                     </div>
                 </div>
@@ -24,4 +24,4 @@ const DashboardLayout = ({ children, activeMenu }) => {
     )
 }
 
-export default DashboardLayout
+export default DashboardLayout;
