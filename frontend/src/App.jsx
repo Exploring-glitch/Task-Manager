@@ -17,31 +17,27 @@ function App() {
 
   return (
     <UserProvider>
-      <div className='h-screen flex flex-col'>
-        <NavBar />
+      <Routes>
+        <Route path='/auth/login' element={<Login_Page />} />
+        <Route path='/auth/signup' element={<Signup_Page />} />
 
-        <Routes>
-          <Route path='/auth/login' element={<Login_Page />} />
-          <Route path='/auth/signup' element={<Signup_Page />} />
+        {/*Admin Routes*/}
+        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+          <Route path='/api/tasks/dashboard' element={<AdminDashboard />} />
+          <Route path='/admin/tasks' element={<ManageTasks />} />
+          <Route path='/admin/create-tasks' element={<CreateTask />} />
+        </Route>
 
-          {/*Admin Routes*/}
-          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-            <Route path='/api/tasks/dashboard' element={<AdminDashboard />} />
-            <Route path='/admin/tasks' element={<ManageTasks />} />
-            <Route path='/admin/create-tasks' element={<CreateTask />} />
-          </Route>
+        {/*User Routes*/}
+        <Route element={<PrivateRoute allowedRoles={["user"]} />}>
+          <Route path='/api/tasks/dashboard-user-data' element={<UserDashboard />} />
+          <Route path='/user/tasks' element={<MyTask />} />
+          <Route path='/user/task-details' element={<ViewTaskDetails />} />
+        </Route>
 
-          {/*User Routes*/}
-          <Route element={<PrivateRoute allowedRoles={["user"]} />}>
-            <Route path='/api/tasks/dashboard-user-data' element={<UserDashboard />} />
-            <Route path='/user/tasks' element={<MyTask />} />
-            <Route path='/user/task-details' element={<ViewTaskDetails />} />
-          </Route>
-
-          {/*Default Route*/}
-          <Route path='/' element={<Root />}></Route>
-        </Routes>
-      </div>
+        {/*Default Route*/}
+        <Route path='/' element={<Root />}></Route>
+      </Routes>
     </UserProvider >
   )
 }

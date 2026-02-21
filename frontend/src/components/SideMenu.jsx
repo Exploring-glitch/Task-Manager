@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/userContext.jsx'
 import { useNavigate } from 'react-router-dom';
 import { logout_user } from '../api/userApi.js';
+import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from '../util/data.jsx';
 
-const SideMenu = () => {
+const SideMenu = ({activeMenu}) => {
     const { user, clearUser } = useContext(UserContext);
     const [sideMenuData, setSideMenuData] = useState([]);
 
     const navigate = useNavigate();
-
 
     const handleClick = async (route) => {
         if (route == "/logout") {
@@ -20,7 +20,7 @@ const SideMenu = () => {
 
                 clearUser(); // remove user from context
                 navigate("/auth/login"); // redirect to login
-            } 
+            }
             catch (error) {
                 console.error("Logout failed:", error);
             }
@@ -29,10 +29,54 @@ const SideMenu = () => {
         navigate(route) //if the route is not "logout" then this will run: redirect to the given route
     }
 
-
+    useEffect(() => {
+        if (user.user) {
+            setSideMenuData(user.user?.role === "admin" ? SIDE_MENU_DATA : SIDE_MENU_USER_DATA)
+        }
+        return () => { };
+    }, [user]);
 
     return (
-        <div>SideMenu</div>
+        <div className=' bg-white border-2 border-gray-200/50'>
+            <div className=' flex flex-col items-center justify-center pt-5 mb-7'>
+                <div className='relative'>
+                    
+                    <img
+                        src={user.user?.profileImageUrl || ""}
+                        alt='Profile Image'
+                        className='w-20 h-20 rounded-full bg-slate-400'
+                    />
+                </div>
+
+                {user.user?.role === "admin" && (
+                    <div className=''>
+                        Admin
+                    </div>
+                )}
+
+                <h5 className=''>
+                    {user.user?.name || ""}
+                </h5>
+
+                <p className=''>{user.user?.email || ""} </p>
+            </div>
+
+            {sideMenuData.map((item, index) => (
+                <button
+                    key={`menu_${index}`}
+                    className={`w-full flex items-center gap-4 text-[15px] 
+                        ${ activeMenu == item.label
+                            ? "text-primary bg-linear-to-r from-blue-50/40 to-blue-100/50 border-r-3"
+                            : ""
+                        }
+                    py-3 px-6 mb-3 cursor-pointer`}
+                    onClick={() => handleClick(item.path)}
+                >
+                    <item.icon className="" />
+                    {item.label}
+                </button>
+            ))}
+        </div>
     )
 }
 
