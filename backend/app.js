@@ -10,6 +10,10 @@ import taskRouter from "./src/routes/taskRoutes.js";
 import reportRouter from "./src/routes/reportRoutes.js"
 import path from "path";
 import { fileURLToPath } from "url";
+import cookieParser from "cookie-parser";
+
+app.use(cookieParser());
+
 
 
 app.use(cors({

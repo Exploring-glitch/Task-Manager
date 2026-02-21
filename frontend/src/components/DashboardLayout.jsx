@@ -15,10 +15,10 @@ const DashboardLayout = ({ children, activeMenu }) => {
                     <div className='hidden lg:block'>
                         <SideMenu activeMenu={activeMenu}></SideMenu>
                     </div>
-                    <div className='h-[calc(100vh-52px)] w-screen overflow-x-hidden'>
+                    <div className='p-3 h-[calc(100vh-52px)] w-screen overflow-x-hidden'>
                         {children}
                     </div>
-                </div>
+                </div>                 
             )}
         </div>
     )
