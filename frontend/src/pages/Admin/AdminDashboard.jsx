@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useUserAuth } from '../../hooks/useUserAuth.jsx';
 import { UserContext } from '../../context/userContext.jsx';
-import DashboardLayout from '../../components/DashboardLayout.jsx';
+import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
 import { useNavigate } from 'react-router-dom';
 import { dashboard_data } from '../../api/tasksApi.js';
 import moment from 'moment';
