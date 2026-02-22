@@ -65,7 +65,7 @@ const AdminDashboard = () => {
           <InfoCard 
             label="Total Tasks"
             value={addThousandsSeperator(
-              dashBoardData?.charts?.taskDistribution?.All || 0
+              dashBoardData?.charts?.taskDistributions?.All || 0
             )}
             color="bg-primary"
           /> 
@@ -73,7 +73,7 @@ const AdminDashboard = () => {
           <InfoCard 
             label="Pending Tasks"
             value={addThousandsSeperator(
-              dashBoardData?.charts?.taskDistribution?.Pending || 0
+              dashBoardData?.charts?.taskDistributions?.Pending || 0
             )}
             color="bg-violet-500"
           />  
@@ -81,7 +81,7 @@ const AdminDashboard = () => {
           <InfoCard 
             label="In Progress Tasks"
             value={addThousandsSeperator(
-              dashBoardData?.charts?.taskDistribution?.InProgress || 0
+              dashBoardData?.charts?.taskDistributions?.InProgress || 0
             )}
             color="bg-cyan-500"
           />  
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
           <InfoCard 
             label="Completed Tasks"
             value={addThousandsSeperator(
-              dashBoardData?.charts?.taskDistribution?.completed || 0
+              dashBoardData?.charts?.taskDistributions?.Completed || 0
             )}
             color="bg-lime-500"
           />   
