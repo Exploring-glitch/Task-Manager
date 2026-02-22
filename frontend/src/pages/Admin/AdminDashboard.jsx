@@ -16,7 +16,7 @@ import TaskListTable from '../../components/TaskListTable.jsx';
 const AdminDashboard = () => {
   useUserAuth();
   const { user } = useContext(UserContext);
-  
+
   const navigate = useNavigate();
 
   const [dashBoardData, setDashBoardData] = useState(null);
@@ -100,16 +100,19 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className='grid grid-cols-1 gap-6 my-4
-        md:grid-cols-2 md:my-6
-      '>
-        <div className='md:col-span-2'>
+      <div className='p-6 my-4 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
+        <div className=' grid grid-cols-1 gap-6 
+          md:grid-cols-2 md:my-6 md:col-span-2'
+        >
           <div className='flex items-center justify-between'>
             <h5 className='text-lg'>Recent Tasks</h5>
-            <button className=''
+            <button className='flex items-center text-[12px] font-medium
+              text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
+              px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer'
               onClick={onSeeMore}
             >
-              See All <LuArrowRight className='text-base' />
+              See All 
+              <LuArrowRight className='text-base' />
             </button>
           </div>
 
