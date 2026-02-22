@@ -49,10 +49,10 @@ const Login_Page = () => {
                 updateUser(response);
 
                 if (response.user.role == "member") {
-                    navigate("/api/tasks/dashboard-user-data") //this means, when user login, go to the dashboard page
+                    navigate("/member/dashboard-user-data") //this means, when user login, go to the dashboard page
                     setLoading(false);
                 } else{
-                    navigate("/api/tasks/dashboard") //this means, when user login, go to the dashboard page (only accessible for admins)
+                    navigate("/admin/dashboard") //this means, when user login, go to the dashboard page (only accessible for admins)
                     setLoading(false);
                 }
             }

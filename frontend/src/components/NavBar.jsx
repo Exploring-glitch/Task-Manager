@@ -44,7 +44,9 @@ const NavBar = ({ activeMenu }) => {
                 </nav>
 
                 {user && (
-                    <div className='flex gap-5'>
+                    <div className='flex gap-2  
+                        sm:gap-5'
+                    >
                         <button
                             className='block lg:hidden text-black'
                             onClick={() => {
@@ -52,12 +54,12 @@ const NavBar = ({ activeMenu }) => {
                             }}
                         >
                             {openSideMenu
-                                ? (<HiOutlineX className="text-2xl" />)
-                                : (<HiOutlineMenu className="text-2xl" />)
+                                ? (<HiOutlineX className="sm:text-2xl" />)
+                                : (<HiOutlineMenu className="sm:text-2xl" />)
                             }
                         </button>
 
-                        <h2 className='text-lg font-medium'> Expense Tracker</h2>
+                        <h2 className='sm:text-lg sm:font-medium'> Expense Tracker</h2>
 
                         {openSideMenu && (
                             <div className='lg:hidden fixed top-12 left-0'>

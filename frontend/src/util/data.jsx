@@ -13,13 +13,13 @@ export const SIDE_MENU_DATA = [
         id: "02",
         label: "Manage Task",
         icon: LuClipboardCheck,
-        path: "/tasks"
+        path: "/admin/tasks"
     },
     {
         id: "03",
         label: "Create Task",
         icon: LuSquarePlus,
-        path: "/tasks/create-task"
+        path: "/admin/create-tasks"
     },
     {
         id: "04",

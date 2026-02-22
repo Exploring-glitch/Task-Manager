@@ -7,6 +7,7 @@ import { dashboard_data } from '../../api/tasksApi.js';
 import moment from 'moment';
 import InfoCard from '../../components/cards/InfoCard.jsx';
 import { addThousandsSeperator } from '../../util/helper.jsx';
+import { LuArrowRight } from 'react-icons/lu';
 
 
 
@@ -24,21 +25,25 @@ const AdminDashboard = () => {
   const getDashboardData = async () => {
     try {
       const response = await dashboard_data();
-    
+
       if (response) {
         setDashBoardData(response);
       }
-      
+
     }
     catch (e) {
       console.error('Failed to fetch Dashboard data: ', e);
     }
   }
 
+  const onSeeMore = () => {
+    navigate('/admin/tasks')
+  }
+
   useEffect(() => {
     getDashboardData();
 
-    return () => {};
+    return () => { };
   }, []);
 
 
@@ -47,52 +52,67 @@ const AdminDashboard = () => {
   return (
     <DashboardLayout activeMenu="Dashboard">
       <div className='p-6 my-3 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
-        <div>
-          <div className='col-span-3'>
-            <h2 className='text-xl
-             md:text-2xl'
-            > 
-              Good Morning! {user.user?.name} 
-            </h2>
-            <p className='text-gray-400 mt-1.5 text-xs
+        <div className='col-span-3'>
+          <h2 className='text-xl
+            md:text-2xl'
+          >
+            Hey! {user.user?.name}
+          </h2>
+          <p className='text-gray-400 mt-1.5 text-xs
               md:text-[13px]'> {moment().format("dddd Do MMM YYY")} </p>
-          </div>
         </div>
 
         <div className='pt-6 grid grid-cols-2 gap-3
           md:grid-cols-4 md:gap-6
         '>
-          <InfoCard 
+          <InfoCard
             label="Total Tasks"
             value={addThousandsSeperator(
               dashBoardData?.charts?.taskDistributions?.All || 0
             )}
             color="bg-primary"
-          /> 
+          />
 
-          <InfoCard 
+          <InfoCard
             label="Pending Tasks"
             value={addThousandsSeperator(
               dashBoardData?.charts?.taskDistributions?.Pending || 0
             )}
             color="bg-violet-500"
-          />  
+          />
 
-          <InfoCard 
+          <InfoCard
             label="In Progress Tasks"
             value={addThousandsSeperator(
               dashBoardData?.charts?.taskDistributions?.InProgress || 0
             )}
             color="bg-cyan-500"
-          />  
+          />
 
-          <InfoCard 
+          <InfoCard
             label="Completed Tasks"
             value={addThousandsSeperator(
               dashBoardData?.charts?.taskDistributions?.Completed || 0
             )}
             color="bg-lime-500"
-          />   
+          />
+        </div>
+      </div>
+
+      <div className='grid grid-cols-1 gap-6 my-4
+        md:grid-cols-2 md:my-6
+      '>
+        <div className='md:col-span-2'>
+          <div className='flex items-center justify-between'>
+            <h5 className='text-lg'>Recent Tasks</h5>
+            <button className=''
+              onClick={onSeeMore}
+            >
+              See All <LuArrowRight className='text-base' />
+            </button>
+          </div>
+
+          <TaskListTable tableData={dashBoardData?.recentTasks || []} />
         </div>
       </div>
     </DashboardLayout>
