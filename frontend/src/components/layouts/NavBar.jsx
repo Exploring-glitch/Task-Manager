@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { UserContext } from '../context/userContext.jsx';
+import { UserContext } from '../../context/userContext.jsx';
 import SideMenu from './SideMenu.jsx';
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 

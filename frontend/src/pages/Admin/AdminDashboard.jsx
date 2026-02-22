@@ -8,6 +8,7 @@ import moment from 'moment';
 import InfoCard from '../../components/cards/InfoCard.jsx';
 import { addThousandsSeperator } from '../../util/helper.jsx';
 import { LuArrowRight } from 'react-icons/lu';
+import TaskListTable from '../../components/TaskListTable.jsx';
 
 
 
@@ -15,7 +16,7 @@ import { LuArrowRight } from 'react-icons/lu';
 const AdminDashboard = () => {
   useUserAuth();
   const { user } = useContext(UserContext);
-  console.log(user)
+  
   const navigate = useNavigate();
 
   const [dashBoardData, setDashBoardData] = useState(null);

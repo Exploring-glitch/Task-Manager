@@ -7,7 +7,6 @@ import ManageUsers from './pages/Admin/ManageUsers.jsx';
 import UserDashboard from './pages/User/UserDashboard.jsx';
 import MyTask from './pages/User/MyTask.jsx';
 import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
-import NavBar from './components/NavBar.jsx';
 import Login_Page from './pages/Auth/Login_Page.jsx';
 import Signup_Page from './pages/Auth/Signup_page.jsx';
 import { UserContext, UserProvider } from './context/userContext.jsx';

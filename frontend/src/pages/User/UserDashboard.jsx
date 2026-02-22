@@ -1,6 +1,6 @@
 import React from 'react'
 import { useUserAuth } from '../../hooks/useUserAuth.jsx';
-import DashboardLayout from '../../components/DashboardLayout.jsx';
+import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
 
 const UserDashboard = () => {
   useUserAuth();

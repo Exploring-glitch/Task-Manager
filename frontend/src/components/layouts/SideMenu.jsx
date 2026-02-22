@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../context/userContext.jsx'
+import { UserContext } from '../../context/userContext.jsx'
 import { useNavigate } from 'react-router-dom';
-import { logout_user } from '../api/userApi.js';
-import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from '../util/data.jsx';
+import { logout_user } from '../../api/userApi.js';
+import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from '../../util/data.jsx';
 
 const SideMenu = ({activeMenu}) => {
     const { user, clearUser } = useContext(UserContext);
