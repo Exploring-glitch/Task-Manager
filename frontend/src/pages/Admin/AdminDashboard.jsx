@@ -11,10 +11,10 @@ import { addThousandsSeperator } from '../../util/helper.jsx';
 
 
 
-
 const AdminDashboard = () => {
   useUserAuth();
   const { user } = useContext(UserContext);
+  console.log(user)
   const navigate = useNavigate();
 
   const [dashBoardData, setDashBoardData] = useState(null);
@@ -43,6 +43,7 @@ const AdminDashboard = () => {
 
 
 
+
   return (
     <DashboardLayout activeMenu="Dashboard">
       <div className='p-6 my-3 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
@@ -58,16 +59,40 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className='grid grid-cols-2 gap-3
+        <div className='pt-6 grid grid-cols-2 gap-3
           md:grid-cols-4 md:gap-6
         '>
           <InfoCard 
-            label="Total Card"
+            label="Total Tasks"
             value={addThousandsSeperator(
               dashBoardData?.charts?.taskDistribution?.All || 0
             )}
             color="bg-primary"
+          /> 
+
+          <InfoCard 
+            label="Pending Tasks"
+            value={addThousandsSeperator(
+              dashBoardData?.charts?.taskDistribution?.Pending || 0
+            )}
+            color="bg-violet-500"
           />  
+
+          <InfoCard 
+            label="In Progress Tasks"
+            value={addThousandsSeperator(
+              dashBoardData?.charts?.taskDistribution?.InProgress || 0
+            )}
+            color="bg-cyan-500"
+          />  
+
+          <InfoCard 
+            label="Completed Tasks"
+            value={addThousandsSeperator(
+              dashBoardData?.charts?.taskDistribution?.completed || 0
+            )}
+            color="bg-lime-500"
+          />   
         </div>
       </div>
     </DashboardLayout>
