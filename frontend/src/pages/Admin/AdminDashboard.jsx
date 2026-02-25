@@ -10,7 +10,7 @@ import { addThousandsSeperator } from '../../util/helper.jsx';
 import { LuArrowRight } from 'react-icons/lu';
 import TaskListTable from '../../components/TaskListTable.jsx';
 
-
+const COLORS = ["#8D51FF", "#00B8DB", "#7BCE00"];
 
 
 const AdminDashboard = () => {
@@ -24,8 +24,25 @@ const AdminDashboard = () => {
   const [barChartData, setBarChartData] = useState([]);
 
 
-  
+  //Prepare chart data
+  const prepareChartData = (data) => {
+    const taskDistributions = data?.taskDistributions || null;
+    const taskPriorityLevels = data?.taskPriorityLevels || null;
 
+    const taskDistributionData = [
+      { status: "Pending", count: taskDistributions?.Pending || 0 },
+      { status: "In Progress", count: taskDistributions?.InProgress || 0 },
+      { status: "Completed", count: taskDistributions?.Completed || 0 },
+    ];
+    setPieChartData(taskDistributionData);
+
+    const  PriorityLevelData = [
+      { priority: "Low", count: taskPriorityLevels?.Low || 0 },
+      { priority: "Medium", count: taskPriorityLevels?.Medium || 0 },
+      { priority: "High", count: taskPriorityLevels?.High || 0 },
+    ];
+    setBarChartData(PriorityLevelData)
+  }
 
   const getDashboardData = async () => {
     try {
@@ -33,6 +50,7 @@ const AdminDashboard = () => {
 
       if (response) {
         setDashBoardData(response);
+        prepareChartData(response?.charts || null);
       }
 
     }
@@ -105,7 +123,19 @@ const AdminDashboard = () => {
       </div>
 
       <div className='p-6 my-4 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
-        <div className=' grid grid-cols-1 gap-6 
+        
+        <div>
+          <div className='flex items-center justify-between'>
+            <h5 className='font-medium'>Task Distribution</h5>
+          </div>
+
+          <CustomPieChart 
+            data={pieChartData}
+            colors={COLORS}
+          />
+        </div>
+        
+        <div className='grid grid-cols-1 gap-6 
           md:my-6'
         >
           <div className='flex items-center justify-between'>
