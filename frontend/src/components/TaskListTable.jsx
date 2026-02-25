@@ -25,14 +25,14 @@ const TaskListTable = ({ tableData }) => {
     return (
         <div className='mt-3 rounded-lg p-0 overflow-x-auto'>
             <table className='min-w-full'>
-                <thread>
-                    <tr className=''>
+                <thead>
+                    <tr className='text-left'>
                         <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'> Name </th>
                         <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'> Status </th>
                         <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'> Priority </th>
                         <th className='py-3 px-4 text-gray-800 font-medium text-[13px] hidden md:table-cell'> Created On </th>
                     </tr>
-                </thread>
+                </thead>
 
                 <tbody>
                     {tableData.map((task) => (
