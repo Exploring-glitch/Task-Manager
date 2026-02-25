@@ -23,6 +23,10 @@ const AdminDashboard = () => {
   const [pieChartData, setPieChartData] = useState([]);
   const [barChartData, setBarChartData] = useState([]);
 
+
+  
+
+
   const getDashboardData = async () => {
     try {
       const response = await dashboard_data();
@@ -102,7 +106,7 @@ const AdminDashboard = () => {
 
       <div className='p-6 my-4 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
         <div className=' grid grid-cols-1 gap-6 
-          md:grid-cols-2 md:my-6 md:col-span-2'
+          md:my-6'
         >
           <div className='flex items-center justify-between'>
             <h5 className='text-lg'>Recent Tasks</h5>
