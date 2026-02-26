@@ -9,6 +9,7 @@ import InfoCard from '../../components/cards/InfoCard.jsx';
 import { addThousandsSeperator } from '../../util/helper.jsx';
 import { LuArrowRight } from 'react-icons/lu';
 import TaskListTable from '../../components/TaskListTable.jsx';
+import CustomPieChart from '../../components/charts/CustomPieChart.jsx';
 
 const COLORS = ["#8D51FF", "#00B8DB", "#7BCE00"];
 
