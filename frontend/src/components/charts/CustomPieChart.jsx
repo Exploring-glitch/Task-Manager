@@ -1,6 +1,7 @@
 import React from 'react'
 import { Pie, Cell, Tooltip, ResponsiveContainer, Legend, PieChart, Label } from 'recharts';
 import CustomToolTip from './CustomToolTip.jsx';
+import CustomLegend from './CustomLegend.jsx';
 
 const CustomPieChart = ({ data, colors }) => {
   const total = data.reduce((sum, item) => sum + item.count, 0);
