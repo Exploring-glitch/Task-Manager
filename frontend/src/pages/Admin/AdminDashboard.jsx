@@ -10,6 +10,7 @@ import { addThousandsSeperator } from '../../util/helper.jsx';
 import { LuArrowRight } from 'react-icons/lu';
 import TaskListTable from '../../components/TaskListTable.jsx';
 import CustomPieChart from '../../components/charts/CustomPieChart.jsx';
+import CustomBarChart from '../../components/charts/CustomBarChart.jsx';
 
 const COLORS = ["#8D51FF", "#00B8DB", "#7BCE00"];
 
@@ -140,12 +141,11 @@ const AdminDashboard = () => {
         <div className='p-6 my-4 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
 
           <div className='flex items-center justify-between'>
-            <h5 className='font-medium'>Task Distribution</h5>
+            <h5 className='font-medium'>Task Priority Levels</h5>
           </div>
 
           <CustomBarChart 
-            data={pieChartData}
-            colors={COLORS}
+            data={barChartData}
           />
         </div>
         

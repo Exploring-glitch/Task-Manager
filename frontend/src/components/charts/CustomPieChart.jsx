@@ -7,7 +7,6 @@ import CustomCenterLabel from './CustomCenterLabel.jsx';
 const CustomPieChart = ({ data, colors }) => {
   const total = data.reduce((sum, item) => sum + item.count, 0);
 
-
   return (
     <ResponsiveContainer width="100%" height={325}>
       <PieChart>
