@@ -1,15 +1,16 @@
-import React from "react";
 
 const CustomCenterLabel = ({ viewBox, total }) => {
+  if (!viewBox) return null;
+
   const { cx, cy } = viewBox;
 
   return (
-    <>
+    <g>
       <text
         x={cx}
         y={cy}
         textAnchor="middle"
-        dominantBaseline="middle"
+        dominantBaseline="central"
         style={{ fontSize: "28px", fontWeight: "bold", fill: "#111" }}
       >
         {total}
@@ -17,15 +18,16 @@ const CustomCenterLabel = ({ viewBox, total }) => {
 
       <text
         x={cx}
-        y={cy + 20}
+        y={cy + 22}
         textAnchor="middle"
-        dominantBaseline="middle"
+        dominantBaseline="central"
         style={{ fontSize: "14px", fill: "#666" }}
       >
         Total Tasks
       </text>
-    </>
+    </g>
   );
 };
+
 
 export default CustomCenterLabel;

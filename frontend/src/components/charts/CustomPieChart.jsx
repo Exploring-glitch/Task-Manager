@@ -8,16 +8,16 @@ const CustomPieChart = ({ data, colors }) => {
   const total = data.reduce((sum, item) => sum + item.count, 0);
 
   return (
-    <ResponsiveContainer width="100%" height={325}>
-      <PieChart>
+    <ResponsiveContainer width="100%" height={380}>
+      <PieChart margin={{ top: 20, bottom: 20 }}>
         <Pie
           data={data}
           dataKey="count"
           nameKey="status"
           cx="50%"
           cy="50%"
-          outerRadius={130}
-          innerRadius={100}
+          outerRadius={120}
+          innerRadius={90}
           labelLine={false}
         >
           {data.map((entry, index) => (
