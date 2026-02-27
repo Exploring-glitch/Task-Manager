@@ -3,6 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 
 const CustomBarChart = ({ data }) => {
+
     //Function to alternate colors
     const getBarColor = (entry) => {
         switch (entry?.priority) {
@@ -28,7 +29,7 @@ const CustomBarChart = ({ data }) => {
     }
 
 
-
+    
     return (
         <div className='bg-white mt-6'>
             <ResponsiveContainer width="100%" height={300}>
