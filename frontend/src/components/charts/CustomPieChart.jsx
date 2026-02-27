@@ -1,5 +1,6 @@
 import React from 'react'
 import { Pie, Cell, Tooltip, ResponsiveContainer, Legend, PieChart, Label } from 'recharts';
+import CustomToolTip from './CustomToolTip.jsx';
 
 const CustomPieChart = ({ data, colors }) => {
   const total = data.reduce((sum, item) => sum + item.count, 0);
@@ -22,7 +23,7 @@ const CustomPieChart = ({ data, colors }) => {
             <Cell key={`cell-${index}`} fill={colors[index % colors.length]}></Cell>
           ))}
 
-          {/* CENTER LABEL */}
+          {/* CENTER LABEL IN PIE CHART */}
           <Label
             content={({ viewBox }) => {
               const { cx, cy } = viewBox;
@@ -53,8 +54,10 @@ const CustomPieChart = ({ data, colors }) => {
             }}
           />
         </Pie>
-        <Tooltip></Tooltip>
-        <Legend></Legend>
+
+        <Tooltip content={<CustomToolTip />}></Tooltip>
+        <Legend content={<CustomLegend />}></Legend>
+
       </PieChart>
     </ResponsiveContainer>
   )
