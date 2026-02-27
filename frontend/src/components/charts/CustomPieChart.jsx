@@ -2,6 +2,7 @@ import React from 'react'
 import { Pie, Cell, Tooltip, ResponsiveContainer, Legend, PieChart, Label } from 'recharts';
 import CustomToolTip from './CustomToolTip.jsx';
 import CustomLegend from './CustomLegend.jsx';
+import CustomCenterLabel from './CustomCenterLabel.jsx';
 
 const CustomPieChart = ({ data, colors }) => {
   const total = data.reduce((sum, item) => sum + item.count, 0);
@@ -24,41 +25,13 @@ const CustomPieChart = ({ data, colors }) => {
             <Cell key={`cell-${index}`} fill={colors[index % colors.length]}></Cell>
           ))}
 
-          {/* CENTER LABEL IN PIE CHART */}
           <Label
-            content={({ viewBox }) => {
-              const { cx, cy } = viewBox;
-
-              return (
-                <>
-                  <text
-                    x={cx}
-                    y={cy}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{ fontSize: "28px", fontWeight: "bold", fill: "#111" }}
-                  >
-                    {total}
-                  </text>
-
-                  <text
-                    x={cx}
-                    y={cy + 20}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{ fontSize: "14px", fill: "#666" }}
-                  >
-                    Total Tasks
-                  </text>
-                </>
-              );
-            }}
+            content={(props) => <CustomCenterLabel {...props} total={total} />}
           />
         </Pie>
 
         <Tooltip content={<CustomToolTip />}></Tooltip>
         <Legend content={<CustomLegend />}></Legend>
-
       </PieChart>
     </ResponsiveContainer>
   )
