@@ -123,9 +123,10 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <div className='p-6 my-4 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-6 my-4 md:my-6'>
         
-        <div>
+        <div className='p-6 my-4 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
+
           <div className='flex items-center justify-between'>
             <h5 className='font-medium'>Task Distribution</h5>
           </div>
@@ -135,10 +136,21 @@ const AdminDashboard = () => {
             colors={COLORS}
           />
         </div>
+
+        <div className='p-6 my-4 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
+
+          <div className='flex items-center justify-between'>
+            <h5 className='font-medium'>Task Distribution</h5>
+          </div>
+
+          <CustomBarChart 
+            data={pieChartData}
+            colors={COLORS}
+          />
+        </div>
         
-        <div className='grid grid-cols-1 gap-6 
-          md:my-6'
-        >
+        <div className='md:col-span-2'>
+
           <div className='flex items-center justify-between'>
             <h5 className='text-lg'>Recent Tasks</h5>
             <button className='flex items-center text-[12px] font-medium
@@ -150,8 +162,8 @@ const AdminDashboard = () => {
               <LuArrowRight className='text-base' />
             </button>
           </div>
-
           <TaskListTable tableData={dashBoardData?.recentTasks || []} />
+
         </div>
       </div>
     </DashboardLayout>
