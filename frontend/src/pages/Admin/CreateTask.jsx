@@ -82,8 +82,8 @@ const CreateTask = () => {
         <div className='mt-4 grid grid-cols-1 md:grid-cols-4'>
           <div className='col-span-3 bg-white p-6 rounded-lg shadow-lg shadow-gray-100 border border-gray-200/50'>
             <div className='flex items-center justify-between'>
-              <h2 className='text-xl font-medium'> 
-                {taskId ? "Update Task" : "Create Task"} 
+              <h2 className='text-xl font-medium'>
+                {taskId ? "Update Task" : "Create Task"}
               </h2>
 
               {taskId && (
@@ -107,6 +107,7 @@ const CreateTask = () => {
                 placeholder:text-gray-500'
               />
             </div>
+
             <div className='mt-3'>
               <label className='text-xs font-medium text-slate-600'> Description </label>
 
@@ -120,7 +121,7 @@ const CreateTask = () => {
               />
             </div>
 
-            <div className=' mt-4 grid grid-cols-12 gap-4'>
+            <div className='mt-3 grid grid-cols-12 gap-4'>
               <div className='col-span-6 md:col-span-4'>
                 <label className='text-xs font-medium text-slate-600'> Priority </label>
 
@@ -131,7 +132,21 @@ const CreateTask = () => {
                   placeholder="Select Priority"
                 />
               </div>
+
+              <div className='col-span-6 md:col-span-4'>
+                <label className='text-xs font-medium text-slate-600'> Due Date </label>
+
+                <input
+                  type='date'
+                  placeholder='Create App UI'
+                  value={taskData.dueDate}
+                  onChange={({ target }) => handleValueChange("dueDate", target.value)}
+                  className='mt-2 w-full text-sm text-black outline-none bg-white border border-slate-100 px-2.5 py-3 rounded-md 
+                placeholder:text-gray-500'
+                ></input>
+              </div>
             </div>
+            
           </div>
         </div>
       </div>
