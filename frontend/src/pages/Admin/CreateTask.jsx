@@ -127,7 +127,7 @@ const CreateTask = () => {
                 <SelectDropDown
                   options={PRIORITY_DATA}
                   value={taskData.priority}
-                  onChange={(value)> handleValueChange("priority", value)}
+                  onChange={(value) => handleValueChange("priority", value)}
                   placeholder="Select Priority"
                 />
               </div>
