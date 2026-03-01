@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { get_all_users } from '../../api/userApi.js';
 
 const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
@@ -19,6 +19,34 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
         }
     }
 
+    const toggleUserSelection = (userId) => {
+        setTempSelectedUsers((prev) => 
+            prev.includes(userId) 
+            ? prev.filter((id) => id !== userId) 
+            : [...prev, userId]
+        );
+    };
+
+    const handleAssign = () => {
+        setSelectedUsers(tempSelectedUsers);
+        setIsModalOpen(false);
+    };
+
+    const selectedUserAvatars = allUsers.filter((user) => selectedUsers.includes(user._id)).map((user) => user.profileImageUrl);
+
+    useEffect(() => {
+        getAllUsers();
+    }, []);
+
+    useEffect(() => {
+        if(selectedUsers.length === 0){
+            setTempSelectedUsers([]);
+        }
+        return () => {};
+    }, [selectedUsers]);
+
+
+    
 
     return (
         <div>
