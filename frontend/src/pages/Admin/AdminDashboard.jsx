@@ -155,7 +155,7 @@ const AdminDashboard = () => {
             <h5 className='text-lg'>Recent Tasks</h5>
             <button className='flex items-center text-[12px] font-medium
               text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
-              px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer'
+              px-4 py-1.5 rounded-lg border border-gray-200 cursor-pointer'
               onClick={onSeeMore}
             >
               See All 

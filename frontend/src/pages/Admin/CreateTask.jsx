@@ -82,6 +82,7 @@ const CreateTask = () => {
       <div className='mt-5'>
         <div className='mt-4 grid grid-cols-1 md:grid-cols-4'>
           <div className='col-span-3 bg-white p-6 rounded-lg shadow-lg shadow-gray-100 border border-gray-200/50'>
+           
             <div className='flex items-center justify-between'>
               <h2 className='text-xl font-medium'>
                 {taskId ? "Update Task" : "Create Task"}

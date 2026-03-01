@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { get_all_users } from '../../api/userApi.js';
+import { LuUsers } from 'react-icons/lu';
 
 const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
     const [allUsers, setAllUsers] = useState([]);
@@ -7,23 +8,23 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
     const [tempSelectedUsers, setTempSelectedUsers] = useState([]);
 
     const getAllUsers = async () => {
-        try{
+        try {
             const response = await get_all_users();
             console.log(response)
-            if(response?.length > 0){
+            if (response?.length > 0) {
                 setAllUsers(response)
             }
         }
-        catch(e){
+        catch (e) {
             console.log("Error fetching users.Error:", e);
         }
     }
 
     const toggleUserSelection = (userId) => {
-        setTempSelectedUsers((prev) => 
-            prev.includes(userId) 
-            ? prev.filter((id) => id !== userId) 
-            : [...prev, userId]
+        setTempSelectedUsers((prev) =>
+            prev.includes(userId)
+                ? prev.filter((id) => id !== userId)
+                : [...prev, userId]
         );
     };
 
@@ -39,18 +40,28 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
     }, []);
 
     useEffect(() => {
-        if(selectedUsers.length === 0){
+        if (selectedUsers.length === 0) {
             setTempSelectedUsers([]);
         }
-        return () => {};
+        return () => { };
     }, [selectedUsers]);
 
 
-    
+
 
     return (
         <div>
-            <button className='border border-amber-400' onClick={() => getAllUsers()}>hello</button>
+            {selectedUserAvatars.length === 0 && (
+                <button
+                    onClick={() => setIsModalOpen(true)}
+                    className='mt-2 flex items-center text-[12px] font-medium
+                    text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
+                    px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer'
+                >
+                    <LuUsers className='text-sm mr-3' />
+                    Add Members 
+                </button>
+            )}
         </div>
     )
 }
