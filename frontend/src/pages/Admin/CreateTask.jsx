@@ -5,7 +5,8 @@ import toast from "react-hot-toast";
 import moment from 'moment';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LuTrash2 } from 'react-icons/lu';
-import SelectDropDown from '../../components/SelectDropDown.jsx';
+import SelectDropDown from '../../components/inputs/SelectDropDown.jsx';
+import SelectUsers from '../../components/inputs/SelectUsers.jsx';
 
 
 
@@ -122,7 +123,7 @@ const CreateTask = () => {
             </div>
 
             <div className='mt-3 grid grid-cols-12 gap-4'>
-              <div className='col-span-6 md:col-span-4'>
+              <div className='col-span-6 md:col-span-6'>
                 <label className='text-xs font-medium text-slate-600'> Priority </label>
 
                 <SelectDropDown
@@ -133,7 +134,7 @@ const CreateTask = () => {
                 />
               </div>
 
-              <div className='col-span-6 md:col-span-4'>
+              <div className='col-span-6 md:col-span-6'>
                 <label className='text-xs font-medium text-slate-600'> Due Date </label>
 
                 <input
@@ -146,7 +147,18 @@ const CreateTask = () => {
                 ></input>
               </div>
             </div>
-            
+
+            <div className='mt-3 col-span-12 md:col-span-3'>
+              <label className='text-xs font-medium text-slate-600'> Assign To </label>
+
+              <SelectUsers
+                selectedUsers={taskData.assignedTo}
+                setSelectedUsers={(value) => {
+                  handleValueChange("assignedTo", value)
+                }}
+              ></SelectUsers>
+            </div>
+
           </div>
         </div>
       </div>

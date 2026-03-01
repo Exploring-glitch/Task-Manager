@@ -27,3 +27,8 @@ export const logout_user = async () => {
     const { data } = await axiosInstance.post("api/auth/logout", {}, { withCredentials: true })
     return data;
 }
+
+export const get_all_users = async () => {
+    const { data } = await axiosInstance.get("api/users/");
+    return data;
+}
