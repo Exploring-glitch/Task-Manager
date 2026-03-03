@@ -69,7 +69,9 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
                 onClose={() => setIsModalOpen(false)}
                 title="Select Users"
             >
-                <div className='space-y-4 h-[60vh] overflow-y-auto'></div>
+                <div className=''>
+                    
+                </div>
             </Modal>
         </div>
     )
