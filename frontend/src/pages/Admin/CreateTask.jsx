@@ -82,7 +82,7 @@ const CreateTask = () => {
       <div className='mt-5'>
         <div className='mt-4 grid grid-cols-1 md:grid-cols-4'>
           <div className='col-span-3 bg-white p-6 rounded-lg shadow-lg shadow-gray-100 border border-gray-200/50'>
-           
+
             <div className='flex items-center justify-between'>
               <h2 className='text-xl font-medium'>
                 {taskId ? "Update Task" : "Create Task"}
@@ -124,7 +124,7 @@ const CreateTask = () => {
             </div>
 
             <div className='mt-3 grid grid-cols-12 gap-4'>
-              <div className='col-span-6 md:col-span-6'>
+              <div className='col-span-6 md:col-span-4'>
                 <label className='text-xs font-medium text-slate-600'> Priority </label>
 
                 <SelectDropDown
@@ -135,7 +135,7 @@ const CreateTask = () => {
                 />
               </div>
 
-              <div className='col-span-6 md:col-span-6'>
+              <div className='col-span-6 md:col-span-4'>
                 <label className='text-xs font-medium text-slate-600'> Due Date </label>
 
                 <input
@@ -147,17 +147,17 @@ const CreateTask = () => {
                 placeholder:text-gray-500'
                 ></input>
               </div>
-            </div>
 
-            <div className='mt-3 col-span-12 md:col-span-3'>
-              <label className='text-xs font-medium text-slate-600'> Assign To </label>
+              <div className='col-span-6 md:col-span-4'>
+                <label className='text-xs font-medium text-slate-600'> Assign To </label>
 
-              <SelectUsers
-                selectedUsers={taskData.assignedTo}
-                setSelectedUsers={(value) => {
-                  handleValueChange("assignedTo", value)
-                }}
-              ></SelectUsers>
+                <SelectUsers
+                  selectedUsers={taskData.assignedTo}
+                  setSelectedUsers={(value) => {
+                    handleValueChange("assignedTo", value)
+                  }}
+                ></SelectUsers>
+              </div>
             </div>
 
           </div>
