@@ -68,7 +68,6 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
             {selectedUserAvatars.length > 0 && (
                 <div onClick={() => setIsModalOpen(true)} className='cursor-pointer'>
                     <AvatarGroup avatars={selectedUserAvatars} maxVisible={3} />
-
                 </div>
             )}
 
