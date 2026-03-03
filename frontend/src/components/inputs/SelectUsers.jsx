@@ -69,8 +69,31 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
                 onClose={() => setIsModalOpen(false)}
                 title="Select Users"
             >
-                <div className=''>
-                    
+                <div className='h-[47vh] space-y-4 overflow-y-auto'>
+                    {allUsers.map((user) => (
+                        <div 
+                            key={user._id}
+                            className='flex items-center gap-4 p-3 border-b border-gray-200'
+                        >
+                            <img 
+                                src={user.profileImageUrl} 
+                                alt={user.name} 
+                                className=''
+                            />
+
+                            <div className=''>
+                                <p className=''> {user.name} </p>
+                                <p className=''> {user.email} </p>
+                            </div>
+
+                            <input
+                                type='checkbox'
+                                checked={tempSelectedUsers.includes(user._id)}
+                                onChange={() => toggleUserSelection(user._id)}
+                                className=''
+                            />
+                        </div>
+                    ))}
                 </div>
             </Modal>
         </div>

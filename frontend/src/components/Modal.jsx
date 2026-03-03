@@ -13,11 +13,9 @@ const Modal = ({ children, isOpen, onClose, title }) => {
 
                 <div className='relative h-[60vh] bg-white rounded-lg shadow-lg dark:bg-gray-700 max-h-full max-w-full'>
                     
-                    <div className='flex items-center justify-between p-4 border-b border-gray-200 rounded-t dark:border-gray-600 
-                        md:p-5
-                    '>
+                    <div className='md:p-5 flex items-center justify-between p-4 border-b border-gray-200 rounded-t dark:border-gray-600'>
                         <h3 className='text-lg text-gray-900 dark:text-white'> {title} </h3>
-
+                        
                         <button
                             type='button'
                             onClick={onClose}
@@ -36,14 +34,12 @@ const Modal = ({ children, isOpen, onClose, title }) => {
                                     strokeLinejoin='round'
                                     strokeWidth='2'
                                     d="M1 1l12 12M13 1L1 13"
-                                ></path>
+                                />
                             </svg>
                         </button>
                     </div>
+                    <div className='p-4 md:p-5 space-y-4'> {children} </div>
                 </div>
-
-                <div className='p-4 md:p-5 space-y-4'> {children} </div>
-
             </div>
         </div>
     )
