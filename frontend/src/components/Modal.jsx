@@ -8,8 +8,8 @@ const Modal = ({ children, isOpen, onClose, title }) => {
 
 
     return (
-        <div className='bg-black-100/20 bg-opacity-50 fixed right-0 top-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden'>
-            <div className=''>
+        <div className='fixed right-0 top-0 z-50 flex justify-center items-center w-full h-[calc(100vh-52px)] overflow-y-auto overflow-x-hidden'>
+            <div className='relative p-4 w-full max-w-2xl max-h-full'>
 
                 <div className=''>
                     <h3 className=''> {title} </h3>
@@ -31,7 +31,7 @@ const Modal = ({ children, isOpen, onClose, title }) => {
                                 strokeLinecap='round'
                                 strokeLinejoin='round'
                                 strokeWidth='2'
-                                d='m1 1 6 6m0 0 6 6M7 716-6M7 71-6 6'
+                                d="M1 1l12 12M13 1L1 13"
                             ></path>
                         </svg>
                     </button>
