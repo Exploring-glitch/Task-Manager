@@ -60,7 +60,7 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
                     px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer'
                 >
                     <LuUsers className='text-sm mr-3' />
-                    Add Members 
+                    Add Members
                 </button>
             )}
 
@@ -69,12 +69,12 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
                 onClose={() => setIsModalOpen(false)}
                 title="Select Users"
             >
-                <div className='h-[45vh] space-y-4 overflow-y-auto overflow-x-hidden'>
+                <div className='h-[35vh] space-y-4 overflow-y-auto overflow-x-hidden'>
                     {allUsers.map((user) => (
                         <div key={user._id} className='flex items-center gap-4 p-3 border-b border-gray-200 hover:bg-gray-50 transition'>
-                            <img 
-                                src={user.profileImageUrl} 
-                                alt={user.name} 
+                            <img
+                                src={user.profileImageUrl}
+                                alt={user.name}
                                 className='w-10 h-10 rounded-full'
                             />
 
@@ -91,6 +91,26 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
                             />
                         </div>
                     ))}
+                </div>
+
+                <div className='flex justify-end gap-4 pt-4'>
+                    <button
+                        onClick={() => setIsModalOpen(false)}
+                        className='mt-2 flex items-center text-[12px] font-medium
+                        text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
+                        px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer'
+                    >
+                        CANCEL
+                    </button>
+
+                    <button
+                        onClick={handleAssign}
+                        className='mt-2 flex items-center text-[12px] font-medium
+                        text-white hover:text-primary bg-primary hover:bg-blue-50
+                        px-4 py-1.5 rounded-lg hover:border-gray-200/50 cursor-pointer'
+                    >
+                        DONE
+                    </button>
                 </div>
             </Modal>
         </div>
