@@ -69,28 +69,25 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
                 onClose={() => setIsModalOpen(false)}
                 title="Select Users"
             >
-                <div className='h-[47vh] space-y-4 overflow-y-auto'>
+                <div className='h-[45vh] space-y-4 overflow-y-auto overflow-x-hidden'>
                     {allUsers.map((user) => (
-                        <div 
-                            key={user._id}
-                            className='flex items-center gap-4 p-3 border-b border-gray-200'
-                        >
+                        <div key={user._id} className='flex items-center gap-4 p-3 border-b border-gray-200 hover:bg-gray-50 transition'>
                             <img 
                                 src={user.profileImageUrl} 
                                 alt={user.name} 
-                                className=''
+                                className='w-10 h-10 rounded-full'
                             />
 
-                            <div className=''>
-                                <p className=''> {user.name} </p>
-                                <p className=''> {user.email} </p>
+                            <div className='flex-1'> {/*flex-1 means take the remaining space: it pushes checkbox towars the right */}
+                                <p className='font-medium text-gray-800 dark:text-white'> {user.name} </p>
+                                <p className='text-[13px] text-gray-500'> {user.email} </p>
                             </div>
 
                             <input
                                 type='checkbox'
                                 checked={tempSelectedUsers.includes(user._id)}
                                 onChange={() => toggleUserSelection(user._id)}
-                                className=''
+                                className='w-4 h-4 outline-none cursor-pointer'
                             />
                         </div>
                     ))}

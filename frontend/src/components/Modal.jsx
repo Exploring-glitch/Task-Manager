@@ -15,7 +15,7 @@ const Modal = ({ children, isOpen, onClose, title }) => {
                     
                     <div className='md:p-5 flex items-center justify-between p-4 border-b border-gray-200 rounded-t dark:border-gray-600'>
                         <h3 className='text-lg text-gray-900 dark:text-white'> {title} </h3>
-                        
+
                         <button
                             type='button'
                             onClick={onClose}
