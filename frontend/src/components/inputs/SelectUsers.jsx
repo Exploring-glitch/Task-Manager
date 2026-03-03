@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { get_all_users } from '../../api/userApi.js';
 import { LuUsers } from 'react-icons/lu';
 import Modal from '../Modal.jsx';
+import AvatarGroup from '../AvatarGroup.jsx';
 
 const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
     const [allUsers, setAllUsers] = useState([]);
@@ -62,6 +63,13 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
                     <LuUsers className='text-sm mr-3' />
                     Add Members
                 </button>
+            )}
+
+            {selectedUserAvatars.length > 0 && (
+                <div onClick={() => setIsModalOpen(true)} className='cursor-pointer'>
+                    <AvatarGroup avatars={selectedUserAvatars} maxVisible={3} />
+
+                </div>
             )}
 
             <Modal
