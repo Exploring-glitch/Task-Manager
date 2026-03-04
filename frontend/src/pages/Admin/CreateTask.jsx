@@ -167,8 +167,8 @@ const CreateTask = () => {
               </label>
               
               <TodoListInput
-                todolist ={taskData?.todoCheckLists}
-                setTodoList={(value) => handleValueChange("todoCheckLists", value)}
+                todolist ={taskData?.todoCheckList}
+                setTodoList={(value) => handleValueChange("todoCheckList", value)}
               />
             </div>
 
