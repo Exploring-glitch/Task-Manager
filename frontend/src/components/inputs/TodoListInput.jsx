@@ -25,37 +25,40 @@ const TodoListInput = ({ todolist, setTodoList }) => {
             {todolist.map((item,index) => (
                 <div
                     key={item}
-                    className=''
+                    className='mb-3 flex justify-between px-3 py-2 rounded-md border border-gray-100 bg-gray-50'
                 >
-                    <p className=''>
-                       <span className=''>
+                    <p className='text-xs text-black'>
+                       <span className='text-xs text-gray-400 font-semibold mr-2'>
                             {index < 9 ? `0${index + 1}` : index + 1}
                         </span> 
+                        {item}
                     </p>
 
                     <button 
                         onClick={() => { handleDeleteOption(index); }}
-                        className=''
+                        className='cursor-pointer'
                     >
-                        <HiOutlineTrash className='' />
+                        <HiOutlineTrash className='text-lg text-red-500' />
                     </button>
                 </div>
             ))}
 
-            <div className='' >
+            <div className='flex items-center gap-5 mt-4' >
                 <input
                     type='text'
                     placeholder='Enter Task'
                     value={option}
                     onChange={( {target} ) => setOption(target.value)}
-                    className=''
+                    className='w-full text-[13px] text-black outline-none bg-white border border-gray-100 px-3 py-1.5'
                 />
 
                 <button 
                     onClick={handleAddOption}
-                    className=''
+                    className='flex items-center text-[12px] font-medium
+                    text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
+                    px-4 pr-5 py-1.5 rounded-lg border border-gray-300/50 cursor-pointer'
                 >
-                    <HiMiniPlus className='' /> Add
+                    <HiMiniPlus className='text-[16px] mr-2' /> <span className='text-[13px]'> Add </span> 
                 </button>
             </div>
         </div>
