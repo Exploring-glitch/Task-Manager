@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { HiMiniPlus, HiOutlineTrash } from "react-icons/hi2";
 
 
 const TodoListInput = ({ todolist, setTodoList }) => {
+    const inputRef = useRef(null);
+
     const [option, setOption] = useState("");
 
     //Function to handle adding an option
@@ -10,6 +12,10 @@ const TodoListInput = ({ todolist, setTodoList }) => {
         if(option.trim()){
             setTodoList([...todolist, option.trim()]);
             setOption("");
+        } 
+        else{
+            inputRef.current.focus();   
+            return;
         }
     };
 
@@ -45,11 +51,12 @@ const TodoListInput = ({ todolist, setTodoList }) => {
 
             <div className='flex items-center gap-5 mt-4' >
                 <input
+                    ref={inputRef}
                     type='text'
                     placeholder='Enter Task'
                     value={option}
                     onChange={( {target} ) => setOption(target.value)}
-                    className='w-full text-[13px] text-black outline-none bg-white border border-gray-100 px-3 py-1.5'
+                    className='w-full text-[13px] text-black outline-none bg-white border border-gray-100 px-3 py-1.5 focus:ring-1 focus:ring-gray-200'
                 />
 
                 <button 
