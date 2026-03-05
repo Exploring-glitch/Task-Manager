@@ -173,24 +173,27 @@ const CreateTask = () => {
 
             <div className='mt-3'>
               <label className='text-xs font-medium text-slate-600'> Add Attachments</label>
-                
-              <AddAttachmentInput 
+
+              <AddAttachmentInput
                 attachments={taskData?.attachments}
                 setAttachments={(value) => handleValueChange("attachments", value)}
               />
             </div>
-            
-            {error && 
-              <p className=''>{error}</p>
+
+            {error &&
+              <p className='mt-5 text-xs font-medium text-red-500'>{error}</p>
             }
 
-            <div className=''>
-              <button 
+            <div className='mt-7 flex justify-center'>
+              <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className=''
+                className='px-4 py-2 w-full flex justify-center items-center gap-1.5 text-xs md:text-sm font-medium bg-blue-50 text-primary whitespace-nowrap border border-blue-100 rounded-lg cursor-pointer'
               >
-                {taskId ? "UPDATE TASK" : "CREATE TASK"}
+                {loading
+                  ? "Saving..."
+                  : taskId ? "UPDATE TASK" : "CREATE TASK"
+                }
               </button>
             </div>
 
