@@ -27,40 +27,42 @@ const AddAttachmentInput = ({ attachments, setAttachments }) => {
             {attachments.map((item, index) => (
                 <div 
                     key={item}
-                    className=''
+                    className='flex justify-between px-3 py-2 bg-gray-50 border border-gray-100 rounded-md mb-3'
                 >
-                    <div className=''>
-                        <LuPaperclip className='' />
-                        <p className=''>{item}</p>
+                    <div className='flex-1 flex items-center gap-3 border-gray-100'>
+                        <LuPaperclip className='text-gray-400' />
+                        <p className='text-xs text-black'>{item}</p>
                     </div>
 
                     <button 
                         onClick={() => {handleDeleteOption(index)}}
-                        className=''
+                        className='cursor-pointer'
                     >
-                        <HiOutlineTrash  className='' />
+                        <HiOutlineTrash  className='text-lg text-red-500' />
                     </button>
                 </div>
             ))}
 
-            <div className=''>
-                <div className=''>
-                    <LuPaperclip className='' />
+            <div className='flex items-center gap-5 mt-4'>
+                <div className='flex-1 flex items-center gap-3 border border-gray-100 rounded-md px-3'>
+                    <LuPaperclip className='text-gray-400' />
 
                     <input 
                         type="text" 
                         placeholder='Add File Link'
                         value={option}
                         onChange={( {target} ) => setOption(target.value)}
-                        className=''
+                        className='py-2 w-full text-[13px] text-black outline-none bg-white'
                     />
                 </div>
 
                 <button 
                     onClick={handleAddOption}
-                    className=''
+                    className='text-nowrap flex items-center text-[12px] font-medium
+                    text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
+                    px-4 pr-5 py-1.5 rounded-lg border border-gray-300/50 cursor-pointer'
                 >
-                    <HiMiniPlus className=''/> Add
+                    <HiMiniPlus className='text-lg'/> Add
                 </button>
             </div>
         </div>

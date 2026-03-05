@@ -179,7 +179,7 @@ const CreateTask = () => {
               <AddAttachmentInput 
                 attachments={taskData?.attachments}
                 setAttachments={(value) => handleValueChange("attachments", value)}
-              ></AddAttachmentInput>
+              />
             </div>
 
           </div>
