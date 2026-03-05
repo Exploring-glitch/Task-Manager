@@ -30,7 +30,7 @@ const TodoListInput = ({ todolist, setTodoList }) => {
         <div>
             {todolist.map((item,index) => (
                 <div
-                    key={item}
+                    key={index}
                     className='mb-3 flex justify-between px-3 py-2 rounded-md border border-gray-100 bg-gray-50'
                 >
                     <p className='text-xs text-black'>
