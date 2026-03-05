@@ -8,6 +8,7 @@ import { LuTrash2 } from 'react-icons/lu';
 import SelectDropDown from '../../components/inputs/SelectDropDown.jsx';
 import SelectUsers from '../../components/inputs/SelectUsers.jsx';
 import TodoListInput from '../../components/inputs/TodoListInput.jsx';
+import AddAttachmentInput from '../../components/inputs/AddAttachmentInput.jsx';
 
 
 
