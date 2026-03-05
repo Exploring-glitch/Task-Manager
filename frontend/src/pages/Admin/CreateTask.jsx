@@ -165,12 +165,22 @@ const CreateTask = () => {
               <label className='text-xs font-medium text-slate-600'>
                 TODO Checklist
               </label>
-              
+
               <TodoListInput
-                todolist ={taskData?.todoCheckList}
+                todolist={taskData?.todoCheckList}
                 setTodoList={(value) => handleValueChange("todoCheckList", value)}
               />
             </div>
+
+            <div className='mt-3'>
+              <label className='text-xs font-medium text-slate-600'> Add Attachments</label>
+                
+              <AddAttachmentInput 
+                attachments={taskData?.attachments}
+                setAttachments={(value) => handleValueChange("attachments", value)}
+              ></AddAttachmentInput>
+            </div>
+
           </div>
         </div>
       </div>
