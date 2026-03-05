@@ -13,6 +13,9 @@ const AddAttachmentInput = ({ attachments, setAttachments }) => {
             setAttachments([...attachments, option.trim()]);
             setOption("");
         }
+        else{
+            return;
+        }
     }
 
     //Function to handle deleting an option
@@ -23,11 +26,11 @@ const AddAttachmentInput = ({ attachments, setAttachments }) => {
 
 
     return (
-        <div className=''>
+        <div>
             {attachments.map((item, index) => (
                 <div 
-                    key={item}
-                    className='flex justify-between px-3 py-2 bg-gray-50 border border-gray-100 rounded-md mb-3'
+                    key={index}
+                    className='mb-3 mt-2 flex justify-between px-3 py-2 bg-gray-50 border border-gray-100 rounded-md'
                 >
                     <div className='flex-1 flex items-center gap-3 border-gray-100'>
                         <LuPaperclip className='text-gray-400' />
