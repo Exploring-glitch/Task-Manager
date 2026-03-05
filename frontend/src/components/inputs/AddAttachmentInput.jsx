@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { HiMiniPlus, HiOutlineTrash } from "react-icons/hi2";
-import { LuPaperclip } from 'react-icons/lu';
+import { LuPaperclip, LuTypeOutline } from 'react-icons/lu';
 
 
 
@@ -23,7 +23,47 @@ const AddAttachmentInput = ({ attachments, setAttachments }) => {
 
 
     return (
-        <div>AddAttachmentInput</div>
+        <div className=''>
+            {attachments.map((item, index) => (
+                <div 
+                    key={item}
+                    className=''
+                >
+                    <div className=''>
+                        <LuPaperclip className='' />
+                        <p className=''>{item}</p>
+                    </div>
+
+                    <button 
+                        onClick={() => {handleDeleteOption(index)}}
+                        className=''
+                    >
+                        <HiOutlineTrash  className='' />
+                    </button>
+                </div>
+            ))}
+
+            <div className=''>
+                <div className=''>
+                    <LuPaperclip className='' />
+
+                    <input 
+                        type="text" 
+                        placeholder='Add File Link'
+                        value={option}
+                        onChange={( {target} ) => setOption(target.value)}
+                        className=''
+                    />
+                </div>
+
+                <button 
+                    onClick={handleAddOption}
+                    className=''
+                >
+                    <HiMiniPlus className=''/> Add
+                </button>
+            </div>
+        </div>
     )
 }
 
