@@ -171,9 +171,6 @@ const CreateTask = () => {
                 setTodoList={(value) => handleValueChange("todoCheckList", value)}
               />
             </div>
-
-            
-
           </div>
         </div>
       </div>
