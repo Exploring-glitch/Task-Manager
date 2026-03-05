@@ -65,7 +65,7 @@ const AddAttachmentInput = ({ attachments, setAttachments }) => {
                     text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
                     px-4 pr-5 py-1.5 rounded-lg border border-gray-300/50 cursor-pointer'
                 >
-                    <HiMiniPlus className='text-lg'/> Add
+                    <HiMiniPlus className='text-[16px] mr-2'/> <span className='text-[13px]'> Add </span> 
                 </button>
             </div>
         </div>
