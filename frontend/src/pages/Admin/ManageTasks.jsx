@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
 import { useNavigate } from 'react-router-dom';
 import { get_all_tasks } from '../../api/tasksApi.js';
+import { LuFileSpreadsheet } from 'react-icons/lu';
 
 
 const ManageTasks = () => {
@@ -55,7 +56,41 @@ const ManageTasks = () => {
 
   return (
     <DashboardLayout activeMenu="Manage Tasks">
-      hello
+      <div className='my-5'>
+        <div className='flex flex-col justify-between
+          lg:flex-row lg:items-center'
+        >
+          <div className='flex items-center justify-between gap-3'>
+            <h2 className='text-lg md:text-xl font-medium'>My Tasks</h2>
+
+            <button
+              onClick={handleDownloadReport}
+              className='lg:hidden flex items-center gap-3 text-xs md:[text-13px] font-medium text-lime-900 bg-lime-100 px-2 md:px-3 py-2 rounded border border-lime-200 hover:border-lime-400 cursor-pointer'
+            >
+              <LuFileSpreadsheet className='text-lg' />
+              Download Report
+            </button>
+          </div>
+
+          {allTasks?.length > 0 && (
+            <div className='flex items-center gap-3'>
+              <TaskStatusList
+                tabs={tabs}
+                activeTab={filterStatus}
+                setActiveTab={setFilterStatus}
+              />
+
+              <button
+                onClick={handleDownloadReport}
+                className='hidden lg:flex items-center gap-3 text-xs md:[text-13px] font-medium text-lime-900 bg-lime-100 px-2 md:px-3 py-2 rounded border border-lime-200 hover:border-lime-400 cursor-pointer'
+              >
+                <LuFileSpreadsheet className='text-lg' />
+                Download Report
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </DashboardLayout>
   )
 }
