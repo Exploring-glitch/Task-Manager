@@ -11,6 +11,8 @@ import Login_Page from './pages/Auth/Login_Page.jsx';
 import Signup_Page from './pages/Auth/Signup_page.jsx';
 import { UserContext, UserProvider } from './context/userContext.jsx';
 import { useContext } from 'react';
+import { Toaster } from "react-hot-toast";
+
 
 function App() {
 
@@ -53,5 +55,5 @@ const Root = () => {
     return <Navigate to="/auth/login" />
   }
 
-  return user.role === "admin" ? <Navigate to="/tasks/dashboard" /> : <Navigate to="/tasks/dashboard-user-data" />
+  return user.role === "admin" ? <Navigate to="/admin/dashboard" /> : <Navigate to="/member/dashboard-user-data" />
 }
