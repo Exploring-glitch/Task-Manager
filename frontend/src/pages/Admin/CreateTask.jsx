@@ -37,6 +37,7 @@ const CreateTask = () => {
     setTaskData((prevData) => ({
       ...prevData, [key]: value
     }));
+    console.log("hi",taskData)
   }
 
   const clearData = () => {
@@ -217,7 +218,7 @@ const CreateTask = () => {
               <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className='px-4 py-2 w-full flex justify-center items-center gap-1.5 text-xs md:text-sm font-medium bg-blue-50 text-primary whitespace-nowrap border border-blue-100 rounded-lg cursor-pointer'
+                className='px-4 py-2 w-full flex justify-center items-center gap-1.5 text-xs md:text-sm font-medium bg-blue-50 hover:bg-blue-100 hover:transition text-primary whitespace-nowrap border border-blue-100 rounded-lg cursor-pointer'
               >
                 {loading
                   ? "Saving..."
