@@ -9,6 +9,7 @@ import SelectDropDown from '../../components/inputs/SelectDropDown.jsx';
 import SelectUsers from '../../components/inputs/SelectUsers.jsx';
 import TodoListInput from '../../components/inputs/TodoListInput.jsx';
 import AddAttachmentInput from '../../components/inputs/AddAttachmentInput.jsx';
+import { create_task } from '../../api/tasksApi.js';
 
 
 
@@ -37,7 +38,7 @@ const CreateTask = () => {
     setTaskData((prevData) => ({
       ...prevData, [key]: value
     }));
-    console.log("hi",taskData)
+    console.log("hi", taskData)
   }
 
   const clearData = () => {
@@ -55,7 +56,34 @@ const CreateTask = () => {
 
   //create task
   const createTask = async () => {
+    setLoading(true);
 
+    try {
+      const todoList = taskData.todoCheckList.map((item) => ({
+        text: item,
+        completed: false,
+      }));
+
+      const response = await create_task({
+        ...taskData,
+        dueDate: new Date(taskData.dueDate).toISOString(),
+        todoCheckLists: todoList
+      });
+
+      console.log("response: ", response)
+
+      //toast.success("Task Created Successfully");
+      alert("Task created successfully");
+
+      clearData();
+    }
+    catch(e){
+      console.log("Error creating task. Error: ", e.message);
+      setLoading(false);
+    }
+    finally{
+      setLoading(false);
+    }
   }
 
   //update task

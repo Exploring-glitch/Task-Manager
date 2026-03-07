@@ -4,6 +4,7 @@ import Task from "../models/taskSchema.js"
 
 export const createTask = async (req, res) => { //access: admin
     try {
+        console.log("hi")
         const { title, description, priority, status, dueDate, assignedTo, attachments, todoCheckLists } = req.body
 
         if (!Array.isArray(assignedTo)) {
