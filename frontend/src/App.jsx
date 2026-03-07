@@ -18,6 +18,10 @@ function App() {
 
   return (
     <UserProvider>
+      <Toaster position="top-center" toastOptions={{
+        duration: 3000,
+      }} />
+
       <Routes>
         <Route path='/auth/login' element={<Login_Page />} />
         <Route path='/auth/signup' element={<Signup_Page />} />

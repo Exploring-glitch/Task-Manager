@@ -45,7 +45,7 @@ const CreateTask = () => {
     //reset from
     setTaskData({
       title: "",
-      descriptiopn: "",
+      description: "",
       priority: "Low",
       dueDate: null,
       assignedTo: [],
@@ -70,9 +70,7 @@ const CreateTask = () => {
         todoCheckLists: todoList
       });
 
-      //toast.success("Task Created Successfully");
-      alert("Task created successfully");
-
+      toast.success("Task Created Successfully");
       clearData();
     }
     catch(e){
