@@ -10,3 +10,8 @@ export const create_task = async(taskData) => {
     const { data } = await axiosInstance.post("/api/tasks/create-task", taskData);
     return data;
 }
+
+export const get_all_tasks = async(taskData) => {
+    const { data } = axiosInstance.get("/api/tasks/", taskData);
+    return data;
+}
