@@ -64,7 +64,36 @@ const CreateTask = () => {
 
   //on sumit
   const handleSubmit = async () => {
+    setError(null);
 
+    //input validation
+    if (!taskData.title.trim()) {
+      setError("Title is requird.");
+      return;
+    }
+    if (!taskData.description.trim()) {
+      setError("Description is required.");
+      return;
+    }
+    if (!taskData.dueDate) {
+      setError("Due date is required.");
+      return;
+    }
+    if (taskData.assignedTo?.length === 0) {
+      setError("Task not assigned to any member.");
+      return;
+    }
+    if (taskData.todoCheckList?.length === 0) {
+      setError("Add atleast one todo task.");
+      return;
+    }
+
+    if (taskId) {
+      updateTask();
+      return;
+    }
+
+    createTask();
   }
 
   //get task info by id
