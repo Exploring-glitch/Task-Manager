@@ -6,9 +6,7 @@ export const dashboard_data = async() => {
     return data;
 }
 
-export const create_task = async() => {
-    console.log("api")
+export const create_task = async(taskData) => {
     const { data } = await axiosInstance.post("/api/tasks/create-task", taskData);
-    console.log("from api call data: ", data)
     return data;
 }

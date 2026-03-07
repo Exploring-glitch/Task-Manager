@@ -70,8 +70,6 @@ const CreateTask = () => {
         todoCheckLists: todoList
       });
 
-      console.log("response: ", response)
-
       //toast.success("Task Created Successfully");
       alert("Task created successfully");
 
@@ -79,7 +77,6 @@ const CreateTask = () => {
     }
     catch(e){
       console.log("Error creating task. Error: ", e.message);
-      setLoading(false);
     }
     finally{
       setLoading(false);
