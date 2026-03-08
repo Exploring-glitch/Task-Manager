@@ -11,7 +11,7 @@ const NavBar = ({ activeMenu }) => {
 
     const [openSideMenu, setOpenSideMenu] = useState(false);
     const { user } = useContext(UserContext);
-    console.log("nav",user)
+
 
     return (
         <header className="sticky top-0 z-50 w-screen bg-[#F5F8FF] border-b border-[#E3E8FF] overflow-hidden">

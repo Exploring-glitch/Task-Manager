@@ -12,6 +12,6 @@ export const create_task = async(taskData) => {
 }
 
 export const get_all_tasks = async(taskData) => {
-    const { data } = axiosInstance.get("/api/tasks/", taskData);
+    const { data } = await axiosInstance.get("/api/tasks/", taskData);
     return data;
 }

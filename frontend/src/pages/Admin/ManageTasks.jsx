@@ -3,6 +3,7 @@ import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
 import { useNavigate } from 'react-router-dom';
 import { get_all_tasks } from '../../api/tasksApi.js';
 import { LuFileSpreadsheet } from 'react-icons/lu';
+import TaskStatusList from '../../components/TaskStatusList.jsx';
 
 
 const ManageTasks = () => {
@@ -20,12 +21,10 @@ const ManageTasks = () => {
         }
       });
 
-      console.log(response)
-
-      setAllTasks(response.data?.tasks?.length > 0 ? response.data.tasks : []);
+      setAllTasks(response?.tasks?.length > 0 ? response.tasks : []);
 
       //map statusSummary data with fixed labels and order
-      const statusSummary = response.data?.statusSummary || {};
+      const statusSummary = response?.statusSummary || {};
       const statusArray = [
         { label: "All", count: statusSummary.all || 0 },
         { label: "Pending", count: statusSummary.pending || 0 },
@@ -35,7 +34,7 @@ const ManageTasks = () => {
       setTabs(statusArray);
     }
     catch (e) {
-      console.log("Error fetching users:", e);
+      console.log("Error fetching users. Error:", e);
     }
   }
 
