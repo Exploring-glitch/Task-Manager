@@ -71,7 +71,7 @@ const ManageTasks = () => {
             </button>
           </div>
 
-          {allTasks?.length > 0 && (
+          {tabs?.[0]?.count > 0 && (
             <div className='flex items-center gap-3'>
               <TaskStatusList
                 tabs={tabs}
