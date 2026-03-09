@@ -1,4 +1,8 @@
 import React from 'react'
+import Progress from '../Progress';
+import AvatarGroup from "../AvatarGroup";
+import { LuPaperclip } from 'react-icons/lu';
+import moment from "moment";
 
 
 
@@ -24,8 +28,8 @@ const TaskCard = ({ title, description, priority, status, progress, createdAt, d
                 return "text-rose-500 bg-rose-50 border border-rose-500/10"
         }
     };
-
-
+    
+    
 
     return (
         <div>TaskCard</div>
