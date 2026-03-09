@@ -89,6 +89,27 @@ const ManageTasks = () => {
             </div>
           )}
         </div>
+
+        <div className='mt-4 gap-4 grid grid-cols-1 md:grid-flow-cols-3'>
+          {allTasks?.map((item, index) => (
+            <TaskCard
+              key={item._id}
+              title={item.title}
+              description={item.description}
+              priority={item.priority}
+              status={item.status}
+              progress={item.progress}
+              createdAt={item.createdAt}
+              dueDate={item.dueDate}
+              assignedTo={item.assignedTo?.map((item) => item.profileImageUrl)}
+              attachmentCount={item.attachments?.length || 0}
+              completedTodoCount={item.completedTodoCount || 0}
+              todoChecklist={item.todoChecklist || []}
+
+              onClick={() => { handleClick(item) }}
+            ></TaskCard>
+          ))}
+        </div>
       </div>
     </DashboardLayout>
   )
