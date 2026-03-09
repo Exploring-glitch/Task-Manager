@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { get_all_tasks } from '../../api/tasksApi.js';
 import { LuFileSpreadsheet } from 'react-icons/lu';
 import TaskStatusList from '../../components/TaskStatusList.jsx';
+import TaskCard from '../../components/cards/TaskCard.jsx';
 
 
 const ManageTasks = () => {
@@ -105,7 +106,6 @@ const ManageTasks = () => {
               attachmentCount={item.attachments?.length || 0}
               completedTodoCount={item.completedTodoCount || 0}
               todoChecklist={item.todoChecklist || []}
-
               onClick={() => { handleClick(item) }}
             ></TaskCard>
           ))}
