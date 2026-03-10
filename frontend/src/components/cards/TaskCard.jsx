@@ -7,7 +7,7 @@ import moment from "moment";
 
 
 const TaskCard = ({ title, description, priority, status, progress, createdAt, dueDate, assignedTo, attachmentCount, completedTodoCount, todoChecklist, onClick }) => {
-    
+
     const getStatusTagColor = () => {
         switch (status) {
             case "In Progress":
@@ -34,10 +34,10 @@ const TaskCard = ({ title, description, priority, status, progress, createdAt, d
 
     return (
         <div
-            className=''
+            className='bg-white rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50 cursor-pointer'
             onClick={onclick}
         >
-            <div className=''>
+            <div className='flex items-end gap-3 px-4'>
                 <div className={`px-4 py-0.5 rounded text-[11px] font-medium ${getStatusTagColor()}`}>
                     {status}
                 </div>
@@ -55,37 +55,38 @@ const TaskCard = ({ title, description, priority, status, progress, createdAt, d
                         : "border-violet-500" 
                 } 
             `}>
-                <p className=''> {title} </p>
-                <p className=''> {description} </p>
-                <p className=''> Task Done:{" "} 
-                    <span className=''> 
+                <p className='mt-4 text-sm font-medium text-gray-800 line-clamp-2'> {title} </p>
+                <p className='mt-1.5 text-xs text-gray-500 line-clamp-2 leading-4.5'> {description} </p>
+                <p className='mt-2 mb-3 text-[13px] text-gray-700/80 font-medium leading-4.5'> Task Done:{" "} 
+                    <span className='font-semibold text-gray-700'> 
                         {completedTodoCount} / {todoChecklist.length || 0}
                     </span>
                 </p>
+
                 <Progress progress={progress} status={status} />
             </div>
 
-            <div className=''>
-                <div className=''>
+            <div className='px-4'>
+                <div className='my-1 flex items-center justify-between'>
                     <div>
-                        <label className=''> Start Date </label>
-                        <p className=''> {moment(createdAt).format("Do MMM YYYY")} </p>
+                        <label className='text-xs text-gray-500'> Start Date </label>
+                        <p className='text-[13px] font-medium text-gray-900'> {moment(createdAt).format("Do MMM YYYY")} </p>
                     </div>
                     
                     <div>
-                        <label className=''> Due Date </label>
-                        <p className=''> {moment(dueDate).format("Do MMM YYYY")} </p>
+                        <label className='text-xs text-gray-500 '> Due Date </label>
+                        <p className='text-[13px] font-medium text-gray-900'> {moment(dueDate).format("Do MMM YYYY")} </p>
                     </div>
                 </div>
             </div>
 
-            <div className=''>
+            <div className='px-4 mt-3 flex items-center justify-between'>
                 <AvatarGroup avatars={assignedTo || []} />
 
                 {attachmentCount > 0 && (
-                    <div className=''>
-                        <LuPaperclip className='' />{" "}
-                        <span className=''> {attachmentCount} </span>
+                    <div className='px-2.5 py-1.5 flex items-center gap-3 bg-blue-50 rounded-lg'>
+                        <LuPaperclip className='text-primary' />{" "}
+                        <span className='text-xs text-gray-900'> {attachmentCount} </span>
                     </div>
                 )}
             </div>
