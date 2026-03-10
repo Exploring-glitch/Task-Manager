@@ -91,7 +91,7 @@ const ManageTasks = () => {
           )}
         </div>
 
-        <div className='mt-4 gap-4 grid grid-cols-1 md:grid-flow-cols-3'>
+        <div className='mt-4 gap-4 grid grid-cols-1 md:grid-cols-3'>
           {allTasks?.map((item, index) => (
             <TaskCard
               key={item._id}
