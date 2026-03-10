@@ -31,7 +31,7 @@ const ManageTasks = () => {
         { label: "All", count: statusSummary.all || 0 },
         { label: "Pending", count: statusSummary.pending || 0 },
         { label: "In Progress", count: statusSummary.inProgress || 0 },
-        { label: "Complete", count: statusSummary.complete || 0 },
+        { label: "Completed", count: statusSummary.completed || 0 },
       ];
       setTabs(statusArray);
     }
