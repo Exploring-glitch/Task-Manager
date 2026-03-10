@@ -38,11 +38,11 @@ const TaskCard = ({ title, description, priority, status, progress, createdAt, d
             onClick={onclick}
         >
             <div className='flex items-end gap-3 px-4'>
-                <div className={`px-4 py-0.5 rounded text-[11px] font-medium ${getStatusTagColor()}`}>
+                <div className={`px-4 py-2 rounded text-[11px] font-medium ${getStatusTagColor()}`}>
                     {status}
                 </div>
 
-                <div className={`px-4 py-0.5 rounded text-[11px] font-medium ${getPriorityTagColor()}`}>
+                <div className={`px-4 py-2 rounded text-[11px] font-medium ${getPriorityTagColor()}`}>
                     {priority}
                 </div>
             </div>
