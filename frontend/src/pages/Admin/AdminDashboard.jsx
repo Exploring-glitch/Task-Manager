@@ -81,10 +81,10 @@ const AdminDashboard = () => {
           <h2 className='text-xl
             md:text-2xl'
           >
-            Hey! {user.user?.name}
+            Hey! {user?.user?.name}
           </h2>
           <p className='text-gray-400 mt-1.5 text-xs
-              md:text-[13px]'> {moment().format("dddd Do MMM YYY")} </p>
+              md:text-[13px]'> {moment().format("dddd Do MMM YYYY")} </p>
         </div>
 
         <div className='pt-6 grid grid-cols-2 gap-3

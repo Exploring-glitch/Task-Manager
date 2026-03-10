@@ -14,6 +14,7 @@ import { useContext } from 'react';
 import { Toaster } from "react-hot-toast";
 
 
+
 function App() {
 
   return (
@@ -34,7 +35,7 @@ function App() {
         </Route>
 
         {/*User Routes*/}
-        <Route element={<PrivateRoute allowedRoles={["user"]} />}>
+        <Route element={<PrivateRoute allowedRoles={["member"]} />}>
           <Route path='/member/dashboard-user-data' element={<UserDashboard />} />
           <Route path='/member/tasks' element={<MyTask />} />
           <Route path='/member/task-details' element={<ViewTaskDetails />} />
@@ -47,13 +48,12 @@ function App() {
   )
 }
 
-export default App
 
 
 const Root = () => {
   const { user, loading } = useContext(UserContext);
 
-  if (loading) return <Outlet />
+  if (loading) return <div>Loading...</div>;
 
   if (!user) {
     return <Navigate to="/auth/login" />
@@ -61,3 +61,7 @@ const Root = () => {
 
   return user.role === "admin" ? <Navigate to="/admin/dashboard" /> : <Navigate to="/member/dashboard-user-data" />
 }
+
+
+export default App
+
