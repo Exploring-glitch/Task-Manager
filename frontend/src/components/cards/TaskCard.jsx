@@ -80,7 +80,7 @@ const TaskCard = ({ title, description, priority, status, progress, createdAt, d
                 </div>
             </div>
 
-            <div className='px-4 mt-3 flex items-center justify-between'>
+            <div className='px-4 mt-4 flex items-center justify-between'>
                 <AvatarGroup avatars={assignedTo || []} />
 
                 {attachmentCount > 0 && (
