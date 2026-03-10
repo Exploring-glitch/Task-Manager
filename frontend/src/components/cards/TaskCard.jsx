@@ -6,7 +6,8 @@ import moment from "moment";
 
 
 
-const TaskCard = ({ title, description, priority, status, progress, createdAt, dueDate, assignedTo, attachmentCount, completedTodoCount, todoChecklist, onClick }) => {
+const TaskCard = ({ title, description, priority, status, progress, createdAt, dueDate, assignedTo, attachmentCount, completedTodoCount, todoCheckList, onClick }) => {
+    console.log("hello", todoCheckList)
 
     const getStatusTagColor = () => {
         switch (status) {
@@ -59,7 +60,7 @@ const TaskCard = ({ title, description, priority, status, progress, createdAt, d
                 <p className='mt-1.5 text-xs text-gray-500 line-clamp-2 leading-4.5'> {description} </p>
                 <p className='mt-2 mb-3 text-[13px] text-gray-700/80 font-medium leading-4.5'> Task Done:{" "} 
                     <span className='font-semibold text-gray-700'> 
-                        {completedTodoCount} / {todoChecklist.length || 0}
+                        {completedTodoCount} / {todoCheckList.length || 0}
                     </span>
                 </p>
 
@@ -80,7 +81,7 @@ const TaskCard = ({ title, description, priority, status, progress, createdAt, d
                 </div>
             </div>
 
-            <div className='px-4 mt-4 flex items-center justify-between'>
+            <div className='px-4 mt-3 flex items-center justify-between'>
                 <AvatarGroup avatars={assignedTo || []} />
 
                 {attachmentCount > 0 && (
