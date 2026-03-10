@@ -38,7 +38,6 @@ const CreateTask = () => {
     setTaskData((prevData) => ({
       ...prevData, [key]: value
     }));
-    console.log("hi", taskData)
   }
 
   const clearData = () => {

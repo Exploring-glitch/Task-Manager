@@ -22,6 +22,7 @@ const ManageTasks = () => {
         }
       });
 
+
       setAllTasks(response?.tasks?.length > 0 ? response.tasks : []);
 
       //map statusSummary data with fixed labels and order
@@ -102,7 +103,7 @@ const ManageTasks = () => {
               progress={item.progress}
               createdAt={item.createdAt}
               dueDate={item.dueDate}
-              assignedTo={item.assignedTo?.map((item) => item.profileImageUrl)}
+              assignedTo={item.assignedTo?.map((user) => user.profileImageUrl)}
               attachmentCount={item.attachments?.length || 0}
               completedTodoCount={item.completedTodoCount || 0}
               todoCheckList={item.todoCheckLists || []}

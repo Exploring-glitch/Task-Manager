@@ -7,7 +7,7 @@ import moment from "moment";
 
 
 const TaskCard = ({ title, description, priority, status, progress, createdAt, dueDate, assignedTo, attachmentCount, completedTodoCount, todoCheckList, onClick }) => {
-    console.log("hello", todoCheckList)
+    console.log("hello", assignedTo)
 
     const getStatusTagColor = () => {
         switch (status) {
