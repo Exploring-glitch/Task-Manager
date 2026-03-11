@@ -11,11 +11,6 @@ const SideMenu = ({ activeMenu }) => {
     const { user, loading, clearUser } = useContext(UserContext);
     const [sideMenuData, setSideMenuData] = useState([]);
 
-
-    console.log("user",user)
-    console.log("sidemenudata",sideMenuData)
-
-
     const navigate = useNavigate();
 
     if (loading) {
