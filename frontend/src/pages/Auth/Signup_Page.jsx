@@ -75,7 +75,7 @@ const Signup_Page = () => {
 
                 updateUser(response);
 
-                if (response.user.role == "member") {
+                if (response.user?.role === "member") {
                     navigate("/member/dashboard-user-data") //this means, when user login, go to the dashboard page
                     setLoading(false);
                 } else {

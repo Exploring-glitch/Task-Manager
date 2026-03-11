@@ -52,14 +52,14 @@ function App() {
 
 const Root = () => {
   const { user, loading } = useContext(UserContext);
-
+  
   if (loading) return <div>Loading...</div>;
 
   if (!user) {
     return <Navigate to="/auth/login" />
   }
 
-  return user.role === "admin" ? <Navigate to="/admin/dashboard" /> : <Navigate to="/member/dashboard-user-data" />
+  return user?.role === "admin" ? <Navigate to="/admin/dashboard" /> : <Navigate to="/member/dashboard-user-data" />
 }
 
 

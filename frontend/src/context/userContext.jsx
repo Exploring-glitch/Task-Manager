@@ -12,7 +12,8 @@ export const UserProvider = ({ children }) => {
             try {
                 const res = await axiosInstance.get("/api/auth/profile");
                 setUser(res.data);
-            } catch {
+            } catch(err) {
+                console.error("Profile fetch failed:", err);
                 setUser(null);
             } finally {
                 setLoading(false);

@@ -3,12 +3,24 @@ import { UserContext } from '../../context/userContext.jsx'
 import { useNavigate } from 'react-router-dom';
 import { logout_user } from '../../api/userApi.js';
 import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from '../../util/data.jsx';
+import toast from "react-hot-toast";
 
-const SideMenu = ({activeMenu}) => {
-    const { user, clearUser } = useContext(UserContext);
+
+
+const SideMenu = ({ activeMenu }) => {
+    const { user, loading, clearUser } = useContext(UserContext);
     const [sideMenuData, setSideMenuData] = useState([]);
 
+
+    console.log("user",user)
+    console.log("sidemenudata",sideMenuData)
+
+
     const navigate = useNavigate();
+
+    if (loading) {
+        return <div className="p-6">Loading...</div>;
+    }
 
     const handleClick = async (route) => {
         if (route == "/logout") {
@@ -30,41 +42,41 @@ const SideMenu = ({activeMenu}) => {
     }
 
     useEffect(() => {
-        if (user.user) {
-            setSideMenuData(user.user?.role === "admin" ? SIDE_MENU_DATA : SIDE_MENU_USER_DATA)
+        if (user?.user) {
+            setSideMenuData(user?.user?.role === "admin" ? SIDE_MENU_DATA : SIDE_MENU_USER_DATA)
         }
-        return () => { };
+        
     }, [user]);
 
     return (
         <div className='w-64 min-h-[calc(100vh-52px)] sticky top-13 z-10 bg-white border-r-2 border-gray-400/50'>
             <div className='flex flex-col items-center justify-center pt-5 mb-7'>
-                <div className='relative'> 
+                <div className='relative'>
                     <img
-                        src={user.user?.profileImageUrl || ""}
+                        src={user?.user?.profileImageUrl || ""}
                         alt='Profile Image'
                         className='w-20 h-20 rounded-full bg-slate-400'
                     />
                 </div>
 
-                {user.user?.role === "admin" && (
+                {user?.user?.role === "admin" && (
                     <div className='text-[10px] font-medium text-white bg-[#1D4ED8] px-3 py-0.5 rounded mt-1'>
                         Admin
                     </div>
                 )}
 
                 <h5 className='text-gray-950 font-medium mt-3 leading-4'>
-                    {user.user?.name || ""}
+                    {user?.user?.name || ""}
                 </h5>
 
-                <p className='text-[12px] text-gray-500'>{user.user?.email || ""} </p>
+                <p className='text-[12px] text-gray-500'>{user?.user?.email || ""} </p>
             </div>
 
-            {sideMenuData.map((item, index) => (
+            {sideMenuData?.length > 0 && sideMenuData.map((item, index) => (
                 <button
                     key={`menu_${index}`}
                     className={`w-full flex items-center gap-4 text-[15px] 
-                        ${ activeMenu == item.label
+                        ${activeMenu == item.label
                             ? "text-primary bg-linear-to-r from-blue-50/40 to-blue-100/50 border-r-3"
                             : ""
                         }
@@ -79,4 +91,4 @@ const SideMenu = ({activeMenu}) => {
     )
 }
 
-export default SideMenu
+export default SideMenu;
