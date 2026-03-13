@@ -42,6 +42,7 @@ const CreateTask = () => {
     }));
   }
 
+  //clear the data after creating a new task
   const clearData = () => {
     //reset from
     setTaskData({
@@ -54,7 +55,7 @@ const CreateTask = () => {
       attachments: [],
     })
   }
-  
+
   //create task
   const createTask = async () => {
     setLoading(true);
