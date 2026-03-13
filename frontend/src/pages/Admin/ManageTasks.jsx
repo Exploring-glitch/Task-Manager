@@ -41,9 +41,7 @@ const ManageTasks = () => {
   }
 
   const handleClick = (taskData) => {
-    console.log("from manage task handleclick")
-    
-    navigate("/admin/create-task", { state: { taskId: taskData._id } });
+    navigate("/admin/create-tasks", { state: { taskId: taskData._id } });
   };
 
   //download task report 
