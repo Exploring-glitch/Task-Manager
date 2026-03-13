@@ -35,7 +35,7 @@ const TaskCard = ({ title, description, priority, status, progress, createdAt, d
     return (
         <div
             className='bg-white rounded-xl py-4 shadow-md shadow-gray-100 border border-gray-200/50 cursor-pointer'
-            onClick={onclick}
+            onClick={onClick}
         >
             <div className='flex items-end gap-3 px-4'>
                 <div className={`px-4 py-2 rounded text-[11px] font-medium ${getStatusTagColor()}`}>
