@@ -28,7 +28,7 @@ const TodoListInput = ({ todolist, setTodoList }) => {
 
     return (
         <div>
-            {todolist.map((item,index) => (
+            {todolist?.map((item,index) => (
                 <div
                     key={index}
                     className='mb-3 flex justify-between px-3 py-2 rounded-md border border-gray-100 bg-gray-50'

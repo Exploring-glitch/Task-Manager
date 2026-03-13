@@ -41,6 +41,7 @@ const CreateTask = () => {
       ...prevData, [key]: value
     }));
   }
+
   const clearData = () => {
     //reset from
     setTaskData({
@@ -53,10 +54,9 @@ const CreateTask = () => {
       attachments: [],
     })
   }
+  
   //create task
   const createTask = async () => {
-    consople.log("inside createtask")
-    
     setLoading(true);
 
     try {
@@ -140,7 +140,6 @@ const CreateTask = () => {
     }
 
     if (taskId) {
-      console.log("hello")
       await updateTask();
       return;
     }
@@ -150,8 +149,6 @@ const CreateTask = () => {
 
   //get task info by id
   const getTaskDetailsById = async () => {
-    console.log("inside getTaskDetailsById")
-
     try {
       const response = await get_task_details_by_id(taskId);
 
@@ -167,7 +164,7 @@ const CreateTask = () => {
             ? moment(taskInfo.dueDate).format("YYYY-MM-DD")
             : null,
           assignedTo: taskInfo?.assignedTo?.map((item) => item?._id) || [],
-          todoCheckList: taskInfo?.todoCheckList?.map((item) => item?.text) || [],
+          todoCheckList: taskInfo?.todoCheckLists?.map((item) => item?.text) || [],
           attachments: taskInfo?.attachments || [],
         }));
       }
@@ -189,6 +186,9 @@ const CreateTask = () => {
 
     return () => { }
   }, [taskId]);
+
+
+
 
   return (
     <DashboardLayout activeMenu="Create Task">

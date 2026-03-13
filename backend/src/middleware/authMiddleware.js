@@ -3,7 +3,6 @@ import { verifyToken } from "../utils/helper.js";
 
 //authentication middleware for all
 export const authMiddleware = async(req, res, next) => {
-    
     const token = req.cookies.token;
 
     if(!token){ 
