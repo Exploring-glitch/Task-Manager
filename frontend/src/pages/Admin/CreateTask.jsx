@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
 import { PRIORITY_DATA } from '../../util/data.jsx';
 import toast from "react-hot-toast";
@@ -9,7 +9,7 @@ import SelectDropDown from '../../components/inputs/SelectDropDown.jsx';
 import SelectUsers from '../../components/inputs/SelectUsers.jsx';
 import TodoListInput from '../../components/inputs/TodoListInput.jsx';
 import AddAttachmentInput from '../../components/inputs/AddAttachmentInput.jsx';
-import { create_task } from '../../api/tasksApi.js';
+import { create_task, get_task_details_by_id } from '../../api/tasksApi.js';
 import { update_task } from "../../api/tasksApi.js";
 
 
@@ -41,8 +41,6 @@ const CreateTask = () => {
       ...prevData, [key]: value
     }));
   }
-
-
   const clearData = () => {
     //reset from
     setTaskData({
@@ -55,9 +53,10 @@ const CreateTask = () => {
       attachments: [],
     })
   }
-
   //create task
   const createTask = async () => {
+    consople.log("inside createtask")
+    
     setLoading(true);
 
     try {
@@ -75,10 +74,10 @@ const CreateTask = () => {
       toast.success("Task Created Successfully");
       clearData();
     }
-    catch(e){
+    catch (e) {
       console.log("Error creating task. Error: ", e.message);
     }
-    finally{
+    finally {
       setLoading(false);
     }
   }
@@ -87,10 +86,10 @@ const CreateTask = () => {
   const updateTask = async () => {
     setLoading(true);
 
-    try{
+    try {
       const todoList = taskData.todoCheckList?.map((item) => {
         const prevTodoChecklist = currentTask?.todoCheckList || [];
-        const matchedTask = prevTodoChecklist.find((task) => task.text == item);
+        const matchedTask = prevTodoChecklist.find((task) => task.text === item);
 
         return {
           text: item,
@@ -99,17 +98,17 @@ const CreateTask = () => {
       });
 
       const response = await update_task(taskId, {
-        ...taskData, 
+        ...taskData,
         dueDate: new Date(taskData.dueDate).toISOString(),
         todoCheckLists: todoList
       });
 
       toast.success("Task Updated Successfully");
     }
-    catch(e){
+    catch (e) {
       console.log("Error creating task. Error: ", e)
     }
-    finally{
+    finally {
       setLoading(false);
     }
   }
@@ -141,8 +140,8 @@ const CreateTask = () => {
     }
 
     if (taskId) {
-      consol.log("hello")
-      updateTask();
+      console.log("hello")
+      await updateTask();
       return;
     }
 
@@ -151,7 +150,31 @@ const CreateTask = () => {
 
   //get task info by id
   const getTaskDetailsById = async () => {
+    console.log("inside getTaskDetailsById")
 
+    try {
+      const response = await get_task_details_by_id(taskId);
+
+      if (response) {
+        const taskInfo = response;
+        setCurrentTask(taskInfo);
+
+        setTaskData((prevState) => ({
+          title: taskInfo.title,
+          description: taskInfo.description,
+          priority: taskInfo.priority,
+          dueDate: taskInfo.dueDate
+            ? moment(taskInfo.dueDate).format("YYYY-MM-DD")
+            : null,
+          assignedTo: taskInfo?.assignedTo?.map((item) => item?._id) || [],
+          todoCheckList: taskInfo?.todoCheckList?.map((item) => item?.text) || [],
+          attachments: taskInfo?.attachments || [],
+        }));
+      }
+    }
+    catch (e) {
+      console.log("Error fetching users. Error: ", e)
+    }
   }
 
   //delete task
@@ -159,7 +182,13 @@ const CreateTask = () => {
 
   }
 
+  useEffect(() => {
+    if (taskId) {
+      getTaskDetailsById(taskId)
+    }
 
+    return () => { }
+  }, [taskId]);
 
   return (
     <DashboardLayout activeMenu="Create Task">
