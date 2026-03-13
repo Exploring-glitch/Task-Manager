@@ -10,6 +10,8 @@ import SelectUsers from '../../components/inputs/SelectUsers.jsx';
 import TodoListInput from '../../components/inputs/TodoListInput.jsx';
 import AddAttachmentInput from '../../components/inputs/AddAttachmentInput.jsx';
 import { create_task } from '../../api/tasksApi.js';
+import { update_task } from "../../api/tasksApi.js";
+
 
 
 
@@ -39,6 +41,7 @@ const CreateTask = () => {
       ...prevData, [key]: value
     }));
   }
+
 
   const clearData = () => {
     //reset from
@@ -82,7 +85,33 @@ const CreateTask = () => {
 
   //update task
   const updateTask = async () => {
+    setLoading(true);
 
+    try{
+      const todoList = taskData.todoCheckList?.map((item) => {
+        const prevTodoChecklist = currentTask?.todoCheckList || [];
+        const matchedTask = prevTodoChecklist.find((task) => task.text == item);
+
+        return {
+          text: item,
+          completed: matchedTask ? matchedTask.completed : false,
+        };
+      });
+
+      const response = await update_task(taskId, {
+        ...taskData, 
+        dueDate: new Date(taskData.dueDate).toISOString(),
+        todoCheckLists: todoList
+      });
+
+      toast.success("Task Updated Successfully");
+    }
+    catch(e){
+      console.log("Error creating task. Error: ", e)
+    }
+    finally{
+      setLoading(false);
+    }
   }
 
   //on sumit
@@ -112,6 +141,7 @@ const CreateTask = () => {
     }
 
     if (taskId) {
+      consol.log("hello")
       updateTask();
       return;
     }

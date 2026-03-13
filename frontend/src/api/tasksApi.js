@@ -15,3 +15,8 @@ export const get_all_tasks = async(taskData) => {
     const { data } = await axiosInstance.get("/api/tasks/", taskData);
     return data;
 }
+
+export const update_task = async(taskData) => {
+    const { data } = await axiosInstance.put("/api/tasks/update-task/:id", taskData);
+    return data;
+}

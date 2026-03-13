@@ -12,7 +12,7 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
     const getAllUsers = async () => {
         try {
             const response = await get_all_users();
-            console.log(response)
+        
             if (response?.length > 0) {
                 setAllUsers(response)
             }
