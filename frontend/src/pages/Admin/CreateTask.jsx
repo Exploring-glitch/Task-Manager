@@ -9,8 +9,7 @@ import SelectDropDown from '../../components/inputs/SelectDropDown.jsx';
 import SelectUsers from '../../components/inputs/SelectUsers.jsx';
 import TodoListInput from '../../components/inputs/TodoListInput.jsx';
 import AddAttachmentInput from '../../components/inputs/AddAttachmentInput.jsx';
-import { create_task, get_task_details_by_id } from '../../api/tasksApi.js';
-import { update_task } from "../../api/tasksApi.js";
+import { create_task, delete_task, get_task_details_by_id, update_task } from '../../api/tasksApi.js';
 
 
 
@@ -177,7 +176,15 @@ const CreateTask = () => {
 
   //delete task
   const deleteTask = async () => {
-
+    try{
+      const response = await delete_task(taskId);
+      setOpenDeleteAlert(false);
+      toast.success("Expense details deleted successfully")
+      navigate('/admin/tasks')
+    }
+    catch(e){
+      console.log("Error deleting expense. Error: ", e);
+    }
   }
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axiosInstance } from "../util/axiosInstance.js";
 
 
@@ -21,8 +22,12 @@ export const get_task_details_by_id = async(taskId) => {
     return data;    
 }
 
-
 export const update_task = async(taskId, taskData) => {
     const { data } = await axiosInstance.put(`/api/tasks/update-task/${taskId}`, taskData);
+    return data;
+}
+
+export const delete_task = async(taskId) => {
+    const { data } = await axiosInstance.delete(`/api/tasks/delete-task/${taskId}`);
     return data;
 }
