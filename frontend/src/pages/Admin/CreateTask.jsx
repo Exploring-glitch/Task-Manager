@@ -11,6 +11,7 @@ import TodoListInput from '../../components/inputs/TodoListInput.jsx';
 import AddAttachmentInput from '../../components/inputs/AddAttachmentInput.jsx';
 import { create_task, delete_task, get_task_details_by_id, update_task } from '../../api/tasksApi.js';
 import DeleteAlert from '../../components/DeleteAlert.jsx';
+import { ModalDelete } from '../../components/ModalDelete.jsx';
 
 
 
@@ -321,7 +322,7 @@ const CreateTask = () => {
         </div>
       </div>
 
-      <Modal
+      <ModalDelete
         isOpen={openDeleteAlert}
         onClose={() => setOpenDeleteAlert(false)}
         title="Delete Task"
@@ -330,7 +331,7 @@ const CreateTask = () => {
           content="Are you sure you want to delete this task?"
           onDelete={() => deleteTask()}
         />
-      </Modal>
+      </ModalDelete>
     </DashboardLayout>
   )
 }
