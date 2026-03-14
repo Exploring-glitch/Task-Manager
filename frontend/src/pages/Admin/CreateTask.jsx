@@ -10,6 +10,7 @@ import SelectUsers from '../../components/inputs/SelectUsers.jsx';
 import TodoListInput from '../../components/inputs/TodoListInput.jsx';
 import AddAttachmentInput from '../../components/inputs/AddAttachmentInput.jsx';
 import { create_task, delete_task, get_task_details_by_id, update_task } from '../../api/tasksApi.js';
+import DeleteAlert from '../../components/DeleteAlert.jsx';
 
 
 
@@ -319,6 +320,17 @@ const CreateTask = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={openDeleteAlert}
+        onClose={() => setOpenDeleteAlert(false)}
+        title="Delete Task"
+      >
+        <DeleteAlert 
+          content="Are you sure you want to delete this task?"
+          onDelete={() => deleteTask()}
+        />
+      </Modal>
     </DashboardLayout>
   )
 }
