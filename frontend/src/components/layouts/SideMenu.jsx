@@ -40,7 +40,7 @@ const SideMenu = ({ activeMenu }) => {
         if (user?.user) {
             setSideMenuData(user?.user?.role === "admin" ? SIDE_MENU_DATA : SIDE_MENU_USER_DATA)
         }
-        
+
     }, [user]);
 
     return (

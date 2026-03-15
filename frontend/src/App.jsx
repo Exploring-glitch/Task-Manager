@@ -32,6 +32,8 @@ function App() {
           <Route path='/admin/dashboard' element={<AdminDashboard />} />
           <Route path='/admin/tasks' element={<ManageTasks />} />
           <Route path='/admin/create-tasks' element={<CreateTask />} />
+          <Route path='/admin/team-members' element={<ManageUsers />} />
+
         </Route>
 
         {/*User Routes*/}
