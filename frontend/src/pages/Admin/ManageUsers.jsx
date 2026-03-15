@@ -3,6 +3,7 @@ import DashboardLayout from '../../components/layouts/DashboardLayout.jsx'
 import { get_all_users } from '../../api/userApi.js';
 import { useEffect } from 'react';
 import { LuFileSpreadsheet } from 'react-icons/lu';
+import UserCard from '../../components/cards/UserCard.jsx';
 
 const ManageUsers = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -50,8 +51,13 @@ const ManageUsers = () => {
           </button>
         </div>
 
-        <div className=''>
-
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-4'>
+          {allUsers?.map((user) => (
+            <UserCard
+              key={user._id}
+              userInfo={user}
+            />
+          ))}
         </div>
       </div>
     </DashboardLayout>
