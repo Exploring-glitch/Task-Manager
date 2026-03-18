@@ -4,6 +4,8 @@ import { get_all_users } from '../../api/userApi.js';
 import { useEffect } from 'react';
 import { LuFileSpreadsheet } from 'react-icons/lu';
 import UserCard from '../../components/cards/UserCard.jsx';
+import { download_report } from '../../api/reportApi.js';
+import toast from 'react-hot-toast';
 
 const ManageUsers = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -23,7 +25,22 @@ const ManageUsers = () => {
 
   //download task report
   const handleDownloadReport = async() => {
+    try{
+      const response = await download_report({responseType: "blob"})
 
+      const url = window.webkitURL.createObjectURL(new Blob([response]))
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "user-details.xlsx")
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    }
+    catch(err){
+      console.log("Error downloading report. error: ", err)
+      toast.error("Failed to download expense details. Please try again.")
+    }
   }
 
   useEffect(() => {
