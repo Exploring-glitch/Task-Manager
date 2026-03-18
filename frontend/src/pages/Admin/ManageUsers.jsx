@@ -26,7 +26,7 @@ const ManageUsers = () => {
   //download task report
   const handleDownloadReport = async() => {
     try{
-      const response = await download_report({responseType: "blob"})
+      const response = await download_report()
 
       const url = window.webkitURL.createObjectURL(new Blob([response]))
       const link = document.createElement("a");
