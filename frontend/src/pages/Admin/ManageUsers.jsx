@@ -27,9 +27,8 @@ const ManageUsers = () => {
   const handleDownloadReport = async() => {
     try{
       const response = await download_report()
-      console.log("hello",response)
 
-      const url = window.webkitURL.createObjectURL(new Blob([response.data]))
+      const url = window.webkitURL.createObjectURL(new Blob([response]))
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", "user-details.xlsx")
