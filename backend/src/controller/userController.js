@@ -12,6 +12,8 @@ export const getAllUsers = async (req, res) => {
         //return user info along with the current task count and status of each user
         const userWithTaskCount = await memberInfo(users);
 
+        console.log("hellooo", userWithTaskCount)
+
         res.status(200).json( userWithTaskCount )
     }
     catch (error) {
