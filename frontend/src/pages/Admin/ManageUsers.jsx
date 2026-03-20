@@ -30,9 +30,12 @@ const ManageUsers = () => {
 
       const url = window.webkitURL.createObjectURL(new Blob([response]))
       const link = document.createElement("a");
+
       link.href = url;
       link.setAttribute("download", "user-details.xlsx")
+
       document.body.appendChild(link);
+      
       link.click();
       link.parentNode.removeChild(link);
       window.URL.revokeObjectURL(url);
