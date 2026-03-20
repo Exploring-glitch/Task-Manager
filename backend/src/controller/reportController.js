@@ -97,8 +97,6 @@ export const exportUsersReport = async (req, res) => {
             }
         });
 
-        console.log("this",userTaskMap);
-
         const workBook = new excelJs.Workbook();
         const workSheet = workBook.addWorksheet("User Tasks Report");
         workSheet.columns = [
