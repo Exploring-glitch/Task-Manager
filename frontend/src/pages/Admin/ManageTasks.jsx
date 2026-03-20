@@ -46,7 +46,12 @@ const ManageTasks = () => {
 
   //download task report 
   const handleDownloadReport = async () => {
-
+    try{
+      const response = await download_task_report();
+    }
+    catch(err){
+      console.log("Error downloading task reports. Error:", err);
+    }
   };
 
   useEffect(() => {
