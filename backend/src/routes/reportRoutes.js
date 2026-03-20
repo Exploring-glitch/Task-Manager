@@ -4,7 +4,7 @@ import { exportTasksReport, exportUsersReport } from "../controller/reportContro
 const reportRouter = express.Router();
 
 
-reportRouter.get("/exports/tasks", authMiddleware, adminOnly, exportTasksReport) //export all tasks as an excel/pdf file. access: admin
+reportRouter.get("/export/tasks", authMiddleware, adminOnly, exportTasksReport) //export all tasks as an excel/pdf file. access: admin
 reportRouter.get("/export/users", authMiddleware, adminOnly, exportUsersReport) //export all user-task report. access: admin
 
 

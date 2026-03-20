@@ -5,6 +5,8 @@ import { get_all_tasks } from '../../api/tasksApi.js';
 import { LuFileSpreadsheet } from 'react-icons/lu';
 import TaskStatusList from '../../components/TaskStatusList.jsx';
 import TaskCard from '../../components/cards/TaskCard.jsx';
+import { download_task_report } from '../../api/reportApi.js';
+import toast from 'react-hot-toast';
 
 
 const ManageTasks = () => {
@@ -48,9 +50,22 @@ const ManageTasks = () => {
   const handleDownloadReport = async () => {
     try{
       const response = await download_task_report();
+
+      const url = window.webkitURL.createObjectURL(new Blob([response]))
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.setAttribute("download", "task-details.xlsx")
+
+      document.body.appendChild(link);
+      
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
     }
     catch(err){
       console.log("Error downloading task reports. Error:", err);
+      toast.error("Failed to download expense details. Please try again.")
     }
   };
 
