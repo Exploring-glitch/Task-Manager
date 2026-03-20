@@ -5,9 +5,6 @@ import Task from "../models/taskSchema.js"
 export const memberInfo = async (users) => {
     return Promise.all(
         users.map(async (user) => {
-
-            console.log("user",user)
-
             const pendingTask = await Task.countDocuments({
                 assignedTo: user._id,
                 status: "Pending"
@@ -16,9 +13,6 @@ export const memberInfo = async (users) => {
                 assignedTo: user._id,
                 status: "In Progress"
             });
-
-            console.log("inProgressTask: ", inProgressTask)
-
             const completedTask = await Task.countDocuments({
                 assignedTo: user._id,
                 status: "Completed"
