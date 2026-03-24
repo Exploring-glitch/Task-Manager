@@ -24,8 +24,6 @@ const ManageTasks = () => {
         }
       });
 
-      console.log(response)
-
       setAllTasks(response?.tasks?.length > 0 ? response.tasks : []);
 
       //map statusSummary data with fixed labels and order
