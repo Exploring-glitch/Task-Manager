@@ -41,7 +41,7 @@ const MyTask = () => {
   }
 
   const handleClick = (taskId) => {
-    navigate("/member/task-details/${taskId}");
+    navigate(`/member/task-details/${taskId}`);
   };
 
   useEffect(() => {
