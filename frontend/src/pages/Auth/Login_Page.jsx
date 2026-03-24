@@ -132,7 +132,7 @@ const Login_Page = () => {
                         value={password}
                         onInput={(c) => setPassword(c.target.value)}
                         type="password"
-                        placeholder="Minimum 8 characters needed"
+                        placeholder="Minimum 6 characters needed"
                         className="
                         mt-2 w-full p-2 rounded
                         text-sm md:text-base
