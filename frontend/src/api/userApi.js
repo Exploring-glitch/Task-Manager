@@ -32,3 +32,8 @@ export const get_all_users = async () => {
     const { data } = await axiosInstance.get("api/users/");
     return data;
 }
+
+export const user_dashboard_data = async() => {
+    const { data } = await axiosInstance.get("api/tasks/dashboard-user-data")
+    return data;
+}
