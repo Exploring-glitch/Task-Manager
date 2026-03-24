@@ -24,6 +24,7 @@ const ManageTasks = () => {
         }
       });
 
+      console.log(response)
 
       setAllTasks(response?.tasks?.length > 0 ? response.tasks : []);
 

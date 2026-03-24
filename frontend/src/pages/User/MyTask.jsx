@@ -23,7 +23,6 @@ const MyTask = () => {
           status: filterStatus === "All" ? "" : filterStatus,
         }
       });
-
       setAllTasks(response?.tasks?.length > 0 ? response.tasks : []);
 
       //map statusSummary data with fixed labels and order

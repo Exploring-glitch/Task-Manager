@@ -116,7 +116,7 @@ export const getTaskById = async (req, res) => { //get tsk by id. access: users(
         if (!task) {
             return res.status(404).json({ "message": "Task not found" })
         }
-
+        console.log("task: ", task)
         res.json(task)
     }
     catch (error) {

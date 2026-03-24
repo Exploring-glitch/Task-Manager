@@ -44,20 +44,15 @@ export const createTaskDao = async(title, description, priority, status, dueDate
     await newTask.save();
     return newTask;
 }
-
-
 export const findTaskById = async(id) =>{
     return await Task.findById(id);
 }
-
 export const findTaskByIdWithUser = async(id) =>{
     return await Task.findById(id).populate(
         "assignedTo" , 
         "name email profileImageUrl"
     );
 }
-
-
 export const findTasksForAdminDao = async(filter) =>{
     return await Task.find(filter).populate(
         "assignedTo",
@@ -67,7 +62,7 @@ export const findTasksForAdminDao = async(filter) =>{
 export const findTasksForMemberDao = async(filter, id) =>{
     return await Task.find({ ...filter, assignedTo : id }).populate(
         "assignedTo",
-        "name email profileImgUrl" 
+        "name email profileImageUrl" 
     )
 }
 export const allTaskDao = async(role, id) =>{
