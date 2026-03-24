@@ -52,7 +52,7 @@ const MyTask = () => {
 
 
   return (
-    <DashboardLayout activeMenu="Manage Task">
+    <DashboardLayout activeMenu="My Tasks">
       <div className='my-5'>
         <div className='flex flex-col justify-between
           lg:flex-row lg:items-center'
