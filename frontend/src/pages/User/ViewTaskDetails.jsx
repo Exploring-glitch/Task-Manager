@@ -21,9 +21,9 @@ const ViewTaskDetails = () => {
   }
 
 
-  const getTaskDetailsId = async () => {
+  const getTaskDetailsId = async (id) => {
     try{
-      const response = await get_task_details_by_id()
+      const response = await get_task_details_by_id(id)
       console.log(response);
       if (response) {
         const taskInfo = response;
@@ -43,10 +43,9 @@ const ViewTaskDetails = () => {
   };
 
   useEffect(() => {
-    console.log("hello")
     if (id) {
-      console.log("hello id")
-      getTaskDetailsId();
+      console.log("hello id: ", id)
+      getTaskDetailsId(id);
     }
     
     return () => {};
