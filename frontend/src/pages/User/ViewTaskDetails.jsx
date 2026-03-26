@@ -4,6 +4,10 @@ import { get_task_details_by_id } from '../../api/tasksApi.js';
 import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
 import AvatarGroup from '../../components/AvatarGroup.jsx';
 import moment from 'moment';
+import { LuSquareArrowOutUpRight } from 'react-icons/lu';
+
+
+
 
 const ViewTaskDetails = () => {
   const { id } = useParams();
@@ -26,7 +30,7 @@ const ViewTaskDetails = () => {
   const getTaskDetailsId = async (id) => {
     try {
       const response = await get_task_details_by_id(id)
-  
+      console.log(response)
       if (response) {
         const taskInfo = response;
         setTask(taskInfo);
@@ -77,7 +81,7 @@ const ViewTaskDetails = () => {
                 />
               </div>
 
-              <div className='mt-4 grid grid-cols-12'>
+              <div className='mt-4 grid grid-cols-12 gap-4'>
                 <div className='col-span-6 md:col-span-4'>
                   <InfoBox label="Priority" value={task?.priority} />
                 </div>
@@ -97,7 +101,34 @@ const ViewTaskDetails = () => {
                   />
                 </div>
               </div>
+                
+              <div className='mt-2'>
+                <label className='text-xs font-medium text-slate-500'>Todo CheckList</label>
 
+                {task?.todoCheckLists?.map((item, index) => (
+                  <TodoCheckList
+                    key={`todo_${index}`}
+                    text={item.text}
+                    isChecked={item?.Completed}
+                    onChange={() => updateTodoCheckList(index)}
+                  />
+                ))}
+              </div>
+              
+              {task.attachments?.length > 0 && (
+                <div className='mt-2'>
+                  <label className='text-xs font-medium text-slate-500'>Attachments</label>
+
+                  {task?.attachments?.map((link, index) => (
+                    <Attachment 
+                      key={`link_${index}`}
+                      link={link}
+                      index={index}
+                      onClick={() => handleLinkClick(link)}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -114,4 +145,31 @@ const InfoBox = ({ label, value }) => {
 
     <p className='mt-0.5 text-[12px] font-medium text-gray-700 md:text-[13px]'> {value} </p>
   </>
+};
+
+const TodoCheckList = ({text, isChecked, onChange}) => {
+  return <div className='flex items-center gap-3 p-3'>
+    <input
+      type='checkbox'
+      checked={isChecked}
+      onChange={onChange}
+      className='w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded-sm outline-none cursor-pointer'
+    />
+    
+    <p className='text-[13px] text-gray-800'> {text} </p>
+  </div>
+};
+
+const Attachment = ({link, index, onClick}) => {
+  return <div className='mt-2 flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md cursor-pointer'
+   onClick={onClick}
+  >
+    <div className='flex-1 flex items-center gap-3'>
+      <span className='mr-2 text-xs text-gray-400 font-semibold'> {index < 9 ? `0${index + 1}` : index + 1} </span>
+
+      <p className='text-xs text-black'> {link} </p>
+    </div>
+
+    <LuSquareArrowOutUpRight className='text-gray-400 ' />
+  </div>
 }
