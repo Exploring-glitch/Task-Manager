@@ -41,6 +41,7 @@ const MyTask = () => {
   }
 
   const handleClick = (taskId) => {
+    console.log("taskId frm MyTask.jsx:", taskId)
     navigate(`/member/task-details/${taskId}`);
   };
 

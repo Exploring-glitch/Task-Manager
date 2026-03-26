@@ -54,7 +54,6 @@ const UserDashboard = () => {
         setDashBoardData(response);
         prepareChartData(response?.charts || null);
       }
-
     }
     catch (e) {
       console.error('Failed to fetch Dashboard data: ', e);

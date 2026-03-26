@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { get_task_details_by_id } from '../../api/tasksApi.js';
 
 const ViewTaskDetails = () => {
   const { id } = useParams();
+  console.log("id: ", id)
   const [task, setTask] = useState(null);
 
   const getStatusTagColor = (status) => {
@@ -19,7 +21,20 @@ const ViewTaskDetails = () => {
   }
 
 
-  const getTaskDetailsId = async () => { };
+  const getTaskDetailsId = async () => {
+    try{
+      const response = await get_task_details_by_id()
+      console.log(response);
+      if (response) {
+        const taskInfo = response;
+        setTask(taskInfo);
+      }
+    }
+    catch(err){
+      console.log("Error fetching task details. Error: ", err)
+    }
+  };
+
 
   const updateTodoCheckList = async () => { };
 
@@ -28,7 +43,9 @@ const ViewTaskDetails = () => {
   };
 
   useEffect(() => {
+    console.log("hello")
     if (id) {
+      console.log("hello id")
       getTaskDetailsId();
     }
     

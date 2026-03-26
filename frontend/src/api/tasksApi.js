@@ -30,3 +30,4 @@ export const delete_task = async(taskId) => {
     const { data } = await axiosInstance.delete(`/api/tasks/delete-task/${taskId}`);
     return data;
 }
+
