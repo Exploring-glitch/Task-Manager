@@ -30,7 +30,7 @@ const ViewTaskDetails = () => {
   const getTaskDetailsId = async (id) => {
     try {
       const response = await get_task_details_by_id(id)
-      console.log(response)
+      
       if (response) {
         const taskInfo = response;
         setTask(taskInfo);
