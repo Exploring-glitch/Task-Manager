@@ -31,3 +31,9 @@ export const delete_task = async(taskId) => {
     return data;
 }
 
+export const update_todoCheckLists = async(taskId, todoCheckLists) => {
+    const { data } = await axiosInstance.put(`/api/tasks/update-task-todo/${taskId}`, todoCheckLists)
+    console.log("api: ",data)
+    return data;
+}
+

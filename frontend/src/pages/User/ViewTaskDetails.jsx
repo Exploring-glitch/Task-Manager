@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { get_task_details_by_id } from '../../api/tasksApi.js';
+import { get_task_details_by_id, update_todoCheckLists } from '../../api/tasksApi.js';
 import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
 import AvatarGroup from '../../components/AvatarGroup.jsx';
 import moment from 'moment';
@@ -41,9 +41,31 @@ const ViewTaskDetails = () => {
     }
   };
 
-  const updateTodoCheckList = async () => { };
+  const updateTodoCheckList = async (index) => {
+    const todoList = [...task?.todoCheckLists];
+    const taskId = id;
+
+    if (todoList && todoList[index]) {
+      todoList[index].completed = !todoList[index].completed;
+
+      try {
+        const response = await update_todoCheckLists(taskId, { todoCheckLists: todoList })
+        if (response.status === 200) {
+          setTask(response?.get_task_details_by_id || task);
+        }else{
+          todoList[index].completed = !todoList[index].completed;
+        }
+      }
+      catch(err) {
+        todoList[index].completed = !todoList[index].completed;
+      }
+    }
+  };
 
   const handleLinkClick = (link) => {
+    if (!/^https?:\/\//i.test(link)) {
+      link = "https://" + link;
+    }
     window.open(link, "_blank");
   };
 
@@ -109,7 +131,7 @@ const ViewTaskDetails = () => {
                   <TodoCheckList
                     key={`todo_${index}`}
                     text={item.text}
-                    isChecked={item?.Completed}
+                    isChecked={item?.completed}
                     onChange={() => updateTodoCheckList(index)}
                   />
                 ))}
