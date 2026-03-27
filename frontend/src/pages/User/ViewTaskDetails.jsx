@@ -30,7 +30,7 @@ const ViewTaskDetails = () => {
   const getTaskDetailsId = async (id) => {
     try {
       const response = await get_task_details_by_id(id)
-      
+
       if (response) {
         const taskInfo = response;
         setTask(taskInfo);
@@ -47,17 +47,23 @@ const ViewTaskDetails = () => {
 
     if (todoList && todoList[index]) {
       todoList[index].completed = !todoList[index].completed;
+      setTask(prev => ({
+        ...prev,
+        todoCheckLists: todoList
+      }));
 
       try {
         const response = await update_todoCheckLists(taskId, { todoCheckLists: todoList })
-        if (response.status === 200) {
-          setTask(response?.get_task_details_by_id || task);
-        }else{
-          todoList[index].completed = !todoList[index].completed;
+        if (response) {
+          setTask(response?.tasks || task);
         }
       }
-      catch(err) {
+      catch (err) {
         todoList[index].completed = !todoList[index].completed;
+        setTask(prev => ({
+          ...prev,
+          todoCheckLists: todoList
+        }));
       }
     }
   };
@@ -109,7 +115,7 @@ const ViewTaskDetails = () => {
                 </div>
 
                 <div className='col-span-6 md:col-span-4'>
-                  <InfoBox label="Due Date" value={task?.dueDate 
+                  <InfoBox label="Due Date" value={task?.dueDate
                     ? moment(task?.dueDate).format("Do MMM YYYY")
                     : "N/A"
                   } />
@@ -117,13 +123,13 @@ const ViewTaskDetails = () => {
 
                 <div className='col-span-6 md:col-span-4'>
                   <label className='text-xs font-medium text-slate-500'> Assigned To </label>
-                  <AvatarGroup 
-                    avatars={ task?.assignedTo?.map((user) =>user?.profileImageUrl || []) }
+                  <AvatarGroup
+                    avatars={task?.assignedTo?.map((user) => user?.profileImageUrl || [])}
                     maxVisible={5}
                   />
                 </div>
               </div>
-                
+
               <div className='mt-2'>
                 <label className='text-xs font-medium text-slate-500'>Todo CheckList</label>
 
@@ -136,13 +142,13 @@ const ViewTaskDetails = () => {
                   />
                 ))}
               </div>
-              
+
               {task.attachments?.length > 0 && (
                 <div className='mt-2'>
                   <label className='text-xs font-medium text-slate-500'>Attachments</label>
 
                   {task?.attachments?.map((link, index) => (
-                    <Attachment 
+                    <Attachment
                       key={`link_${index}`}
                       link={link}
                       index={index}
@@ -169,7 +175,7 @@ const InfoBox = ({ label, value }) => {
   </>
 };
 
-const TodoCheckList = ({text, isChecked, onChange}) => {
+const TodoCheckList = ({ text, isChecked, onChange }) => {
   return <div className='flex items-center gap-3 p-3'>
     <input
       type='checkbox'
@@ -177,14 +183,14 @@ const TodoCheckList = ({text, isChecked, onChange}) => {
       onChange={onChange}
       className='w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded-sm outline-none cursor-pointer'
     />
-    
+
     <p className='text-[13px] text-gray-800'> {text} </p>
   </div>
 };
 
-const Attachment = ({link, index, onClick}) => {
+const Attachment = ({ link, index, onClick }) => {
   return <div className='mt-2 flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md cursor-pointer'
-   onClick={onClick}
+    onClick={onClick}
   >
     <div className='flex-1 flex items-center gap-3'>
       <span className='mr-2 text-xs text-gray-400 font-semibold'> {index < 9 ? `0${index + 1}` : index + 1} </span>
