@@ -18,25 +18,7 @@ const SideMenu = ({ activeMenu }) => {
     }
 
     const handleClick = async (route) => {
-        if (route == "/logout") {
-            const confirmLogout = window.confirm("Are you sure you want to log out?");
-            if (!confirmLogout) return;
-
-            try {
-
-                const response = await logout_user();
-            
-                toast.success("Logged out successfully");
-
-                clearUser(); // remove user from context
-                navigate("/auth/login"); // redirect to login
-            }
-            catch (error) {
-                console.error("Logout failed:", error);
-            }
-            return; //after redirecting, return from the function i.e navigate(route) dosen't run
-        }
-        navigate(route) //if the route is not "logout" then this will run: redirect to the given route
+        navigate(route) //redirect to the given route
     }
 
     useEffect(() => {

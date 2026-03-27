@@ -199,7 +199,6 @@ const CreateTask = () => {
 
 
 
-
   return (
     <DashboardLayout activeMenu="Create Task">
       <div className='mt-5'>
@@ -329,7 +328,8 @@ const CreateTask = () => {
       >
         <DeleteAlert 
           content="Are you sure you want to delete this task?"
-          onDelete={() => deleteTask()}
+          onConfirm={() => deleteTask()}
+          btnText="Delete"
         />
       </ModalDelete>
     </DashboardLayout>

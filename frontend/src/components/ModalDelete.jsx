@@ -1,8 +1,6 @@
 
 
-
 export const ModalDelete = ({ children, isOpen, onClose, title }) => {
-
     if (!isOpen) {
         return;
     }

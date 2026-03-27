@@ -31,7 +31,7 @@ export const SIDE_MENU_DATA = [
         id: "05",
         label: "Logout",
         icon: LuLogOut,
-        path: "/logout"
+        path: "/auth/logout"
     }
 ]
 
@@ -53,7 +53,7 @@ export const SIDE_MENU_USER_DATA = [
         id: "05",
         label: "Logout",
         icon: LuLogOut,
-        path: "/logout"
+        path: "/auth/logout"
     },
 ];
 

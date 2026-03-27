@@ -12,6 +12,7 @@ import Signup_Page from './pages/Auth/Signup_page.jsx';
 import { UserContext, UserProvider } from './context/userContext.jsx';
 import { useContext } from 'react';
 import { Toaster } from "react-hot-toast";
+import Logout_Page from './pages/Auth/Logout_Page.jsx';
 
 
 
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path='/auth/login' element={<Login_Page />} />
         <Route path='/auth/signup' element={<Signup_Page />} />
+        <Route path='/auth/logout' element={<Logout_Page />} />
 
         {/*Admin Routes*/}
         <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
@@ -67,3 +69,4 @@ const Root = () => {
 
 export default App
 
+  
