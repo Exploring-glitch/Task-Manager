@@ -26,7 +26,7 @@ function App() {
 
       <Routes>
         <Route path='/auth/login' element={<Login_Page />} />
-        <Route path='/auth/signup' element={<Signup_Page />} />
+        <Route path='/auth/signup' element={<Signup_Page />} /> 
         <Route path='/auth/logout' element={<Logout_Page />} />
 
         {/*Admin Routes*/}
