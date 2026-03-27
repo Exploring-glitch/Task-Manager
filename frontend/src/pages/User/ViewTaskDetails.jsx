@@ -167,6 +167,9 @@ const ViewTaskDetails = () => {
 
 export default ViewTaskDetails;
 
+
+
+
 const InfoBox = ({ label, value }) => {
   return <>
     <label className='text-xs font-medium text-slate-500'> {label} </label>

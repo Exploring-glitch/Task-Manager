@@ -64,7 +64,7 @@ export const getUserProfile = async (req, res) => {
             return res.status(404).json({ "message": "User not found" })
         }
 
-        res.status(200).json({user})
+        res.status(200).json({ user })
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error" });
@@ -113,6 +113,13 @@ export const uploadProfileImage = (req, res) => {
 }
 
 export const userLogout = (req, res) => {
-    res.clearCookie("token");
-    res.status(200).json({ message: "Logged out successfully" });
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+
+    if (confirmLogout) {
+        res.clearCookie("token");
+        res.status(200).json({ message: "Logged out successfully" });
+    }
+    else{
+        console.log("Logout Failed.");
+    }
 }

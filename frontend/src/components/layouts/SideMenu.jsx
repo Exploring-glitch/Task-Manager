@@ -19,10 +19,13 @@ const SideMenu = ({ activeMenu }) => {
 
     const handleClick = async (route) => {
         if (route == "/logout") {
+            const confirmLogout = window.confirm("Are you sure you want to log out?");
+            if (!confirmLogout) return;
+
             try {
 
                 const response = await logout_user();
-                console.log(response);
+            
                 toast.success("Logged out successfully");
 
                 clearUser(); // remove user from context
