@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../context/userContext.jsx';
 import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
 import { ModalDelete } from '../../components/ModalDelete.jsx';
-import DeleteAlert from '../../components/DeleteAlert.jsx';
+import ConfirmationModal from '../../components/ConfirmationModal.jsx';
 
 const Logout_Page = () => {
     const { user, clearUser } = useContext(UserContext);
@@ -47,7 +47,7 @@ const Logout_Page = () => {
                 onClose={() => setOpenLogoutAlert(false)}
                 title="Logout"
             >
-                <DeleteAlert
+                <ConfirmationModal
                     content="Are you sure you want to logout?"
                     onConfirm={() => handleLogout()}
                     btnText="Logout"

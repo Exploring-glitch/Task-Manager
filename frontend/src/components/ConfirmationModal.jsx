@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DeleteAlert = ({ content, onConfirm, btnText, onCancel }) => {
+const ConfirmationModal = ({ content, onConfirm, btnText, onCancel }) => {
   return (
     <div>
       <p className='text-sm'> {content} </p>
@@ -27,4 +27,4 @@ const DeleteAlert = ({ content, onConfirm, btnText, onCancel }) => {
   )
 }
 
-export default DeleteAlert;
+export default ConfirmationModal;

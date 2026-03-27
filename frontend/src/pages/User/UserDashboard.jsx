@@ -49,7 +49,7 @@ const UserDashboard = () => {
   const getDashboardData = async () => {
     try {
       const response = await user_dashboard_data();
-
+      
       if (response) {
         setDashBoardData(response);
         prepareChartData(response?.charts || null);

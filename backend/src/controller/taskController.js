@@ -292,8 +292,8 @@ export const getDashboardData = async (req, res) => { //access: admin
 export const getUserDashboardData = async (req, res) => { //access: logged-in users(members)
     try {
         const userId = req.user._id;
-
-        const totalTask = await Task.countDocuments();
+        
+        const totalTask = await Task.countDocuments({ "assignedTo": userId});
         const pendingTasks = await Task.countDocuments({ "assignedTo": userId, "status": "Pending" })
         const inProgressTasks = await Task.countDocuments({ "assignedTo": userId, "status": "In Progress" })
         const completedTasks = await Task.countDocuments({ "assignedTo": userId, "status": "Completed" })
