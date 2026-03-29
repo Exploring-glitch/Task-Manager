@@ -14,11 +14,31 @@ import cookieParser from "cookie-parser";
 
 
 
-app.use(cors({
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}));
+const allowedOrigins = [
+  "https://task-manager-git-main-sreeja-deys-projects.vercel.app",
+  "https://task-manager-lime-psi-31.vercel.app/",
+  "https://task-manager-j9gi15pc7-sreeja-deys-projects.vercel.app/"
+];
+
+app.use(
+  cors({
+    origin: function(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
+
+//app.use(cors({
+//    origin: process.env.CLIENT_URL,
+//    methods: ["GET", "POST", "PUT", "DELETE"],
+//    credentials: true
+//}));
 
 
 app.use(cookieParser());
