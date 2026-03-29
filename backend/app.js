@@ -35,7 +35,6 @@ const __dirname = path.dirname(__filename);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 
-console.log("HELLO BACKEND")
 
 //Routes
 app.use("/api/auth", authRouter)
