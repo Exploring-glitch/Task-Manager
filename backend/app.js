@@ -12,8 +12,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 
-app.use(cookieParser());
-
 
 
 app.use(cors({
@@ -23,8 +21,11 @@ app.use(cors({
 }));
 
 
+app.use(cookieParser());
+
 //middleware
 app.use(express.json());
+
 
 
 //Serve uploads folder: to make the folder publicly accessible eg.-http://localhost:3000/uploads/1769529726273-sampleimg1.jpg
@@ -34,6 +35,8 @@ const __dirname = path.dirname(__filename);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 
+console.log("HELLO BACKEND")
+
 //Routes
 app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter)
@@ -42,12 +45,11 @@ app.use("/api/reports", reportRouter)
 
 
 
-
 //server start
 const PORT = process.env.PORT || 3000;
+
 connectDb().then(() => {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });
 });
-

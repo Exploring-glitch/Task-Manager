@@ -9,7 +9,7 @@ import MyTask from './pages/User/MyTask.jsx';
 import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
 import Login_Page from './pages/Auth/Login_Page.jsx';
 import Logout_Page from './pages/Auth/Logout_Page.jsx';
-
+import Signup_Page from './pages/Auth/Signup_Page.jsx'
 import { UserContext, UserProvider } from './context/userContext.jsx';
 import { useContext } from 'react';
 import { Toaster } from "react-hot-toast";
@@ -69,4 +69,4 @@ const Root = () => {
 
 export default App
 
-  
+    
