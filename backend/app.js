@@ -1,8 +1,8 @@
 import express from "express";
 const app = express();
 import dotenv from "dotenv";
-dotenv.config({path: "./.env"});
-import cors from "cors"; 
+dotenv.config({ path: "./.env" });
+import cors from "cors";
 import { connectDb } from "./src/config/mongoConfig.js";
 import authRouter from "./src/routes/authRoutes.js";
 import userRouter from "./src/routes/userRoutes.js";
@@ -45,9 +45,9 @@ app.use("/api/reports", reportRouter)
 
 //server start
 const PORT = process.env.PORT || 3000;
-    app.listen( PORT, () => {
-        connectDb();
+connectDb().then(() => {
+    app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
-    }
-)
+    });
+});
 

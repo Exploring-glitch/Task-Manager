@@ -8,16 +8,16 @@ import UserDashboard from './pages/User/UserDashboard.jsx';
 import MyTask from './pages/User/MyTask.jsx';
 import ViewTaskDetails from './pages/User/ViewTaskDetails.jsx';
 import Login_Page from './pages/Auth/Login_Page.jsx';
-import Signup_Page from './pages/Auth/Signup_page.jsx';
+import Logout_Page from './pages/Auth/Logout_Page.jsx';
+
 import { UserContext, UserProvider } from './context/userContext.jsx';
 import { useContext } from 'react';
 import { Toaster } from "react-hot-toast";
-import Logout_Page from './pages/Auth/Logout_Page.jsx';
+
 
 
 
 function App() {
-
   return (
     <UserProvider>
       <Toaster position="top-center" toastOptions={{
