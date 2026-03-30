@@ -10,7 +10,7 @@ export const ModalDelete = ({ children, isOpen, onClose, title }) => {
         <div className='fixed top-0 right-0 z-50 w-full h-full flex justify-center items-center overflow-y-auto overflow-x-hidden bg-gray-950/50'>
             <div className='relative p-4 w-full max-w-2xl max-h-full'>
 
-                <div className='relative h-[23vh] bg-white rounded-lg shadow-lg dark:bg-gray-700 max-h-full max-w-full'>
+                <div className='relative h-auto bg-white rounded-lg shadow-lg dark:bg-gray-700 max-h-full max-w-full'>
                     
                     <div className='md:p-5 flex items-center justify-between p-4 border-b border-gray-200 rounded-t dark:border-gray-600'>
                         <h3 className='text-lg text-gray-900 dark:text-white'> {title} </h3>
