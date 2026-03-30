@@ -104,7 +104,8 @@ export const uploadProfileImage = (req, res) => {
             return res.status(400).json({ "message": "File not uploaded for Profile Image" });
         }
 
-        const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`
+        const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get("host")}`
+        const imageUrl = `${baseUrl}/uploads/${req.file.filename}`
         res.status(200).json({ imageUrl })
     }
     catch (error) {
