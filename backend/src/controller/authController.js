@@ -64,7 +64,7 @@ export const getUserProfile = async (req, res) => {
             return res.status(404).json({ "message": "User not found" })
         }
 
-        res.status(200).json({user})
+        res.status(200).json({ user })
     }
     catch (error) {
         res.status(500).json({ message: "Internal server error" });
@@ -104,8 +104,9 @@ export const uploadProfileImage = (req, res) => {
             return res.status(400).json({ "message": "File not uploaded for Profile Image" });
         }
 
-        const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get("host")}`
-        const imageUrl = `${baseUrl}/uploads/${req.file.filename}`
+        // Cloudinary gives URL automatically
+        const imageUrl = req.file.path;
+        
         res.status(200).json({ imageUrl })
     }
     catch (error) {

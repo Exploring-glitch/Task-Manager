@@ -1,27 +1,29 @@
 import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../config/cloudinaryConfig.js";
+
 
 //configure storage
-const storage = multer.diskStorage({
-    destination : (req, file, cb) =>{ //cb is callback func
-        cb(null, 'uploads/');
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: "profile_images", // folder in cloudinary
+        allowed_formats: ["jpg", "png", "jpeg"],
     },
-    filename : (req, file, cb) =>{
-        cb(null, `${Date.now()}-${file.originalname}`);
-    }
-})
+});
 
 
 //file filter()
-const fileFilter = (req, file, cb) =>{
+const fileFilter = (req, file, cb) => {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'] //these are the mimetype of the file
-    if(allowedTypes.includes(file.mimetype)) {
+    if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     }
-    else{
+    else {
         cb(new Error('Only .jpeg, .png and .jpg formats are allowed'), false);
     }
-    
+
 }
 
 
-export const uploadMiddleware = multer({storage, fileFilter})
+export const uploadMiddleware = multer({ storage, fileFilter })

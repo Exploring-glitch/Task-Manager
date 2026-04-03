@@ -22,7 +22,7 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: function(origin, callback) {
+    origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
@@ -47,16 +47,6 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-
-//Serve uploads folder: to make the folder publicly accessible eg.-http://localhost:3000/uploads/1769529726273-sampleimg1.jpg
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")))
-
-
-
-
 //Routes
 app.use("/api/auth", authRouter)
 app.use("/api/users", userRouter)
@@ -69,7 +59,7 @@ app.use("/api/reports", reportRouter)
 const PORT = process.env.PORT || 3000;
 
 connectDb().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 });
