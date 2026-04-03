@@ -9,7 +9,7 @@ const TaskStatusList = ({ tabs, activeTab, setActiveTab }) => {
           <button
             key={tab.label}
             onClick={() => setActiveTab(tab.label)}
-            className={`relative sm:px-2 md:px-4 py-2 text-sm font-medium 
+            className={`relative px-1 sm:px-2 md:px-4 py-2 text-sm font-medium 
               ${activeTab === tab.label
                 ? 'text-primary'
                 : 'text-gray-500 hover:text-gray-700'
