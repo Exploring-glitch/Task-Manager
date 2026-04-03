@@ -17,13 +17,17 @@ import cookieParser from "cookie-parser";
 const allowedOrigins = [
   "https://task-manager-git-main-sreeja-deys-projects.vercel.app",
   "https://task-manager-lime-psi-31.vercel.app",
-  "https://task-manager-j9gi15pc7-sreeja-deys-projects.vercel.app"
+  "https://task-manager-j9gi15pc7-sreeja-deys-projects.vercel.app",
+  "https://task-manager-5dntgcoji-sreeja-deys-projects.vercel.app"
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (
+        !origin ||
+        origin.includes("vercel.app")
+      ) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
