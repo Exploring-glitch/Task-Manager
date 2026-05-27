@@ -24,6 +24,8 @@ const ManageTasks = () => {
         }
       });
 
+      console.log("response", response)
+
       setAllTasks(response?.tasks?.length > 0 ? response.tasks : []);
 
       //map statusSummary data with fixed labels and order
@@ -35,6 +37,10 @@ const ManageTasks = () => {
         { label: "Completed", count: statusSummary.completed || 0 },
       ];
       setTabs(statusArray);
+      
+      console.log("statusArray", statusArray)
+      console.log("tabs", tabs)
+
     }
     catch (e) {
       console.log("Error fetching users. Error:", e);
