@@ -84,7 +84,7 @@ const MyTask = () => {
               dueDate={item.dueDate}
               assignedTo={item.assignedTo?.map((user) => user.profileImageUrl)}
               attachmentCount={item.attachments?.length || 0}
-              /*completedTodoCount={item.completedTodoCount || 0} */
+              completedTodoCount={item.completedTodoCount || 0} 
               todoCheckList={item.todoCheckLists || []} 
               onClick={() => { handleClick(item._id) }}
             ></TaskCard>

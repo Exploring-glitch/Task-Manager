@@ -63,7 +63,7 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
         }
 
 
-        {/* //completed todoCheckList count to each task
+        //completed todoCheckList count to each task
         tasks = await Promise.all(
             tasks.map(async (task) => {
                 const completedCount = task.todoCheckLists.filter(
@@ -72,24 +72,8 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
                 return { ...task._doc, completedTodoCount: completedCount }
             })
         ) 
-        */}
+        
 
-        tasks = await Promise.all(
-            tasks.map(async (task) => {
-
-                const total = task.todoCheckLists.length;
-                const completed = task.todoCheckLists.filter(i => i.completed).length;
-
-                const progress = total === 0
-                    ? 0
-                    : Math.round((completed / total) * 100);
-
-                return {
-                    ...task._doc,
-                    progress
-                };
-            })
-        );
 
 
         //status summary count
