@@ -37,9 +37,9 @@ const ManageTasks = () => {
         { label: "Completed", count: statusSummary.completed || 0 },
       ];
       setTabs(statusArray);
-      
+
       console.log("statusArray", statusArray)
-      console.log("tabs", tabs)
+      console.log("allTasks", allTasks)
 
     }
     catch (e) {
@@ -129,7 +129,7 @@ const ManageTasks = () => {
               createdAt={item.createdAt}
               dueDate={item.dueDate}
               assignedTo={item.assignedTo?.map((user) => user.profileImageUrl)}
-              attachmentCount={item.attachments?.length || 0}
+              attachmentCount={item.attachments?.length || 0} 
               completedTodoCount={item.completedTodoCount || 0}
               todoCheckList={item.todoCheckLists || []}
               onClick={() => { handleClick(item) }}
