@@ -111,7 +111,16 @@ A full-stack **Task Management Web Application** built using the **MERN Stack** 
 - ### Team Members
 <img width="1918" height="908" alt="T-M-Admin-Team Members" src="https://github.com/user-attachments/assets/e324f1d6-f061-4aca-9928-d5ee97f5a89f" />
 
+---
 
+> ## Member Role :
+
+- ### Dashboard
+<img width="1918" height="865" alt="T-M-Member-Dashboard-1" src="https://github.com/user-attachments/assets/dd77807d-f934-4e64-bf38-d1a1bb287232" />
+<img width="1918" height="871" alt="T-M-Member-Dashboard-2" src="https://github.com/user-attachments/assets/ab0f03ee-03d6-4b26-936f-bb14a1c859d7" />
+
+- ### My Task
+<img width="1918" height="871" alt="T-M-Admin-My Task" src="https://github.com/user-attachments/assets/9e1021f5-7c67-4421-ad16-d292d280cc06" />
 
 
  
