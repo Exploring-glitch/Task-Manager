@@ -103,7 +103,8 @@ A full-stack **Task Management Web Application** built using the **MERN Stack** 
 <img width="1917" height="911" alt="T-M-Admin-Dashboard" src="https://github.com/user-attachments/assets/f60a4be4-f2c7-4020-9858-059ad5ecfa5b" />
 
 - ### Manage Task
-<img width="1912" height="910" alt="T-M-Admin-Manage Task" src="https://github.com/user-attachments/assets/cd80cae1-bd2d-424a-a917-3d22adede320" />
+<img width="1911" height="912" alt="T-M-Admin-Manage Task" src="https://github.com/user-attachments/assets/778e7778-969c-463a-a55a-4a14d751704a" />
+
 
 - ### Create Task
 <img width="1912" height="908" alt="T-M-Admin-Create Task" src="https://github.com/user-attachments/assets/229248fb-62bb-4319-8992-d954b7f23f78" />
@@ -120,7 +121,8 @@ A full-stack **Task Management Web Application** built using the **MERN Stack** 
 <img width="1918" height="871" alt="T-M-Member-Dashboard-2" src="https://github.com/user-attachments/assets/ab0f03ee-03d6-4b26-936f-bb14a1c859d7" />
 
 - ### My Task
-<img width="1918" height="871" alt="T-M-Admin-My Task" src="https://github.com/user-attachments/assets/9e1021f5-7c67-4421-ad16-d292d280cc06" />
+<img width="1917" height="907" alt="T-M-Member-My Task" src="https://github.com/user-attachments/assets/337dc29b-54fd-4d90-bbff-74bcc664b7d7" />
+
 
 
  
