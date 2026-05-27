@@ -47,8 +47,7 @@ const MyTask = () => {
   };
 
   useEffect(() => {
-    getAllTasks(filterStatus);
-    return;
+    getAllTasks();
   }, [filterStatus]);
 
 
