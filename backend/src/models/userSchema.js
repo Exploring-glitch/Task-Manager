@@ -31,11 +31,10 @@ const userSchema = new mongoose.Schema(
             enum: ["admin", "member"],
             default: "member"
         },
-
     }, 
     { timestamps: true }
 )
-
+j
 
 //we are defining a method named comparePassword that compares pass with the og pass stored in user schema.
 //We are attaching this method in the user doc (in mongoose) itself.
