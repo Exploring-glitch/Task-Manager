@@ -69,6 +69,9 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
                 const completedCount = task.todoCheckLists.filter(
                     (item) => item.completed
                 ).length
+                
+                console.log("todoCheckLists", todoCheckLists)
+                
                 return { ...task._doc, completedTodoCount: completedCount }
             })
         )
