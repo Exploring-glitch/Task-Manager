@@ -120,7 +120,8 @@ A full-stack **Task Management Web Application** built using the **MERN Stack** 
 <img width="1918" height="871" alt="T-M-Member-Dashboard-2" src="https://github.com/user-attachments/assets/ab0f03ee-03d6-4b26-936f-bb14a1c859d7" />
 
 - ### My Task
-<img width="1918" height="871" alt="T-M-Admin-My Task" src="https://github.com/user-attachments/assets/9e1021f5-7c67-4421-ad16-d292d280cc06" />
+<img width="1917" height="907" alt="T-M-Member-My Task" src="https://github.com/user-attachments/assets/337dc29b-54fd-4d90-bbff-74bcc664b7d7" />
+
 
 
  
