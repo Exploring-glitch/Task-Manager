@@ -84,3 +84,39 @@ A full-stack **Task Management Web Application** built using the **MERN Stack** 
 - Frontend : Vercel
 - Backend : Render
 - Database : MongoDB Atlas
+
+---
+
+> ## Home Page :
+
+- ### Signup 
+<img width="1916" height="916" alt="T-M-Signup-page" src="https://github.com/user-attachments/assets/7b388115-04f4-4216-ba23-5919f23fa0b0" />
+
+- ### Login
+<img width="1911" height="905" alt="T-M-Login-page" src="https://github.com/user-attachments/assets/9dd4a606-5349-4f5f-8605-436459c88de2" />
+
+---
+
+> ## Admin Role :
+ 
+- ### Dashboard 
+<img width="1917" height="911" alt="T-M-Admin-Dashboard" src="https://github.com/user-attachments/assets/f60a4be4-f2c7-4020-9858-059ad5ecfa5b" />
+
+- ### Manage Task
+<img width="1912" height="910" alt="T-M-Admin-Manage Task" src="https://github.com/user-attachments/assets/cd80cae1-bd2d-424a-a917-3d22adede320" />
+
+- ### Create Task
+<img width="1912" height="908" alt="T-M-Admin-Create Task" src="https://github.com/user-attachments/assets/229248fb-62bb-4319-8992-d954b7f23f78" />
+
+- ### Team Members
+<img width="1918" height="908" alt="T-M-Admin-Team Members" src="https://github.com/user-attachments/assets/e324f1d6-f061-4aca-9928-d5ee97f5a89f" />
+
+
+
+
+ 
+
+
+
+
+
