@@ -60,7 +60,6 @@ const ViewTaskDetails = () => {
     } catch (err) {
       console.log(err);
     }
-
   }
 };
 

@@ -24,7 +24,6 @@ const MyTask = () => {
         }
       });
 
-      console.log("response", response)
       
       setAllTasks(response?.tasks?.length > 0 ? response.tasks : []);
 
