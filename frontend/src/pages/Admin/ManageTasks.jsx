@@ -131,7 +131,7 @@ const ManageTasks = () => {
               assignedTo={item.assignedTo?.map((user) => user.profileImageUrl)}
               attachmentCount={item.attachments?.length || 0} 
               completedTodoCount={item.completedTodoCount || 0}
-              todoCheckList={item.todoCheckLists || []}
+              todoCheckList={item.todoCheckLists || []} 
               onClick={() => { handleClick(item) }}
             ></TaskCard>
           ))}

@@ -63,18 +63,33 @@ export const getTasks = async (req, res) => { //get all tasks. access: admin(all
         }
 
 
-        //completed todoCheckList count to each task
+        {/* //completed todoCheckList count to each task
         tasks = await Promise.all(
             tasks.map(async (task) => {
                 const completedCount = task.todoCheckLists.filter(
                     (item) => item.completed
                 ).length
-                
-                console.log("todoCheckLists", todoCheckLists)
-                
                 return { ...task._doc, completedTodoCount: completedCount }
             })
-        )
+        ) 
+        */}
+
+        tasks = await Promise.all(
+            tasks.map(async (task) => {
+
+                const total = task.todoCheckLists.length;
+                const completed = task.todoCheckLists.filter(i => i.completed).length;
+
+                const progress = total === 0
+                    ? 0
+                    : Math.round((completed / total) * 100);
+
+                return {
+                    ...task._doc,
+                    progress
+                };
+            })
+        );
 
 
         //status summary count
@@ -295,8 +310,8 @@ export const getDashboardData = async (req, res) => { //access: admin
 export const getUserDashboardData = async (req, res) => { //access: logged-in users(members)
     try {
         const userId = req.user._id;
-        
-        const totalTask = await Task.countDocuments({ "assignedTo": userId});
+
+        const totalTask = await Task.countDocuments({ "assignedTo": userId });
         const pendingTasks = await Task.countDocuments({ "assignedTo": userId, "status": "Pending" })
         const inProgressTasks = await Task.countDocuments({ "assignedTo": userId, "status": "In Progress" })
         const completedTasks = await Task.countDocuments({ "assignedTo": userId, "status": "Completed" })
@@ -345,7 +360,7 @@ export const getUserDashboardData = async (req, res) => { //access: logged-in us
 
 
         //fetch recent 10 taska for the logged-in user
-        const recentTasks = await Task.find({ "assignedTo" : userId})
+        const recentTasks = await Task.find({ "assignedTo": userId })
             .sort({ createdAt: -1 })
             .limit(10)
             .select("title status priority dueDate createdAt")
