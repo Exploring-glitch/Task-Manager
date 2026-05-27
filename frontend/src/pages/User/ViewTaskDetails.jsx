@@ -61,104 +61,104 @@ const ViewTaskDetails = () => {
       console.log(err);
     }
   }
-};
-
-const handleLinkClick = (link) => {
-  if (!/^https?:\/\//i.test(link)) {
-    link = "https://" + link;
-  }
-  window.open(link, "_blank");
-};
-
-useEffect(() => {
-  if (id) {
-    getTaskDetailsId(id);
-  }
-
-  return () => { };
-}, []);
 
 
-return (
-  <DashboardLayout activeMenu="My Tasks">
-    <div className='mt-5'>
-      {task && (
-        <div className='mt-4 grid grid-cols-1 md:grid-cols-4 '>
-          <div className='col-span-3 p-6 my-3 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
+  const handleLinkClick = (link) => {
+    if (!/^https?:\/\//i.test(link)) {
+      link = "https://" + link;
+    }
+    window.open(link, "_blank");
+  };
 
-            <div className='flex items-center justify-between'>
-              <h2 className='text-sm md:text-xl font-medium'> {task?.title} </h2>
+  useEffect(() => {
+    if (id) {
+      getTaskDetailsId(id);
+    }
 
-              <div className={`text-[11px] md:text-[13px] font-medium 
+    return () => { };
+  }, []);
+
+
+  return (
+    <DashboardLayout activeMenu="My Tasks">
+      <div className='mt-5'>
+        {task && (
+          <div className='mt-4 grid grid-cols-1 md:grid-cols-4 '>
+            <div className='col-span-3 p-6 my-3 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
+
+              <div className='flex items-center justify-between'>
+                <h2 className='text-sm md:text-xl font-medium'> {task?.title} </h2>
+
+                <div className={`text-[11px] md:text-[13px] font-medium 
                   ${getStatusTagColor(task?.status)} 
                   px-4 py-0.5 rounded`}
-              >
-                {task?.status}
-              </div>
-            </div>
-
-            <div className='mt-4'>
-              <InfoBox
-                label="Description"
-                value={task?.description}
-              />
-            </div>
-
-            <div className='mt-4 grid grid-cols-12 gap-4'>
-              <div className='col-span-6 md:col-span-4'>
-                <InfoBox label="Priority" value={task?.priority} />
+                >
+                  {task?.status}
+                </div>
               </div>
 
-              <div className='col-span-6 md:col-span-4'>
-                <InfoBox label="Due Date" value={task?.dueDate
-                  ? moment(task?.dueDate).format("Do MMM YYYY")
-                  : "N/A"
-                } />
-              </div>
-
-              <div className='col-span-6 md:col-span-4'>
-                <label className='text-xs font-medium text-slate-500'> Assigned To </label>
-                <AvatarGroup
-                  avatars={task?.assignedTo?.map((user) => user?.profileImageUrl || [])}
-                  maxVisible={5}
+              <div className='mt-4'>
+                <InfoBox
+                  label="Description"
+                  value={task?.description}
                 />
               </div>
-            </div>
 
-            <div className='mt-2'>
-              <label className='text-xs font-medium text-slate-500'>Todo CheckList</label>
+              <div className='mt-4 grid grid-cols-12 gap-4'>
+                <div className='col-span-6 md:col-span-4'>
+                  <InfoBox label="Priority" value={task?.priority} />
+                </div>
 
-              {task?.todoCheckLists?.map((item, index) => (
-                <TodoCheckList
-                  key={`todo_${index}`}
-                  text={item.text}
-                  isChecked={item?.completed}
-                  onChange={() => updateTodoCheckList(index)}
-                />
-              ))}
-            </div>
+                <div className='col-span-6 md:col-span-4'>
+                  <InfoBox label="Due Date" value={task?.dueDate
+                    ? moment(task?.dueDate).format("Do MMM YYYY")
+                    : "N/A"
+                  } />
+                </div>
 
-            {task.attachments?.length > 0 && (
+                <div className='col-span-6 md:col-span-4'>
+                  <label className='text-xs font-medium text-slate-500'> Assigned To </label>
+                  <AvatarGroup
+                    avatars={task?.assignedTo?.map((user) => user?.profileImageUrl || [])}
+                    maxVisible={5}
+                  />
+                </div>
+              </div>
+
               <div className='mt-2'>
-                <label className='text-xs font-medium text-slate-500'>Attachments</label>
+                <label className='text-xs font-medium text-slate-500'>Todo CheckList</label>
 
-                {task?.attachments?.map((link, index) => (
-                  <Attachment
-                    key={`link_${index}`}
-                    link={link}
-                    index={index}
-                    onClick={() => handleLinkClick(link)}
+                {task?.todoCheckLists?.map((item, index) => (
+                  <TodoCheckList
+                    key={`todo_${index}`}
+                    text={item.text}
+                    isChecked={item?.completed}
+                    onChange={() => updateTodoCheckList(index)}
                   />
                 ))}
               </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  </DashboardLayout>
-)
 
+              {task.attachments?.length > 0 && (
+                <div className='mt-2'>
+                  <label className='text-xs font-medium text-slate-500'>Attachments</label>
+
+                  {task?.attachments?.map((link, index) => (
+                    <Attachment
+                      key={`link_${index}`}
+                      link={link}
+                      index={index}
+                      onClick={() => handleLinkClick(link)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </DashboardLayout>
+  )
+};
 
 export default ViewTaskDetails;
 
