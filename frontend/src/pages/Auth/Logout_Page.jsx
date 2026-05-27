@@ -23,7 +23,7 @@ const Logout_Page = () => {
             toast.success("Logged out successfully")
 
             clearUser(); // remove user from context
-            navigate("/auth/login"); // redirect to login
+            window.location.href = "/auth/login"; // redirect to login
         }
         catch (err) {
             console.log("Logout failed: ", err);

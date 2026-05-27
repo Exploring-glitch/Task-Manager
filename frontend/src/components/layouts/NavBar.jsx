@@ -43,7 +43,7 @@ const NavBar = ({ activeMenu }) => {
                     )}
                 </nav>
 
-                {user?.user && (
+                {user?.user && !path.startsWith("/auth") && (
                     <div className='flex gap-2  
                         sm:gap-5'
                     >
