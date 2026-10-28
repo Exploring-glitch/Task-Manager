@@ -1,33 +1,37 @@
-import { memberInfo } from "../dao/taskDao.js";
+import { getMemberTaskCounts } from "../dao/memberStatsDao.js";
 import { findUserById, getAllMembers } from "../dao/userDao.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { forbidden, notFound } from "../utils/errors.js";
 
+// access: admin
+export const getAllUsers = asyncHandler(async (req, res) => {
+    const users = await getAllMembers();
+    const taskCounts = await getMemberTaskCounts(users.map((user) => user._id));
 
-export const getAllUsers = async (req, res) => {
-    try {
-        const users = await getAllMembers();
-        if (!users) {
-            return res.status(404).json({ "message": "User not found" })
-        }
+    const usersWithTaskCount = users.map((user) => ({
+        ...user.toObject(),
+        ...(taskCounts.get(String(user._id)) || {
+            pendingTask: 0,
+            inProgressTask: 0,
+            completedTask: 0,
+        }),
+    }));
 
-        //return user info along with the current task count and status of each user
-        const userWithTaskCount = await memberInfo(users);
+    res.status(200).json(usersWithTaskCount);
+});
 
-        res.status(200).json( userWithTaskCount )
+export const getUserById = asyncHandler(async (req, res) => {
+    const isSelf = String(req.user._id) === String(req.params.id);
+
+    if (req.user.role !== "admin" && !isSelf) {
+        throw forbidden("You can only view your own profile");
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
 
-export const getUserById = async (req, res) => {
-    try {
-        const user = await findUserById(req.params.id)
-        if (!user) {
-            return res.status(404).json({ "message": "User not found" })
-        }
-        res.status(200).json(user)
+    const user = await findUserById(req.params.id);
+
+    if (!user) {
+        throw notFound("User not found");
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
+
+    res.status(200).json(user);
+});
