@@ -1,32 +1,48 @@
-import React, { useEffect, useState } from 'react'
-import { get_all_users } from '../../api/userApi.js';
-import { LuUsers } from 'react-icons/lu';
-import Modal from '../Modal.jsx';
-import AvatarGroup from '../AvatarGroup.jsx';
+import { useEffect, useState } from "react";
+import { LuUsers } from "react-icons/lu";
+import toast from "react-hot-toast";
+import Modal from "../Modal.jsx";
+import AvatarGroup from "../AvatarGroup.jsx";
+import { get_all_users } from "../../api/userApi.js";
 
 const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
     const [allUsers, setAllUsers] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [tempSelectedUsers, setTempSelectedUsers] = useState([]);
+    const [tempSelectedUsers, setTempSelectedUsers] = useState(selectedUsers);
+    const [loading, setLoading] = useState(true);
 
-    const getAllUsers = async () => {
-        try {
-            const response = await get_all_users();
-        
-            if (response?.length > 0) {
-                setAllUsers(response)
+    useEffect(() => {
+        let isActive = true;
+
+        const loadUsers = async () => {
+            try {
+                const response = await get_all_users();
+                if (isActive) setAllUsers(response || []);
+            } catch (error) {
+                if (isActive) toast.error(error.message || "Could not load members");
+            } finally {
+                if (isActive) setLoading(false);
             }
-        }
-        catch (e) {
-            console.log("Error fetching users.Error:", e);
-        }
-    }
+        };
+
+        loadUsers();
+
+        return () => {
+            isActive = false;
+        };
+    }, []);
+
+    const openModal = () => {
+        // Always start from the committed selection so the modal reflects reality.
+        setTempSelectedUsers(selectedUsers);
+        setIsModalOpen(true);
+    };
 
     const toggleUserSelection = (userId) => {
-        setTempSelectedUsers((prev) =>
-            prev.includes(userId)
-                ? prev.filter((id) => id !== userId)
-                : [...prev, userId]
+        setTempSelectedUsers((previous) =>
+            previous.includes(userId)
+                ? previous.filter((id) => id !== userId)
+                : [...previous, userId]
         );
     };
 
@@ -35,93 +51,83 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
         setIsModalOpen(false);
     };
 
-    const selectedUserAvatars = allUsers.filter((user) => selectedUsers.includes(user._id)).map((user) => user.profileImageUrl);
-
-    useEffect(() => {
-        getAllUsers();
-    }, []);
-
-    useEffect(() => {
-        if (selectedUsers.length === 0) {
-            setTempSelectedUsers([]);
-        }
-        return () => { };
-    }, [selectedUsers]);
-
-
-
+    const selectedUserAvatars = allUsers
+        .filter((user) => selectedUsers.includes(user._id))
+        .map((user) => user.profileImageUrl);
 
     return (
         <div>
-            {selectedUserAvatars.length === 0 && (
+            {selectedUserAvatars.length === 0 ? (
                 <button
-                    onClick={() => setIsModalOpen(true)}
-                    className='mt-2 flex items-center text-[12px] font-medium
-                    text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
-                    px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer'
+                    type="button"
+                    onClick={openModal}
+                    className="mt-2 flex cursor-pointer items-center rounded-lg border border-gray-200/50 bg-gray-50 px-4 py-1.5 text-[12px] font-medium text-gray-700 hover:bg-blue-50 hover:text-primary"
                 >
-                    <LuUsers className='text-sm mr-3' />
+                    <LuUsers className="mr-3 text-sm" aria-hidden="true" />
                     Add Members
+                </button>
+            ) : (
+                <button type="button" onClick={openModal} className="mt-2 cursor-pointer">
+                    <AvatarGroup avatars={selectedUserAvatars} maxVisible={3} />
                 </button>
             )}
 
-            {selectedUserAvatars.length > 0 && (
-                <div onClick={() => setIsModalOpen(true)} className='cursor-pointer'>
-                    <AvatarGroup avatars={selectedUserAvatars} maxVisible={3} />
-                </div>
-            )}
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Select Users">
+                <div className="max-h-[35vh] space-y-4 overflow-y-auto overflow-x-hidden">
+                    {loading && <p className="p-3 text-sm text-gray-500">Loading members...</p>}
 
-            <Modal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                title="Select Users"
-            >
-                <div className='h-[35vh] space-y-4 overflow-y-auto overflow-x-hidden'>
+                    {!loading && allUsers.length === 0 && (
+                        <p className="p-3 text-sm text-gray-500">
+                            No members yet. Invite your team to sign up first.
+                        </p>
+                    )}
+
                     {allUsers.map((user) => (
-                        <div key={user._id} className='flex items-center gap-4 p-3 border-b border-gray-200 hover:bg-gray-50 transition'>
+                        <label
+                            key={user._id}
+                            className="flex cursor-pointer items-center gap-4 border-b border-gray-200 p-3 transition hover:bg-gray-50"
+                        >
                             <img
-                                src={user.profileImageUrl}
-                                alt={user.name}
-                                className='w-10 h-10 rounded-full'
+                                src={user.profileImageUrl || ""}
+                                alt={`${user.name} avatar`}
+                                className="h-10 w-10 rounded-full bg-slate-200 object-cover"
                             />
 
-                            <div className='flex-1'> {/*flex-1 means take the remaining space: it pushes checkbox towars the right */}
-                                <p className='font-medium text-gray-800 dark:text-white'> {user.name} </p>
-                                <p className='text-[13px] text-gray-500'> {user.email} </p>
+                            <div className="flex-1">
+                                <p className="font-medium text-gray-800">{user.name}</p>
+                                <p className="text-[13px] text-gray-500">{user.email}</p>
                             </div>
 
                             <input
-                                type='checkbox'
+                                type="checkbox"
                                 checked={tempSelectedUsers.includes(user._id)}
                                 onChange={() => toggleUserSelection(user._id)}
-                                className='w-4 h-4 outline-none cursor-pointer'
+                                className="h-4 w-4 cursor-pointer outline-none"
                             />
-                        </div>
+                        </label>
                     ))}
                 </div>
 
-                <div className='flex justify-end gap-4 pt-4'>
+                <div className="flex justify-end gap-4 pt-4">
                     <button
+                        type="button"
                         onClick={() => setIsModalOpen(false)}
-                        className='mt-2 flex items-center text-[12px] font-medium
-                        text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50
-                        px-4 py-1.5 rounded-lg border border-gray-200/50 cursor-pointer'
+                        className="mt-2 flex cursor-pointer items-center rounded-lg border border-gray-200/50 bg-gray-50 px-4 py-1.5 text-[12px] font-medium text-gray-700 hover:bg-blue-50 hover:text-primary"
                     >
                         CANCEL
                     </button>
 
                     <button
+                        type="button"
                         onClick={handleAssign}
-                        className='mt-2 flex items-center text-[12px] font-medium
-                        text-white hover:text-primary bg-primary hover:bg-blue-50
-                        px-4 py-1.5 rounded-lg hover:border-gray-200/50 cursor-pointer'
+                        className="mt-2 flex cursor-pointer items-center rounded-lg bg-primary px-4 py-1.5 text-[12px] font-medium text-white hover:bg-blue-600"
                     >
                         DONE
                     </button>
                 </div>
             </Modal>
         </div>
-    )
-}
+    );
+};
 
-export default SelectUsers
+export default SelectUsers;
