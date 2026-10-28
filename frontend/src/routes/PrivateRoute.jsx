@@ -1,20 +1,25 @@
-import React, { useContext } from 'react';
-import { Outlet, Navigate } from 'react-router-dom';
-import { UserContext } from '../context/userContext.jsx';
+import { Navigate, Outlet } from "react-router-dom";
+import PageLoader from "../components/PageLoader.jsx";
+import { useUser } from "../hooks/useUser.js";
+import { getHomeRoute } from "./homeRoute.js";
 
 const PrivateRoute = ({ allowedRoles }) => {
-  const { user, loading } = useContext(UserContext);
+    const { user, loading } = useUser();
 
-  if (loading) return <div>Loading...</div>;
+    if (loading) {
+        return <PageLoader label="Checking your session..." />;
+    }
 
-  if (!user) return <Navigate to="/auth/login" replace />;
+    if (!user) {
+        return <Navigate to="/auth/login" replace />;
+    }
 
-  if (allowedRoles && !allowedRoles.includes(user?.user?.role)) {
-    // Redirect if role is not allowed
-    return <Navigate to="/auth/login" replace />;
-  }
+    if (allowedRoles?.length && !allowedRoles.includes(user.role)) {
+        // Send the user to the dashboard they are actually allowed to see.
+        return <Navigate to={getHomeRoute(user.role)} replace />;
+    }
 
-  return <Outlet />;
+    return <Outlet />;
 };
 
 export default PrivateRoute;
