@@ -11,7 +11,7 @@ import SelectDropDown from "../../components/inputs/SelectDropDown.jsx";
 import SelectUsers from "../../components/inputs/SelectUsers.jsx";
 import TodoListInput from "../../components/inputs/TodoListInput.jsx";
 import PageLoader from "../../components/PageLoader.jsx";
-import { PRIORITY_DATA } from "../../util/data.jsx";
+import { PRIORITY_DATA } from "../../util/data.js";
 import {
     create_task,
     delete_task,

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from "../../util/data.jsx";
+import { SIDE_MENU_DATA, SIDE_MENU_USER_DATA } from "../../util/data.js";
 import { useUser } from "../../hooks/useUser.js";
 
 const SideMenu = ({ activeMenu, onNavigate }) => {
