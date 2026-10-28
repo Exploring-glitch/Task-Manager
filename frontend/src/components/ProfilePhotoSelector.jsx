@@ -1,75 +1,95 @@
-import React, { useRef, useState } from 'react'
-import { LuUser, LuUpload, LuTrash } from "react-icons/lu"
+import { useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
+import { LuUser, LuUpload, LuTrash } from "react-icons/lu";
+
+const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024;
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const ProfilePhotoSelector = ({ image, setImage }) => {
-    const inputRef = useRef();
+    const inputRef = useRef(null);
     const [previewUrl, setPreviewUrl] = useState(null);
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            //update the image this state
-            setImage(file);
+    // Release the object URL when it is no longer used.
+    useEffect(() => {
+        return () => {
+            if (previewUrl) URL.revokeObjectURL(previewUrl);
+        };
+    }, [previewUrl]);
 
-            //generate preview url from the file
-            const preview = URL.createObjectURL(file);
-            setPreviewUrl(preview);
+    const handleImageChange = (event) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        if (!ALLOWED_TYPES.includes(file.type)) {
+            toast.error("Only JPEG, PNG and WebP images are allowed");
+            event.target.value = "";
+            return;
         }
+
+        if (file.size > MAX_FILE_SIZE_BYTES) {
+            toast.error("The image must be 2 MB or smaller");
+            event.target.value = "";
+            return;
+        }
+
+        setImage(file);
+        setPreviewUrl(URL.createObjectURL(file));
     };
 
     const handleRemoveImage = () => {
         setImage(null);
         setPreviewUrl(null);
+
+        if (inputRef.current) inputRef.current.value = "";
     };
 
     const onChooseFile = () => {
-        inputRef.current.click();
+        inputRef.current?.click();
     };
 
     return (
-        <div className='flex justify-center mb-3 
-            sm:mb-6'
-        >
+        <div className="mb-3 flex justify-center sm:mb-6">
             <input
                 type="file"
-                accept='image/*'
+                accept="image/jpeg,image/png,image/webp"
                 ref={inputRef}
                 onChange={handleImageChange}
-                className='hidden'
+                className="hidden"
             />
 
             {!image ? (
-                <div className='bg-blue-100 w-20 h-20 flex justify-center items-center rounded-full
-                    relative cursor-pointer'
-                >
-                    <LuUser className='text-4xl'></LuUser>
+                <div className="relative flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-blue-100">
+                    <LuUser className="text-4xl" aria-hidden="true" />
 
                     <button
-                        type='button'
-                        className='bg-blue-800 text-white w-8 h-8 flex justify-center items-center rounded-full
-                        absolute left-14 bottom-11 cursor-pointer'
+                        type="button"
+                        aria-label="Choose a profile photo"
+                        className="absolute bottom-11 left-14 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-blue-800 text-white"
                         onClick={onChooseFile}
-                    >   <LuUpload />
+                    >
+                        <LuUpload />
                     </button>
                 </div>
             ) : (
-                <div className='relative'>
+                <div className="relative">
                     <img
                         src={previewUrl}
-                        alt='profile photo'
-                        className='w-20 h-20 rounded-full object-cover'
+                        alt="Profile preview"
+                        className="h-20 w-20 rounded-full object-cover"
                     />
+
                     <button
-                        type='button'
-                        className='bg-red-800 text-white w-8 h-8 flex justify-center items-center rounded-full
-                        absolute left-14 bottom-11 cursor-pointer'
+                        type="button"
+                        aria-label="Remove the selected photo"
+                        className="absolute bottom-11 left-14 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-red-800 text-white"
                         onClick={handleRemoveImage}
-                    >   <LuTrash />
+                    >
+                        <LuTrash />
                     </button>
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default ProfilePhotoSelector
+export default ProfilePhotoSelector;

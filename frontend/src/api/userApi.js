@@ -1,39 +1,44 @@
 import { axiosInstance } from "../util/axiosInstance.js";
 
-
 export const login_user = async (email, password) => {
-    const { data } = await axiosInstance.post("api/auth/login", { email, password })
+    const { data } = await axiosInstance.post("/api/auth/login", { email, password });
     return data;
-}
+};
 
 export const signup_user = async (fullName, email, password, profileImageUrl, adminInviteToken) => {
-    const { data } = await axiosInstance.post("api/auth/signup", { name: fullName, email, password, profileImageUrl, adminInviteToken })
+    const { data } = await axiosInstance.post("/api/auth/signup", {
+        name: fullName,
+        email,
+        password,
+        profileImageUrl,
+        adminInviteToken,
+    });
     return data;
-}
+};
+
+export const update_profile = async (profileData) => {
+    const { data } = await axiosInstance.put("/api/auth/profile", profileData);
+    return data;
+};
 
 export const upload_image = async (formData) => {
-    const { data } = await axiosInstance.post("api/auth/upload-image", formData,
-        {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            },
-            withCredentials: true // keep cookies
-        }
-    )
+    const { data } = await axiosInstance.post("/api/auth/upload-image", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+    });
     return data;
-}
+};
 
 export const logout_user = async () => {
-    const { data } = await axiosInstance.post("api/auth/logout", {}, { withCredentials: true })
+    const { data } = await axiosInstance.post("/api/auth/logout");
     return data;
-}
+};
 
 export const get_all_users = async () => {
-    const { data } = await axiosInstance.get("api/users/");
+    const { data } = await axiosInstance.get("/api/users");
     return data;
-}
+};
 
-export const user_dashboard_data = async() => {
-    const { data } = await axiosInstance.get("api/tasks/dashboard-user-data")
+export const user_dashboard_data = async () => {
+    const { data } = await axiosInstance.get("/api/tasks/dashboard-user-data");
     return data;
-}
+};
