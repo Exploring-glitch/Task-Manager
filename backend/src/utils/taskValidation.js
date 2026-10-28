@@ -88,7 +88,8 @@ export const parseTaskCreatePayload = (body) => {
         dueDate: requireDate(body.dueDate, "Due date"),
         assignedTo: body.assignedTo === undefined ? [] : parseAssignees(body.assignedTo),
         attachments: body.attachments === undefined ? [] : parseAttachments(body.attachments),
-        todoCheckLists: body.todoCheckLists === undefined ? [] : parseChecklist(body.todoCheckLists),
+        todoCheckLists:
+            body.todoCheckLists === undefined ? [] : parseChecklist(body.todoCheckLists),
     };
 };
 

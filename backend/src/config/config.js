@@ -13,9 +13,7 @@ export const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
  */
 export const getCookieOptions = (req) => {
     const isSecure =
-        isProduction ||
-        req?.secure === true ||
-        req?.headers?.["x-forwarded-proto"] === "https";
+        isProduction || req?.secure === true || req?.headers?.["x-forwarded-proto"] === "https";
 
     return {
         httpOnly: true,

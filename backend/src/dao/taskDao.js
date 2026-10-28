@@ -22,9 +22,7 @@ export const findTaskByIdWithUser = (id) => {
 export const findTasks = ({ filter = {}, userId } = {}) => {
     const query = userId ? { ...filter, assignedTo: userId } : filter;
 
-    return Task.find(query)
-        .populate("assignedTo", TASK_POPULATE_FIELDS)
-        .sort({ createdAt: -1 });
+    return Task.find(query).populate("assignedTo", TASK_POPULATE_FIELDS).sort({ createdAt: -1 });
 };
 
 export const deleteTaskById = (id) => {

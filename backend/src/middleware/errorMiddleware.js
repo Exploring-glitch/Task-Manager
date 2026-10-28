@@ -7,10 +7,7 @@ const translateError = (error) => {
 
     if (isMongoDuplicateKey(error)) {
         const field = Object.keys(error.keyPattern || {})[0];
-        return new AppError(
-            field ? `${field} is already in use` : "Resource already exists",
-            409
-        );
+        return new AppError(field ? `${field} is already in use` : "Resource already exists", 409);
     }
 
     if (error.name === "ValidationError") {

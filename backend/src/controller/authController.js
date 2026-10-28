@@ -10,7 +10,12 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { deleteCloudinaryImage } from "../utils/cloudinaryHelpers.js";
 import { AppError, badRequest, notFound, unauthorized } from "../utils/errors.js";
 import { signToken } from "../utils/helper.js";
-import { optionalString, requireEmail, requirePassword, requireString } from "../utils/validation.js";
+import {
+    optionalString,
+    requireEmail,
+    requirePassword,
+    requireString,
+} from "../utils/validation.js";
 
 const startSession = (req, res, user) => {
     const token = signToken({ id: user._id });
@@ -22,7 +27,9 @@ export const userSignup = asyncHandler(async (req, res) => {
     const name = requireString(req.body.name, "Name", { max: 80 });
     const email = requireEmail(req.body.email);
     const password = requirePassword(req.body.password);
-    const profileImageUrl = optionalString(req.body.profileImageUrl, "Profile image URL", { max: 2048 });
+    const profileImageUrl = optionalString(req.body.profileImageUrl, "Profile image URL", {
+        max: 2048,
+    });
 
     const userExist = await findUserByEmail(email);
     if (userExist) {
@@ -81,10 +88,13 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 
     const name = optionalString(req.body.name, "Name", { max: 80 });
     const email = req.body.email === undefined ? undefined : requireEmail(req.body.email);
-    const profileImageUrl = optionalString(req.body.profileImageUrl, "Profile image URL", { max: 2048 });
-    const password = req.body.password === undefined || req.body.password === ""
-        ? undefined
-        : requirePassword(req.body.password);
+    const profileImageUrl = optionalString(req.body.profileImageUrl, "Profile image URL", {
+        max: 2048,
+    });
+    const password =
+        req.body.password === undefined || req.body.password === ""
+            ? undefined
+            : requirePassword(req.body.password);
 
     if (email && email !== user.email) {
         const emailTaken = await findUserByEmail(email);

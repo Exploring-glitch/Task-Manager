@@ -3,9 +3,7 @@ import { adminOnly, authMiddleware } from "../middleware/authMiddleware.js";
 import { exportTasksReport, exportUsersReport } from "../controller/reportController.js";
 const reportRouter = express.Router();
 
-
-reportRouter.get("/export/tasks", authMiddleware, adminOnly, exportTasksReport) //export all tasks as an excel/pdf file. access: admin
-reportRouter.get("/export/users", authMiddleware, adminOnly, exportUsersReport) //export all user-task report. access: admin
-
+reportRouter.get("/export/tasks", authMiddleware, adminOnly, exportTasksReport); //export all tasks as an excel/pdf file. access: admin
+reportRouter.get("/export/users", authMiddleware, adminOnly, exportUsersReport); //export all user-task report. access: admin
 
 export default reportRouter;

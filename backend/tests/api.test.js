@@ -92,7 +92,11 @@ describe("auth validation", () => {
         const response = await fetch(`${baseUrl}/api/auth/signup`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name: "Someone", email: "someone@example.com", password: "123" }),
+            body: JSON.stringify({
+                name: "Someone",
+                email: "someone@example.com",
+                password: "123",
+            }),
         });
 
         assert.equal(response.status, 400);
