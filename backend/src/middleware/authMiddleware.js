@@ -1,39 +1,36 @@
 import { findUserById } from "../dao/userDao.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { forbidden, unauthorized } from "../utils/errors.js";
 import { verifyToken } from "../utils/helper.js";
 
-//authentication middleware for all
-export const authMiddleware = async(req, res, next) => {
-    const token = req.cookies.token;
+// Authentication middleware for every protected route.
+export const authMiddleware = asyncHandler(async (req, res, next) => {
+    const token = req.cookies?.token;
 
-    if(!token){ 
-        return res.status(401).json({"error" : "Unauthorized"})
+    if (!token) {
+        throw unauthorized("Please sign in to continue");
     }
 
-    try{
-        const decodedId = await verifyToken(token)
-        
-        const user = await findUserById(decodedId)
-        if(!user){
-            return res.status(401).json({"error" : "Unauthorized"})
-        }
-        
-        req.user = user;
-        next();
-    } 
-    catch(e){
-        return res.status(401).json({message:"Unauthorized", "error" : e.message})
-    }
-}
+    const userId = verifyToken(token);
+    const user = await findUserById(userId);
 
+    if (!user) {
+        throw unauthorized("Please sign in to continue");
+    }
 
-//middleware for admin-only access
-export const adminOnly = async(req,res,next) =>{
-    try{
-        if( req.user && req.user.role === "admin"){
-            next();
-        }
+    req.user = user;
+    next();
+});
+
+// Middleware for admin-only routes.
+export const adminOnly = (req, res, next) => {
+    if (!req.user) {
+        return next(unauthorized());
     }
-    catch(e){
-        return res.status(403).json({message:"Access denied. Only admins are allowed"})
+
+    if (req.user.role !== "admin") {
+        return next(forbidden("Access denied. Only admins are allowed"));
     }
-}
+
+    next();
+};
