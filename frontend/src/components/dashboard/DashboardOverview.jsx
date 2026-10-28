@@ -8,7 +8,7 @@ import TaskListTable from "../TaskListTable.jsx";
 import CustomBarChart from "../charts/CustomBarChart.jsx";
 import CustomPieChart from "../charts/CustomPieChart.jsx";
 import { useUser } from "../../hooks/useUser.js";
-import { addThousandsSeperator } from "../../util/helper.jsx";
+import { formatNumber } from "../../util/format.js";
 
 const COLORS = ["#8D51FF", "#00B8DB", "#7BCE00"];
 
@@ -49,22 +49,22 @@ const DashboardOverview = ({ data, loading, seeMorePath, seeMoreLabel = "See All
                 <div className="grid grid-cols-2 gap-3 pt-6 md:grid-cols-4 md:gap-6">
                     <InfoCard
                         label="Total Tasks"
-                        value={addThousandsSeperator(distributions.All || 0)}
+                        value={formatNumber(distributions.All || 0)}
                         color="bg-primary"
                     />
                     <InfoCard
                         label="Pending Tasks"
-                        value={addThousandsSeperator(distributions.Pending || 0)}
+                        value={formatNumber(distributions.Pending || 0)}
                         color="bg-violet-500"
                     />
                     <InfoCard
                         label="In Progress Tasks"
-                        value={addThousandsSeperator(distributions.InProgress || 0)}
+                        value={formatNumber(distributions.InProgress || 0)}
                         color="bg-cyan-500"
                     />
                     <InfoCard
                         label="Completed Tasks"
-                        value={addThousandsSeperator(distributions.Completed || 0)}
+                        value={formatNumber(distributions.Completed || 0)}
                         color="bg-lime-500"
                     />
                 </div>
