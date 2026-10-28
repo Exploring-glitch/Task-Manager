@@ -1,11 +1,24 @@
-PORT =
-MONGODB_URI = 
-CLIENT_URL = 
-JWT_SECRET =
-ADMIN_INVITE_TOKEN =
+# Copy this file to .env and fill in your own values.
+# Never commit real credentials.
 
-BASE_URL=
+PORT=3000
+NODE_ENV=development
 
-CLOUDINARY_CLOUD_NAME=dhpj69s7b
-CLOUDINARY_API_KEY=921115251692977
-CLOUDINARY_API_SECRET=HeUiL236ySxVPiCw-3xDgycg148
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>?appName=Task-Manager
+
+# Comma separated list of allowed frontend origins
+CLIENT_URL=http://localhost:5173
+
+# Use a long random string, e.g. `openssl rand -base64 48`
+JWT_SECRET=change-me
+JWT_EXPIRES_IN=7d
+
+# Token a new admin has to provide while signing up
+ADMIN_INVITE_TOKEN=change-me
+
+# Public URL of this API (used in outgoing links)
+BASE_URL=http://localhost:3000
+
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
