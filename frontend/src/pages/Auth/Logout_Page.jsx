@@ -1,62 +1,44 @@
-import React from 'react'
-import { useState } from 'react'
-import { logout_user } from '../../api/userApi.js';
-import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from '../../context/userContext.jsx';
-import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
-import { ModalDelete } from '../../components/ModalDelete.jsx';
-import ConfirmationModal from '../../components/ConfirmationModal.jsx';
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { logout_user } from "../../api/userApi.js";
+import ConfirmationModal from "../../components/ConfirmationModal.jsx";
+import Modal from "../../components/Modal.jsx";
+import DashboardLayout from "../../components/layouts/DashboardLayout.jsx";
+import { UserContext } from "../../context/UserContext.js";
+import { getHomeRoute } from "../../routes/homeRoute.js";
 
 const Logout_Page = () => {
     const { user, clearUser } = useContext(UserContext);
-    const [openLogoutAlert, setOpenLogoutAlert] = useState(true);
-
     const navigate = useNavigate();
 
     const handleLogout = async () => {
         try {
-            const response = await logout_user();
-            setOpenLogoutAlert(false);
-
-            toast.success("Logged out successfully")
-
-            clearUser(); // remove user from context
-            window.location.href = "/auth/login"; // redirect to login
+            await logout_user();
+            clearUser();
+            toast.success("Logged out successfully");
+            navigate("/auth/login", { replace: true });
+        } catch (error) {
+            toast.error(error.message || "Logout failed");
         }
-        catch (err) {
-            console.log("Logout failed: ", err);
-            toast.error("Logout failed");
-        }
-        return  //after redirecting, return from the function i.e navigate(route) dosen't run
-    }
+    };
 
     const handleCancel = () => {
-        if (user?.user?.role === "admin") {
-            navigate("/admin/dashboard");
-        } else {
-            navigate("/member/dashboard-user-data");
-        }
+        navigate(getHomeRoute(user?.role), { replace: true });
     };
 
     return (
         <DashboardLayout activeMenu="Logout">
-            <ModalDelete
-                isOpen={openLogoutAlert}
-                onClose={() => setOpenLogoutAlert(false)}
-                title="Logout"
-            >
+            <Modal isOpen onClose={handleCancel} title="Logout" size="lg">
                 <ConfirmationModal
                     content="Are you sure you want to logout?"
-                    onConfirm={() => handleLogout()}
+                    onConfirm={handleLogout}
                     btnText="Logout"
-                    onCancel={() => handleCancel()}
+                    onCancel={handleCancel}
                 />
-            </ModalDelete>
-
+            </Modal>
         </DashboardLayout>
-    )
-}
+    );
+};
 
-export default Logout_Page
+export default Logout_Page;
