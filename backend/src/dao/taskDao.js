@@ -1,93 +1,37 @@
-import Task from "../models/taskSchema.js"
+import mongoose from "mongoose";
+import Task from "../models/taskSchema.js";
 
+const TASK_POPULATE_FIELDS = "name email profileImageUrl";
 
-//used in userController.js
-export const memberInfo = async (users) => {
-    return Promise.all(
-        users.map(async (user) => {
-            const pendingTask = await Task.countDocuments({
-                assignedTo: user._id,
-                status: "Pending"
-            });
-            const inProgressTask = await Task.countDocuments({
-                assignedTo: user._id,
-                status: "In Progress"
-            });
-            const completedTask = await Task.countDocuments({
-                assignedTo: user._id,
-                status: "Completed"
-            });
+export const createTaskDao = (taskData) => {
+    return Task.create(taskData);
+};
 
-            return {
-                ...user._doc, //user data
-                pendingTask,
-                inProgressTask,
-                completedTask
-            }
-        })
-    )
-}
+export const findTaskById = (id) => {
+    return Task.findById(id);
+};
 
-//used in taskController.js
-export const createTaskDao = async(title, description, priority, status, dueDate, assignedTo, attachments, todoCheckLists) => {
-    const newTask = new Task({
-        title: title,
-        description: description,
-        priority: priority,
-        status: status,
-        dueDate: dueDate,
-        assignedTo: assignedTo,
-        attachments: attachments,
-        todoCheckLists: todoCheckLists
-    })
+export const findTaskByIdWithUser = (id) => {
+    return Task.findById(id).populate("assignedTo", TASK_POPULATE_FIELDS);
+};
 
-    await newTask.save();
-    return newTask;
-}
-export const findTaskById = async(id) =>{
-    return await Task.findById(id);
-}
-export const findTaskByIdWithUser = async(id) =>{
-    return await Task.findById(id).populate(
-        "assignedTo" , 
-        "name email profileImageUrl"
-    );
-}
-export const findTasksForAdminDao = async(filter) =>{
-    return await Task.find(filter).populate(
-        "assignedTo",
-        "name email profileImageUrl" 
-    )
-}
-export const findTasksForMemberDao = async(filter, id) =>{
-    return await Task.find({ ...filter, assignedTo : id }).populate(
-        "assignedTo",
-        "name email profileImageUrl" 
-    )
-}
-export const allTaskDao = async(role, id) =>{
-    return await Task.countDocuments( 
-        role === "admin" ? {} : {assignedTo: id}
-    )
-}
-export const pendingTasksDao = async(filter,role, id) =>{
-    return await Task.countDocuments({
-        ...filter,
-        status: "Pending",
-        ...(role != "admin" && {assignedTo: id})
-    })
-}
-export const inProgressTasksDao = async(filter, role, id) =>{
-    return await Task.countDocuments({
-        ...filter,
-        status: "In Progress",
-        ...(role != "admin" && {assignedTo: id})
-    })
-}
-export const completeTasksDao = async(filter, role, id) =>{
-    return await Task.countDocuments({
-        ...filter,
-        status: "Completed",
-        ...(role != "admin" && {assignedTo: id})
-    })
-}
+/**
+ * Returns the tasks visible to the given user: everything for admins, only the
+ * assigned tasks for members.
+ */
+export const findTasks = ({ filter = {}, userId } = {}) => {
+    const query = userId ? { ...filter, assignedTo: userId } : filter;
+
+    return Task.find(query)
+        .populate("assignedTo", TASK_POPULATE_FIELDS)
+        .sort({ createdAt: -1 });
+};
+
+export const deleteTaskById = (id) => {
+    return Task.findByIdAndDelete(id);
+};
+
+export const toObjectId = (id) => {
+    if (id instanceof mongoose.Types.ObjectId) return id;
+    return new mongoose.Types.ObjectId(String(id));
+};
