@@ -1,27 +1,27 @@
-import React, { useContext } from 'react'
-import { UserContext } from '../../context/userContext.jsx';
-import SideMenu from '../layouts/SideMenu.jsx';
-import NavBar from '../layouts/NavBar.jsx';
-
+import NavBar from "./NavBar.jsx";
+import SideMenu from "./SideMenu.jsx";
+import { useUser } from "../../hooks/useUser.js";
 
 const DashboardLayout = ({ children, activeMenu }) => {
-    const { user } = useContext(UserContext);
+    const { user } = useUser();
 
     return (
         <div>
             <NavBar activeMenu={activeMenu} />
+
             {user && (
-                <div className='flex'>
-                    <div className='hidden lg:block'>
-                        <SideMenu activeMenu={activeMenu}></SideMenu>
+                <div className="flex">
+                    <div className="hidden lg:block">
+                        <SideMenu activeMenu={activeMenu} />
                     </div>
-                    <div className='p-3 h-[calc(100vh-52px)] w-screen overflow-x-hidden'>
+
+                    <div className="h-[calc(100vh-52px)] w-screen overflow-x-hidden p-3">
                         {children}
                     </div>
-                </div>                 
+                </div>
             )}
         </div>
-    )
-}
+    );
+};
 
 export default DashboardLayout;
