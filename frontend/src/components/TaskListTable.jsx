@@ -1,56 +1,53 @@
-import React from 'react'
-import moment from 'moment';
+import moment from "moment";
+import EmptyState from "./EmptyState.jsx";
+import TaskPriorityBadge from "./badges/TaskPriorityBadge.jsx";
+import TaskStatusBadge from "./badges/TaskStatusBadge.jsx";
 
-
-const TaskListTable = ({ tableData }) => {
-
-    const getStatusBadgeColor = (status) => {
-        switch (status) {
-            case 'Completed': return 'bg-green-100 text-green-500 border border-green-200';
-            case 'InProgress': return 'bg-cyan-100 text-cyan-500 border border-cyan-200';
-            case 'Pending': return 'bg-purple-100 text-purple-500 border border-purple-200';
-            default: return 'bg-gray-100 text-gray-500 border border-gray-200';
-        }
-    };
-
-    const getPriorityBadgeColor = (priority) => {
-        switch (priority) {
-            case 'High': return 'bg-red-100 text-red-500 border border-red-200';
-            case 'Medium': return 'bg-orange-100 text-orange-500 border border-orange-200';
-            case 'Low': return 'bg-green-100 text-green-500 border border-green-200';
-            default: return 'bg-gray-100 text-gray-500 border border-gray-200';
-        }
-    };
+const TaskListTable = ({ tableData = [] }) => {
+    if (tableData.length === 0) {
+        return (
+            <EmptyState
+                title="No recent tasks"
+                description="New tasks will show up here as soon as they are created."
+            />
+        );
+    }
 
     return (
-        <div className='mt-3 rounded-lg p-0 overflow-x-auto'>
-            <table className='min-w-full'>
+        <div className="mt-3 overflow-x-auto rounded-lg p-0">
+            <table className="min-w-full">
                 <thead>
-                    <tr className='text-left'>
-                        <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'> Name </th>
-                        <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'> Status </th>
-                        <th className='py-3 px-4 text-gray-800 font-medium text-[13px]'> Priority </th>
-                        <th className='py-3 px-4 text-gray-800 font-medium text-[13px] hidden md:table-cell'> Created On </th>
+                    <tr className="text-left">
+                        <th className="px-4 py-3 text-[13px] font-medium text-gray-800">Name</th>
+                        <th className="px-4 py-3 text-[13px] font-medium text-gray-800">Status</th>
+                        <th className="px-4 py-3 text-[13px] font-medium text-gray-800">Priority</th>
+                        <th className="hidden px-4 py-3 text-[13px] font-medium text-gray-800 md:table-cell">
+                            Created On
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {tableData.map((task) => (
-                        <tr key={task._id} className='border-t border-gray-200'>
-                            <td className='my-3 mx-4 text-gray-700 text-[13px] line-clamp-1 overflow-hidden'>{task.title}</td>
-                            <td className='py-4 px-4'>
-                                <span className={`px-2 py-1 text-xs rounded inline-block ${getStatusBadgeColor(task.status)}`}> {task.status} </span>
+                        <tr key={task._id} className="border-t border-gray-200">
+                            <td className="mx-4 my-3 overflow-hidden text-[13px] text-gray-700">{task.title}</td>
+                            <td className="px-4 py-4">
+                                <TaskStatusBadge status={task.status} />
                             </td>
-                            <td className='py-4 px-4'>
-                                <span className={`px-2 py-1 text-xs rounded inline-block ${getPriorityBadgeColor(task.priority)}`}> {task.priority} </span>
+                            <td className="px-4 py-4">
+                                <TaskPriorityBadge priority={task.priority} />
                             </td>
-                            <td className='py-4 px-4 text-gray-700 text-[13px] text-nowrap hidden md:table-cell'> {task.createdAt ? moment(task.createdAt).format('Do MMM YYYY') : 'N/A'} </td>
+                            <td className="hidden whitespace-nowrap px-4 py-4 text-[13px] text-gray-700 md:table-cell">
+                                {task.createdAt && moment(task.createdAt).isValid()
+                                    ? moment(task.createdAt).format("Do MMM YYYY")
+                                    : "N/A"}
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
         </div>
-    )
-}
+    );
+};
 
-export default TaskListTable
+export default TaskListTable;
