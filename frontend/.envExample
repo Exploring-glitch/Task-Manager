@@ -1,2 +1,8 @@
-
-VITE_API_URL=
+# Base URL for API requests.
+#
+# Local development: leave as "/" so requests go through the Vite proxy
+# (see vite.config.js) and cookies stay first-party.
+#
+# Production: set this to the deployed API origin, for example
+#   VITE_API_URL=https://your-api.onrender.com
+VITE_API_URL=/
