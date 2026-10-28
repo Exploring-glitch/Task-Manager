@@ -1,120 +1,123 @@
-import { cookieOptions } from "../config/config.js";
-import { createNewUser, findUserByEmail, findUserByEmailAndPassword, findUserByIdAndPassword } from "../dao/userDao.js";
-import { signToken } from "../utils/helper.js"
+import { env } from "../config/env.js";
+import { getCookieOptions } from "../config/config.js";
+import {
+    createNewUser,
+    findUserByEmail,
+    findUserByEmailWithPassword,
+    findUserById,
+} from "../dao/userDao.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { deleteCloudinaryImage } from "../utils/cloudinaryHelpers.js";
+import { AppError, badRequest, notFound, unauthorized } from "../utils/errors.js";
+import { signToken } from "../utils/helper.js";
+import { optionalString, requireEmail, requirePassword, requireString } from "../utils/validation.js";
 
+const startSession = (req, res, user) => {
+    const token = signToken({ id: user._id });
+    res.cookie("token", token, getCookieOptions(req));
+    return token;
+};
 
-export const userSignup = async (req, res) => {
-    try {
-        const { name, email, password, profileImageUrl, adminInviteToken } = req.body;
+export const userSignup = asyncHandler(async (req, res) => {
+    const name = requireString(req.body.name, "Name", { max: 80 });
+    const email = requireEmail(req.body.email);
+    const password = requirePassword(req.body.password);
+    const profileImageUrl = optionalString(req.body.profileImageUrl, "Profile image URL", { max: 2048 });
 
-        //check if user already exists 
-        const userExist = await findUserByEmail(email);
-        if (userExist) {
-            return res.status(409).json({ message: "User already exists" });
-        }
-
-        //check if the user is admin: if he/she has adminInviteToken
-        let role = "member"
-        if (adminInviteToken && adminInviteToken == process.env.ADMIN_INVITE_TOKEN) {
-            role = "admin"
-        }
-
-        //hashing password: its already done in user schema before saving the schema
-
-        //create new user
-        const newUser = await createNewUser(name, email, password, profileImageUrl, role);
-        const token = signToken({ id: newUser._id })
-
-        res.cookie("token", token, cookieOptions)
-        res.status(200).json({ "message": "Sign up success", "user": newUser, "token": token })
+    const userExist = await findUserByEmail(email);
+    if (userExist) {
+        throw new AppError("An account with this email already exists", 409);
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
+
+    // Only the holder of the invite token can register as an admin.
+    const role =
+        req.body.adminInviteToken && req.body.adminInviteToken === env.adminInviteToken
+            ? "admin"
+            : "member";
+
+    const newUser = await createNewUser(name, email, password, profileImageUrl, role);
+    startSession(req, res, newUser);
+
+    res.status(201).json({ message: "Sign up success", user: newUser });
+});
+
+export const userLogin = asyncHandler(async (req, res) => {
+    const email = requireEmail(req.body.email);
+
+    if (typeof req.body.password !== "string" || !req.body.password) {
+        throw badRequest("Password is required");
     }
-}
 
-export const userLogin = async (req, res) => {
-    try {
-        const { email, password } = req.body;
+    const user = await findUserByEmailWithPassword(email);
+    const isPassValid = user ? await user.comparePassword(req.body.password) : false;
 
-        const user = await findUserByEmailAndPassword(email)
-        if (!user) {
-            return res.status(404).json({ message: "User not found" })
-        }
-
-        const isPassValid = await user.comparePassword(password) //using the comparePassword method from the userSchema directly here
-        if (!isPassValid) {
-            return res.status(401).json({ message: "Invalid credentials" })
-        }
-
-        const token = signToken({ id: user._id });
-
-        res.cookie("token", token, cookieOptions);
-        res.status(200).json({ "message": "Login success", "user": user, "token": token });
+    // Same response for "unknown email" and "wrong password" so the endpoint
+    // cannot be used to enumerate registered accounts.
+    if (!user || !isPassValid) {
+        throw unauthorized("Invalid email or password");
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
+
+    startSession(req, res, user);
+
+    res.status(200).json({ message: "Login success", user });
+});
+
+export const getUserProfile = asyncHandler(async (req, res) => {
+    const user = await findUserById(req.user._id);
+
+    if (!user) {
+        throw notFound("User not found");
     }
-}
 
-export const getUserProfile = async (req, res) => {
-    try {
-        const user = await findUserByIdAndPassword(req.user.id)
-        if (!user) {
-            return res.status(404).json({ "message": "User not found" })
-        }
+    res.status(200).json({ user });
+});
 
-        res.status(200).json({ user })
+export const updateUserProfile = asyncHandler(async (req, res) => {
+    const user = await findUserById(req.user._id);
+
+    if (!user) {
+        throw notFound("User not found");
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
+
+    const name = optionalString(req.body.name, "Name", { max: 80 });
+    const email = req.body.email === undefined ? undefined : requireEmail(req.body.email);
+    const profileImageUrl = optionalString(req.body.profileImageUrl, "Profile image URL", { max: 2048 });
+    const password = req.body.password === undefined || req.body.password === ""
+        ? undefined
+        : requirePassword(req.body.password);
+
+    if (email && email !== user.email) {
+        const emailTaken = await findUserByEmail(email);
+        if (emailTaken) {
+            throw new AppError("An account with this email already exists", 409);
+        }
+        user.email = email;
     }
-}
 
-export const updateUserProfile = async (req, res) => {
-    try {
-        const user = await findUserByIdAndPassword(req.user.id)
-        if (!user) {
-            return res.status(404).json({ "message": "User not found" })
-        }
+    if (name) user.name = name;
+    if (password) user.password = password;
 
-        //updating logic
-        if (req.body.name) {  //if user passes a new name, then update prev stored name with the new name passed
-            user.name = req.body.name;
-        }
-        if (req.body.email) { //if user passes a new email, then update prev stored email with the new email passed
-            user.email = req.body.email;
-        }
-        if (req.body.password) {
-            user.password = req.body.password;
-        }
-
-        await user.save();
-
-        res.status(200).json({ message: "Profile updated successfully", user: user });
+    if (profileImageUrl && profileImageUrl !== user.profileImageUrl) {
+        const previousImage = user.profileImageUrl;
+        user.profileImageUrl = profileImageUrl;
+        // Best effort: do not block the update when cleanup fails.
+        void deleteCloudinaryImage(previousImage);
     }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
+
+    await user.save();
+
+    res.status(200).json({ message: "Profile updated successfully", user });
+});
 
 export const uploadProfileImage = (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({ "message": "File not uploaded for Profile Image" });
-        }
+    if (!req.file) {
+        return res.status(400).json({ message: "No image was uploaded" });
+    }
 
-        // Cloudinary gives URL automatically
-        const imageUrl = req.file.path;
-        
-        res.status(200).json({ imageUrl })
-    }
-    catch (error) {
-        res.status(500).json({ message: "Internal server error" });
-    }
-}
+    res.status(200).json({ imageUrl: req.file.path });
+};
 
 export const userLogout = (req, res) => {
-    res.clearCookie("token", cookieOptions);
+    res.clearCookie("token", { ...getCookieOptions(req), maxAge: undefined });
     res.status(200).json({ message: "Logged out successfully" });
-}
+};

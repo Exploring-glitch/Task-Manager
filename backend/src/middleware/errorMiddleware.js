@@ -28,6 +28,18 @@ const translateError = (error) => {
         return new AppError("Request body is not valid JSON", 400);
     }
 
+    if (error.name === "MulterError") {
+        const message =
+            error.code === "LIMIT_FILE_SIZE"
+                ? "Image must be 2 MB or smaller"
+                : "The image could not be uploaded";
+        return new AppError(message, 400);
+    }
+
+    if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
+        return new AppError("Your session has expired, please sign in again", 401);
+    }
+
     return new AppError("Internal server error", 500);
 };
 
