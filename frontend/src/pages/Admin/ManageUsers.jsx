@@ -1,87 +1,70 @@
-import React, { useState } from 'react'
-import DashboardLayout from '../../components/layouts/DashboardLayout.jsx'
-import { get_all_users } from '../../api/userApi.js';
-import { useEffect } from 'react';
-import { LuFileSpreadsheet } from 'react-icons/lu';
-import UserCard from '../../components/cards/UserCard.jsx';
-import { download_user_report } from '../../api/reportApi.js';
-import toast from 'react-hot-toast';
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import DashboardLayout from "../../components/layouts/DashboardLayout.jsx";
+import DownloadReportButton from "../../components/DownloadReportButton.jsx";
+import EmptyState from "../../components/EmptyState.jsx";
+import PageLoader from "../../components/PageLoader.jsx";
+import UserCard from "../../components/cards/UserCard.jsx";
+import { get_all_users } from "../../api/userApi.js";
+import { download_user_report } from "../../api/reportApi.js";
 
 const ManageUsers = () => {
-  const [allUsers, setAllUsers] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-  const getAllUsers = async () => {
-    try {
-      const response = await get_all_users();
+    useEffect(() => {
+        let isActive = true;
 
-      if (response?.length > 0) {
-        setAllUsers(response)
-      }
-    }
-    catch (err) {
-      console.log("Error fetching users. Errpr: ", err);
-    }
-  }
+        const loadUsers = async () => {
+            try {
+                const response = await get_all_users();
+                if (isActive) setAllUsers(response || []);
+            } catch (error) {
+                if (isActive) toast.error(error.message || "Could not load team members");
+            } finally {
+                if (isActive) setLoading(false);
+            }
+        };
 
-  //download user report
-  const handleDownloadReport = async() => {
-    try{
-      const response = await download_user_report();
+        loadUsers();
 
-      const url = window.webkitURL.createObjectURL(new Blob([response]))
-      const link = document.createElement("a");
+        return () => {
+            isActive = false;
+        };
+    }, []);
 
-      link.href = url;
-      link.setAttribute("download", "user-details.xlsx")
+    return (
+        <DashboardLayout activeMenu="Team Members">
+            <div className="mt-5 mb-10">
+                <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
+                    <h2 className="text-xl font-medium">Team Members</h2>
 
-      document.body.appendChild(link);
-      
-      link.click();
-      link.parentNode.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    }
-    catch(err){
-      console.log("Error downloading report. error: ", err)
-      toast.error("Failed to download expense details. Please try again.")
-    }
-  }
+                    <DownloadReportButton
+                        fetcher={download_user_report}
+                        filename="user-details.xlsx"
+                        label="Download report"
+                    />
+                </div>
 
-  useEffect(() => {
-    getAllUsers();
-
-    return () => { };
-  }, []);
-
-
-
-  return (
-    <DashboardLayout activeMenu="Team Members">
-      <div className='mt-5 mb-10'>
-        <div className='flex justify-between
-          md:flex-row md:items-center'
-        >
-          <h2 className='text-xl font-medium'> Team Members </h2>
-
-          <button 
-            onClick={handleDownloadReport}
-            className='flex items-center gap-3 text-xs md:[text-13px] font-medium text-lime-900 bg-lime-100 px-2 md:px-3 py-2 rounded border border-lime-200 hover:border-lime-400 cursor-pointer'
-          > 
-            <LuFileSpreadsheet className='text-lg' />
-            Download report 
-          </button>
-        </div>
-
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-4'>
-          {allUsers?.map((user) => (
-            <UserCard
-              key={user._id}
-              userInfo={user}
-            />
-          ))}
-        </div>
-      </div>
-    </DashboardLayout>
-  )
-}
+                {loading ? (
+                    <PageLoader label="Loading team members..." />
+                ) : allUsers.length === 0 ? (
+                    <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
+                        <EmptyState
+                            title="No team members yet"
+                            description="Members show up here after they sign up."
+                        />
+                    </div>
+                ) : (
+                    <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+                        {allUsers.map((user) => (
+                            <UserCard key={user._id} userInfo={user} />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </DashboardLayout>
+    );
+};
 
 export default ManageUsers;
