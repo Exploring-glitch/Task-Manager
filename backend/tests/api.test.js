@@ -1,7 +1,13 @@
 import assert from "node:assert/strict";
 import { after, before, describe, it } from "node:test";
 
-import app from "../app.js";
+// The app refuses to start without a JWT secret, and the CORS checks below
+// expect a known origin. Provide both before the app module is evaluated so the
+// suite also runs on a clean checkout (CI) without a local .env file.
+process.env.JWT_SECRET ||= "test-only-jwt-secret";
+process.env.CLIENT_URL ||= "https://task-manager-pi-eight-72.vercel.app";
+
+const { default: app } = await import("../app.js");
 
 let server;
 let baseUrl;
