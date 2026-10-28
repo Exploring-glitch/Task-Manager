@@ -5,7 +5,7 @@ import AuthLayout from "../../components/layouts/AuthLayout.jsx";
 import AuthError from "../../components/forms/AuthError.jsx";
 import ProfilePhotoSelector from "../../components/ProfilePhotoSelector.jsx";
 import { signup_user, update_profile } from "../../api/userApi.js";
-import { uploadImg } from "../../util/uploadImg.jsx";
+import { uploadImg } from "../../util/uploadImg.js";
 import { useUser } from "../../hooks/useUser.js";
 import { getHomeRoute } from "../../routes/homeRoute.js";
 
