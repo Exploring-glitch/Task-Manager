@@ -1,10 +1,13 @@
-import React, { useContext, useRef, useState } from 'react'
-import { Link, useNavigate } from "react-router-dom"
-import { signup_user } from '../../api/userApi.js';
-import AuthLayout from '../../components/layouts/AuthLayout.jsx'
-import ProfilePhotoSelector from '../../components/ProfilePhotoSelector.jsx';
-import { UserContext } from '../../context/userContext.jsx';
-import { uploadImg } from '../../util/uploadImg.jsx';
+import { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import AuthLayout from "../../components/layouts/AuthLayout.jsx";
+import AuthError from "../../components/forms/AuthError.jsx";
+import ProfilePhotoSelector from "../../components/ProfilePhotoSelector.jsx";
+import { signup_user, update_profile } from "../../api/userApi.js";
+import { uploadImg } from "../../util/uploadImg.jsx";
+import { useUser } from "../../hooks/useUser.js";
+import { getHomeRoute } from "../../routes/homeRoute.js";
 
 const Signup_Page = () => {
     const [profilePic, setProfilePic] = useState(null);
@@ -14,246 +17,204 @@ const Signup_Page = () => {
     const [adminInviteToken, setAdminInviteToken] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
     const nameRef = useRef(null);
     const emailRef = useRef(null);
     const passRef = useRef(null);
-    const adminTokenRef = useRef(null);
 
-    const { updateUser } = useContext(UserContext);
+    const { updateUser } = useUser();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
-
-        let profileImageUrl = '';
-
-        if (!fullName) {
-            setError("Please enter your full name")
-            nameRef.current?.focus()
-            setLoading(false)
-            return;
+    const validate = () => {
+        if (!fullName.trim()) {
+            nameRef.current?.focus();
+            return "Please enter your full name";
         }
+
         if (!email.trim()) {
-            setError("Please enter your email")
-            emailRef.current?.focus()
-            setLoading(false)
-            return;
+            emailRef.current?.focus();
+            return "Please enter your email";
         }
-        if (!password.trim()) {
-            setError("Please enter your password")
-            passRef.current?.focus()
-            setLoading(false)
-            return;
-        }
+
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            setError("Please enter a valid email address")
-            setLoading(false)
-            return;
+            return "Please enter a valid email address";
         }
+
+        if (!password.trim()) {
+            passRef.current?.focus();
+            return "Please enter your password";
+        }
+
         if (password.length < 6) {
-            setError('Password must contain at least 6 characters');
-            setLoading(false)
+            return "Password must contain at least 6 characters";
+        }
+
+        return "";
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setError("");
+
+        const validationError = validate();
+        if (validationError) {
+            setError(validationError);
             return;
         }
 
-        //signup API call
+        setLoading(true);
+
         try {
-            if(profilePic){
-                const imgUploadResponse = await uploadImg(profilePic);
+            // The account has to exist before an image can be uploaded, because
+            // the upload endpoint requires an authenticated session.
+            const response = await signup_user(fullName, email, password, "", adminInviteToken);
+            updateUser(response.user);
 
-                profileImageUrl = imgUploadResponse.imageUrl || "";
-            }
+            if (profilePic) {
+                try {
+                    const { imageUrl } = await uploadImg(profilePic);
 
-            const response = await signup_user(fullName, email, password, profileImageUrl, adminInviteToken);
-            const { token } = response;
-
-            if (token) {
-
-                updateUser(response);
-
-                if (response.user?.role === "member") {
-                    navigate("/member/dashboard-user-data") //this means, when user login, go to the dashboard page
-                    setLoading(false);
-                } else {
-                    navigate("/admin/dashboard") //this means, when user login, go to the dashboard page (only accessible for admins)
-                    setLoading(false);
+                    if (imageUrl) {
+                        const updated = await update_profile({ profileImageUrl: imageUrl });
+                        updateUser(updated.user);
+                    }
+                } catch {
+                    toast.error("Account created, but the profile photo could not be uploaded");
                 }
             }
-        }
-        catch (e) {
+
+            navigate(getHomeRoute(response.user?.role));
+        } catch (signupError) {
+            setError(signupError.message || "Signup failed. Please try again.");
+        } finally {
             setLoading(false);
-            setError(e.message || 'Login failed. Please check your credentials.');
         }
-    }
+    };
 
     return (
         <AuthLayout>
-            <form onSubmit={handleSubmit}
-                className="w-full h-full px-4 py-4 
-                flex flex-col items-center
-                md:py-0 md:justify-center md:relative md:z-10"
+            <form
+                onSubmit={handleSubmit}
+                className="flex h-full w-full flex-col items-center px-4 py-4 md:relative md:z-10 md:justify-center md:py-0"
             >
-                <h2
-                    className="
-                    text-3xl font-bold text-[#1D4ED8]
-                    sd:text-4xl
-                    lg:text-4xl lg:mb-1
-                    2xl:text-5xl"
-                > Create an Account </h2>
+                <h1 className="text-3xl font-bold text-[#1D4ED8] lg:mb-1 lg:text-4xl 2xl:text-5xl">
+                    Create an Account
+                </h1>
 
-                <h6
-                    className="
-                    text-gray-600 text-xs mb-7
-                    md:text-gray-700 md:text-lg
-                    2xl:text-xl 2xl:mt-4"
-                > Join us today by entering your details below </h6>
+                <p className="mb-7 text-xs text-gray-600 md:text-lg md:text-gray-700 2xl:mt-4 2xl:text-xl">
+                    Join us today by entering your details below
+                </p>
 
-                {error && (
-                    <div className="mb-4 p-2 sm:p-3 bg-[#FFF1F2] text-[#E11D48] border border-[#FECDD3] rounded-md">
-                        {error}
-                    </div>
-                )}
+                <AuthError message={error} />
 
                 <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
-                <div className='grid grid-col-1 gap-0
-                    md:grid-cols-2 md:gap-4'
-                >
+                <div className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-4">
                     <div>
                         <label
-                            className="
-                            text-sm font-semibold
-                            md:text-md md:text-gray-700
-                            2xl:text-2xl"
+                            className="text-sm font-semibold md:text-base md:text-gray-700 2xl:text-2xl"
                             htmlFor="fullName"
                         >
                             Enter your full name here
                         </label>
 
                         <input
+                            id="fullName"
+                            name="name"
+                            autoComplete="name"
                             ref={nameRef}
                             value={fullName}
-                            onInput={(c) => setFullName(c.target.value)}
-                            type="type"
+                            onChange={(event) => setFullName(event.target.value)}
+                            type="text"
                             placeholder="Example: Alex Zen"
-                            className="
-                            mt-0 md:mt-2 w-full p-2 rounded
-                            text-sm md:text-base
-                            placeholder:text-sm md:placeholder:text-sm
-                            bg-[#F5F8FF] border-2 border-[#D6E0FF]
-                            focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                            className="mt-0 w-full rounded border-2 border-[#D6E0FF] bg-[#F5F8FF] p-2 text-sm placeholder:text-sm focus:ring-2 focus:ring-[#2979FF] focus:outline-none md:mt-2 md:text-base"
                         />
                     </div>
 
                     <div>
                         <label
-                            className="
-                            text-sm font-semibold
-                            md:text-md md:text-gray-700
-                            2xl:text-2xl"
+                            className="text-sm font-semibold md:text-base md:text-gray-700 2xl:text-2xl"
                             htmlFor="email"
                         >
                             Enter your email address
                         </label>
 
                         <input
+                            id="email"
+                            name="email"
+                            autoComplete="email"
                             ref={emailRef}
                             value={email}
-                            onInput={(c) => setEmail(c.target.value)}
+                            onChange={(event) => setEmail(event.target.value)}
                             type="email"
                             placeholder="Example: alex@example.com"
-                            className="
-                            mt-0 md:mt-2 w-full p-2 rounded
-                            text-sm md:text-base
-                            placeholder:text-sm md:placeholder:text-sm
-                            bg-[#F5F8FF] border-2 border-[#D6E0FF]
-                            focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                            className="mt-0 w-full rounded border-2 border-[#D6E0FF] bg-[#F5F8FF] p-2 text-sm placeholder:text-sm focus:ring-2 focus:ring-[#2979FF] focus:outline-none md:mt-2 md:text-base"
                         />
                     </div>
 
                     <div>
                         <label
-                            className="
-                            text-sm font-semibold
-                            md:text-md md:text-gray-700
-                            2xl:text-2xl"
+                            className="text-sm font-semibold md:text-base md:text-gray-700 2xl:text-2xl"
                             htmlFor="password"
                         >
                             Enter your password here
                         </label>
 
                         <input
+                            id="password"
+                            name="password"
+                            autoComplete="new-password"
                             ref={passRef}
                             value={password}
-                            onInput={(c) => setPassword(c.target.value)}
+                            onChange={(event) => setPassword(event.target.value)}
                             type="password"
                             placeholder="Min 6 characters needed"
-                            className="
-                            mt-0 md:mt-2
-                            w-full p-2 rounded text-sm 
-                            placeholder:text-sm md:placeholder:text-sm
-                            bg-[#F5F8FF] border-2 border-[#D6E0FF]
-                            focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                            className="mt-0 w-full rounded border-2 border-[#D6E0FF] bg-[#F5F8FF] p-2 text-sm placeholder:text-sm focus:ring-2 focus:ring-[#2979FF] focus:outline-none md:mt-2 md:text-base"
                         />
                     </div>
 
-                    <div className='mb-4'>
+                    <div className="mb-4">
                         <label
-                            className="
-                            text-sm font-semibold
-                            md:text-md md:text-gray-700
-                            2xl:text-2xl"
+                            className="text-sm font-semibold md:text-base md:text-gray-700 2xl:text-2xl"
                             htmlFor="adminToken"
                         >
                             Enter the admin invite token
                         </label>
 
                         <input
-                            ref={adminTokenRef}
+                            id="adminToken"
+                            name="adminInviteToken"
                             value={adminInviteToken}
-                            onInput={(c) => setAdminInviteToken(c.target.value)}
+                            onChange={(event) => setAdminInviteToken(event.target.value)}
                             type="text"
-                            placeholder="6 Digit Code"
-                            className="
-                            mt-0 md:mt-2 w-full p-2 rounded
-                            text-sm md:text-base
-                            placeholder:text-sm md:placeholder:text-sm
-                            bg-[#F5F8FF] border-2 border-[#D6E0FF]
-                            focus:outline-none focus:ring-2 focus:ring-[#2979FF]"
+                            placeholder="Leave empty for a member account"
+                            className="mt-0 w-full rounded border-2 border-[#D6E0FF] bg-[#F5F8FF] p-2 text-sm placeholder:text-sm focus:ring-2 focus:ring-[#2979FF] focus:outline-none md:mt-2 md:text-base"
                         />
                     </div>
                 </div>
 
                 <div className="mb-2 md:mb-3">
                     <button
-                        type='submit'
+                        type="submit"
                         disabled={loading}
-                        className="
-                        w-full py-2 px-4 rounded
-                        font-semibold text-white
-                        bg-[#1D4ED8] hover:bg-[#1E40AF]
-                        transition-colors duration-200
-                        focus:outline-none focus:shadow-outline"
+                        className="w-full rounded bg-[#1D4ED8] px-4 py-2 font-semibold text-white transition-colors duration-200 hover:bg-[#1E40AF] focus:shadow-outline focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
                     >
-                        {loading ? "ᯓ ✈︎" : "SIGNUP"}
+                        {loading ? "Creating account..." : "SIGNUP"}
                     </button>
                 </div>
 
                 <div className="text-center">
                     <p className="cursor-pointer text-sm text-gray-600 2xl:text-lg">
                         Already have an account?{" "}
-                        <Link to={"/auth/login"} className="text-[#1E63E6] hover:text-[#1D4ED8] font-semibold">
+                        <Link to="/auth/login" className="font-semibold text-[#1E63E6] hover:text-[#1D4ED8]">
                             <u>Login</u>
                         </Link>
                     </p>
                 </div>
             </form>
         </AuthLayout>
-    )
-}
+    );
+};
 
-export default Signup_Page
+export default Signup_Page;
