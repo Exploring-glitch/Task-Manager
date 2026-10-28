@@ -1,201 +1,221 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { get_task_details_by_id, update_todoCheckLists } from '../../api/tasksApi.js';
-import DashboardLayout from '../../components/layouts/DashboardLayout.jsx';
-import AvatarGroup from '../../components/AvatarGroup.jsx';
-import moment from 'moment';
-import { LuSquareArrowOutUpRight } from 'react-icons/lu';
-
-
-
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import moment from "moment";
+import toast from "react-hot-toast";
+import { LuSquareArrowOutUpRight } from "react-icons/lu";
+import DashboardLayout from "../../components/layouts/DashboardLayout.jsx";
+import AvatarGroup from "../../components/AvatarGroup.jsx";
+import EmptyState from "../../components/EmptyState.jsx";
+import PageLoader from "../../components/PageLoader.jsx";
+import Progress from "../../components/Progress.jsx";
+import TaskStatusBadge from "../../components/badges/TaskStatusBadge.jsx";
+import { get_task_details_by_id, update_todoCheckLists } from "../../api/tasksApi.js";
 
 const ViewTaskDetails = () => {
-  const { id } = useParams();
-  const [task, setTask] = useState(null);
+    const { id } = useParams();
+    const [task, setTask] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [savingChecklist, setSavingChecklist] = useState(false);
 
+    useEffect(() => {
+        let isActive = true;
 
-  const getStatusTagColor = (status) => {
-    switch (status) {
-      case "In Progress":
-        return "text-cyan-500 bg-cyan-50 border-cyan-500/10";
+        const run = async () => {
+            try {
+                const response = await get_task_details_by_id(id);
+                if (isActive) setTask(response);
+            } catch (error) {
+                if (isActive) toast.error(error.message || "Could not load the task");
+            } finally {
+                if (isActive) setLoading(false);
+            }
+        };
 
-      case "Completed":
-        return "text-lime-500 bg-lime-50 border-lime-500/10";
+        if (id) run();
 
-      default:
-        return "text-violet-500 bg-violet-50 border-violet-500/10";
-    }
-  }
+        return () => {
+            isActive = false;
+        };
+    }, [id]);
 
-  const getTaskDetailsId = async (id) => {
-    try {
-      const response = await get_task_details_by_id(id)
+    const toggleChecklistItem = async (index) => {
+        if (!task || savingChecklist) return;
 
-      if (response) {
-        const taskInfo = response;
-        setTask(taskInfo);
-      }
-    }
-    catch (err) {
-      console.log("Error fetching task details. Error: ", err)
-    }
-  };
+        const previousTask = task;
+        const todoCheckLists = (task.todoCheckLists || []).map((item, itemIndex) =>
+            itemIndex === index ? { ...item, completed: !item.completed } : item
+        );
 
-  const updateTodoCheckList = async (index) => {
-    const todoList = [...task?.todoCheckLists];
+        setTask({ ...task, todoCheckLists });
+        setSavingChecklist(true);
 
-    todoList[index] = {
-      ...todoList[index],
-      completed: !todoList[index].completed,
+        try {
+            const response = await update_todoCheckLists(id, { todoCheckLists });
+            if (response?.tasks) setTask(response.tasks);
+        } catch (error) {
+            setTask(previousTask);
+            toast.error(error.message || "Could not update the checklist");
+        } finally {
+            setSavingChecklist(false);
+        }
     };
 
-    try {
-      const response = await update_todoCheckLists(id, {
-        todoCheckLists: todoList,
-      });
+    const handleLinkClick = (link) => {
+        const url = /^https?:\/\//i.test(link) ? link : `https://${link}`;
+        window.open(url, "_blank", "noopener,noreferrer");
+    };
 
-      if (response?.tasks) {
-        setTask(response.tasks);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-
-  const handleLinkClick = (link) => {
-    if (!/^https?:\/\//i.test(link)) {
-      link = "https://" + link;
-    }
-    window.open(link, "_blank");
-  };
-
-  useEffect(() => {
-    if (id) {
-      getTaskDetailsId(id);
+    if (loading) {
+        return (
+            <DashboardLayout activeMenu="My Tasks">
+                <PageLoader label="Loading task..." />
+            </DashboardLayout>
+        );
     }
 
-    return () => { };
-  }, []);
-
-
-  return (
-    <DashboardLayout activeMenu="My Tasks">
-      <div className='mt-5'>
-        {task && (
-          <div className='mt-4 grid grid-cols-1 md:grid-cols-4 '>
-            <div className='col-span-3 p-6 my-3 rounded-2xl shadow-md shadow-gray-200 border border-gray-200/50'>
-
-              <div className='flex items-center justify-between'>
-                <h2 className='text-sm md:text-xl font-medium'> {task?.title} </h2>
-
-                <div className={`text-[11px] md:text-[13px] font-medium 
-                  ${getStatusTagColor(task?.status)} 
-                  px-4 py-0.5 rounded`}
-                >
-                  {task?.status}
-                </div>
-              </div>
-
-              <div className='mt-4'>
-                <InfoBox
-                  label="Description"
-                  value={task?.description}
-                />
-              </div>
-
-              <div className='mt-4 grid grid-cols-12 gap-4'>
-                <div className='col-span-6 md:col-span-4'>
-                  <InfoBox label="Priority" value={task?.priority} />
-                </div>
-
-                <div className='col-span-6 md:col-span-4'>
-                  <InfoBox label="Due Date" value={task?.dueDate
-                    ? moment(task?.dueDate).format("Do MMM YYYY")
-                    : "N/A"
-                  } />
-                </div>
-
-                <div className='col-span-6 md:col-span-4'>
-                  <label className='text-xs font-medium text-slate-500'> Assigned To </label>
-                  <AvatarGroup
-                    avatars={task?.assignedTo?.map((user) => user?.profileImageUrl || [])}
-                    maxVisible={5}
-                  />
-                </div>
-              </div>
-
-              <div className='mt-2'>
-                <label className='text-xs font-medium text-slate-500'>Todo CheckList</label>
-
-                {task?.todoCheckLists?.map((item, index) => (
-                  <TodoCheckList
-                    key={`todo_${index}`}
-                    text={item.text}
-                    isChecked={item?.completed}
-                    onChange={() => updateTodoCheckList(index)}
-                  />
-                ))}
-              </div>
-
-              {task.attachments?.length > 0 && (
-                <div className='mt-2'>
-                  <label className='text-xs font-medium text-slate-500'>Attachments</label>
-
-                  {task?.attachments?.map((link, index) => (
-                    <Attachment
-                      key={`link_${index}`}
-                      link={link}
-                      index={index}
-                      onClick={() => handleLinkClick(link)}
+    if (!task) {
+        return (
+            <DashboardLayout activeMenu="My Tasks">
+                <div className="mt-5 grid grid-cols-1 md:grid-cols-3">
+                    <EmptyState
+                        title="Task not found"
+                        description="The task may have been deleted or is not assigned to you."
                     />
-                  ))}
                 </div>
-              )}
+            </DashboardLayout>
+        );
+    }
+
+    const checklists = task.todoCheckLists || [];
+    const attachments = task.attachments || [];
+
+    return (
+        <DashboardLayout activeMenu="My Tasks">
+            <div className="mt-5 grid grid-cols-1 md:grid-cols-4">
+                <div className="col-span-3 my-3 rounded-2xl border border-gray-200/50 p-6 shadow-md shadow-gray-200">
+                    <div className="flex items-center justify-between gap-3">
+                        <h2 className="text-sm font-medium md:text-xl">{task.title}</h2>
+                        <TaskStatusBadge status={task.status} className="px-4 py-0.5 text-[11px] md:text-[13px]" />
+                    </div>
+
+                    <div className="mt-4">
+                        <InfoBox label="Description" value={task.description} />
+                    </div>
+
+                    <div className="mt-4 grid grid-cols-12 gap-4">
+                        <div className="col-span-6 md:col-span-4">
+                            <InfoBox label="Priority" value={task.priority} />
+                        </div>
+
+                        <div className="col-span-6 md:col-span-4">
+                            <InfoBox
+                                label="Due Date"
+                                value={task.dueDate ? moment(task.dueDate).format("Do MMM YYYY") : "N/A"}
+                            />
+                        </div>
+
+                        <div className="col-span-6 md:col-span-4">
+                            <p className="text-xs font-medium text-slate-500">Assigned To</p>
+                            <div className="mt-1">
+                                <AvatarGroup
+                                    avatars={(task.assignedTo || []).map((user) => user?.profileImageUrl)}
+                                    maxVisible={5}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-4">
+                        <div className="flex items-center justify-between">
+                            <span className="text-xs font-medium text-slate-500">Progress</span>
+                            <span className="text-xs font-medium text-slate-500">{task.progress || 0}%</span>
+                        </div>
+                        <div className="mt-1">
+                            <Progress progress={task.progress} status={task.status} />
+                        </div>
+                    </div>
+
+                    <div className="mt-4">
+                        <p className="text-xs font-medium text-slate-500">Todo Checklist</p>
+
+                        {checklists.length === 0 ? (
+                            <p className="mt-2 text-xs text-gray-500">No checklist items for this task.</p>
+                        ) : (
+                            checklists.map((item, index) => (
+                                <TodoCheckList
+                                    key={`${item.text}-${index}`}
+                                    text={item.text}
+                                    isChecked={item.completed}
+                                    disabled={savingChecklist}
+                                    onChange={() => toggleChecklistItem(index)}
+                                />
+                            ))
+                        )}
+                    </div>
+
+                    {attachments.length > 0 && (
+                        <div className="mt-4">
+                            <p className="text-xs font-medium text-slate-500">Attachments</p>
+
+                            {attachments.map((link, index) => (
+                                <Attachment
+                                    key={`${link}-${index}`}
+                                    link={link}
+                                    index={index}
+                                    onClick={() => handleLinkClick(link)}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
-          </div>
-        )}
-      </div>
-    </DashboardLayout>
-  )
+        </DashboardLayout>
+    );
 };
 
 export default ViewTaskDetails;
 
-
-
-
 const InfoBox = ({ label, value }) => {
-  return <>
-    <label className='text-xs font-medium text-slate-500'> {label} </label>
-
-    <p className='mt-0.5 text-[12px] font-medium text-gray-700 md:text-[13px]'> {value} </p>
-  </>
+    return (
+        <>
+            <p className="text-xs font-medium text-slate-500">{label}</p>
+            <p className="mt-0.5 text-[12px] font-medium text-gray-700 md:text-[13px]">{value || "N/A"}</p>
+        </>
+    );
 };
 
-const TodoCheckList = ({ text, isChecked, onChange }) => {
-  return <div className='flex items-center gap-3 p-3'>
-    <input
-      type='checkbox'
-      checked={isChecked}
-      onChange={onChange}
-      className='w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded-sm outline-none cursor-pointer'
-    />
+const TodoCheckList = ({ text, isChecked, onChange, disabled }) => {
+    return (
+        <label className="flex cursor-pointer items-center gap-3 p-3">
+            <input
+                type="checkbox"
+                checked={Boolean(isChecked)}
+                onChange={onChange}
+                disabled={disabled}
+                className="h-4 w-4 cursor-pointer rounded-sm border-gray-300 bg-gray-100 text-primary outline-none disabled:cursor-wait"
+            />
 
-    <p className='text-[13px] text-gray-800'> {text} </p>
-  </div>
+            <p className={`text-[13px] text-gray-800 ${isChecked ? "line-through opacity-60" : ""}`}>{text}</p>
+        </label>
+    );
 };
 
 const Attachment = ({ link, index, onClick }) => {
-  return <div className='mt-2 flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md cursor-pointer'
-    onClick={onClick}
-  >
-    <div className='flex-1 flex items-center gap-3'>
-      <span className='mr-2 text-xs text-gray-400 font-semibold'> {index < 9 ? `0${index + 1}` : index + 1} </span>
+    return (
+        <button
+            type="button"
+            className="mt-2 flex w-full cursor-pointer justify-between rounded-md border border-gray-100 bg-gray-50 px-3 py-2 text-left hover:border-gray-300"
+            onClick={onClick}
+        >
+            <div className="flex flex-1 items-center gap-3">
+                <span className="mr-2 text-xs font-semibold text-gray-400">
+                    {index < 9 ? `0${index + 1}` : index + 1}
+                </span>
 
-      <p className='text-xs text-black'> {link} </p>
-    </div>
+                <p className="truncate text-xs text-black">{link}</p>
+            </div>
 
-    <LuSquareArrowOutUpRight className='text-gray-400 ' />
-  </div>
-}
+            <LuSquareArrowOutUpRight className="text-gray-400" aria-hidden="true" />
+        </button>
+    );
+};
