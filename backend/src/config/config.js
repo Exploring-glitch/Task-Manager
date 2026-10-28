@@ -2,8 +2,8 @@ import { env } from "./env.js";
 
 export const isProduction = env.nodeEnv === "production";
 
-// Keep the cookie lifetime in sync with the JWT lifetime. A cookie that expires
-// before its token makes users look logged out for no reason.
+// Default session lifetime: 7 days. Keep this in sync with JWT_EXPIRES_IN,
+// otherwise the cookie can expire before (or outlive) its token.
 export const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
 
 /**
