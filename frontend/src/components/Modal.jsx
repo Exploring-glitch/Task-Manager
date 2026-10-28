@@ -1,48 +1,75 @@
-import React from 'react'
+import { useEffect, useRef } from "react";
+import { HiOutlineX } from "react-icons/hi";
 
-const Modal = ({ children, isOpen, onClose, title }) => {
+const SIZE_CLASSES = {
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-xl",
+    "2xl": "max-w-2xl",
+};
 
-    if (!isOpen) {
-        return;
-    }
+const Modal = ({ children, isOpen, onClose, title, size = "2xl", bodyClassName = "" }) => {
+    const dialogRef = useRef(null);
 
+    useEffect(() => {
+        if (!isOpen) return undefined;
+
+        const handleKeyDown = (event) => {
+            if (event.key === "Escape") onClose?.();
+        };
+
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        document.addEventListener("keydown", handleKeyDown);
+
+        dialogRef.current?.focus();
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isOpen, onClose]);
+
+    if (!isOpen) return null;
+
+    const handleBackdropClick = (event) => {
+        if (event.target === event.currentTarget) onClose?.();
+    };
 
     return (
-        <div className='fixed top-0 right-0 z-50 w-full h-full flex justify-center items-center overflow-y-auto overflow-x-hidden bg-gray-950/50'>
-            <div className='relative p-4 w-full max-w-2xl max-h-full'>
-
-                <div className='relative h-[60vh] bg-white rounded-lg shadow-lg dark:bg-gray-700 max-h-full max-w-full'>
-                    
-                    <div className='md:p-5 flex items-center justify-between p-4 border-b border-gray-200 rounded-t dark:border-gray-600'>
-                        <h3 className='text-lg text-gray-900 dark:text-white'> {title} </h3>
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-gray-950/50 p-4"
+            onMouseDown={handleBackdropClick}
+        >
+            <div
+                ref={dialogRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-title"
+                tabIndex={-1}
+                className={`relative w-full ${SIZE_CLASSES[size] || SIZE_CLASSES["2xl"]} outline-none`}
+            >
+                <div className="relative max-h-[85vh] overflow-y-auto rounded-lg bg-white shadow-lg">
+                    <div className="flex items-center justify-between rounded-t border-b border-gray-200 p-4 md:p-5">
+                        <h3 id="modal-title" className="text-lg text-gray-900">
+                            {title}
+                        </h3>
 
                         <button
-                            type='button'
+                            type="button"
                             onClick={onClose}
-                            className='text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center cursor-pointer hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white'
+                            aria-label="Close dialog"
+                            className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
                         >
-                            <svg
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill='none'
-                                viewBox='0 0 14 14'
-                                className='w-3 h-3'
-                            >
-                                <path
-                                    stroke='currentColor'
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    strokeWidth='2'
-                                    d="M1 1l12 12M13 1L1 13"
-                                />
-                            </svg>
+                            <HiOutlineX className="text-base" />
                         </button>
                     </div>
-                    <div className='p-4 md:p-5 space-y-4'> {children} </div>
+
+                    <div className={`space-y-4 p-4 md:p-5 ${bodyClassName}`}>{children}</div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Modal
+export default Modal;
