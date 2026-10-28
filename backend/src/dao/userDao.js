@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import User from "../models/userSchema.js";
 
 export const createNewUser = async (name, email, password, profileImageUrl, role) => {
@@ -28,5 +29,10 @@ export const findUserByEmailWithPassword = async (email) => {
 };
 
 export const getAllMembers = async () => {
-    return await User.find({ role: "member" });
+    return await User.find({ role: "member" }).sort({ name: 1 });
+};
+
+export const countUsersByIds = async (ids) => {
+    const objectIds = ids.map((id) => new mongoose.Types.ObjectId(String(id)));
+    return User.countDocuments({ _id: { $in: objectIds } });
 };
