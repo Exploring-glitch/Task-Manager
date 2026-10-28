@@ -6,12 +6,24 @@ export const isProduction = env.nodeEnv === "production";
 // before its token makes users look logged out for no reason.
 export const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
 
-export const cookieOptions = {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? "none" : "lax",
-    maxAge: SESSION_DURATION_MS,
-    path: "/",
+/**
+ * Cookie flags are derived per request so the API also works when NODE_ENV is
+ * not set to "production" on a platform that still terminates HTTPS (Render,
+ * Vercel, ...).
+ */
+export const getCookieOptions = (req) => {
+    const isSecure =
+        isProduction ||
+        req?.secure === true ||
+        req?.headers?.["x-forwarded-proto"] === "https";
+
+    return {
+        httpOnly: true,
+        secure: isSecure,
+        sameSite: isSecure ? "none" : "lax",
+        maxAge: SESSION_DURATION_MS,
+        path: "/",
+    };
 };
 
 export const allowedOrigins = (process.env.CLIENT_URL || "")
@@ -21,6 +33,10 @@ export const allowedOrigins = (process.env.CLIENT_URL || "")
 
 // Local development is allowed out of the box so the frontend keeps working
 // without extra configuration.
-if (!isProduction && allowedOrigins.length === 0) {
-    allowedOrigins.push("http://localhost:5173");
+if (!isProduction) {
+    for (const localOrigin of ["http://localhost:5173", "http://127.0.0.1:5173"]) {
+        if (!allowedOrigins.includes(localOrigin)) {
+            allowedOrigins.push(localOrigin);
+        }
+    }
 }
