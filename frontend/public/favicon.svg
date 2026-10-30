@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Task Manager">
-  <rect width="64" height="64" rx="14" fill="#1D4ED8" />
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4F46E5" />
+      <stop offset="1" stop-color="#7C3AED" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#brand)" />
   <path
     d="M18 33.5 27.5 43 46 22"
     fill="none"
