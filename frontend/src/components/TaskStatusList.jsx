@@ -15,7 +15,7 @@ const TaskStatusList = ({ tabs, activeTab, setActiveTab }) => {
                         role="tab"
                         aria-selected={isActive}
                         onClick={() => setActiveTab(tab.label)}
-                        className={`inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
+                        className={`inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
                             isActive
                                 ? "bg-primary text-white shadow-sm shadow-primary/25"
                                 : "text-slate-500 hover:bg-slate-50 hover:text-slate-700"

@@ -72,7 +72,7 @@ const SideMenu = ({ activeMenu, onNavigate, variant = "desktop" }) => {
                                 key={item.id}
                                 type="button"
                                 aria-current={isActive ? "page" : undefined}
-                                className={`group flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-200 ${
+                                className={`group flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
                                     isActive
                                         ? "bg-primary text-white shadow-md shadow-primary/25"
                                         : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
@@ -116,7 +116,7 @@ const SideMenu = ({ activeMenu, onNavigate, variant = "desktop" }) => {
                     <button
                         type="button"
                         aria-current={activeMenu === "Logout" ? "page" : undefined}
-                        className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
+                        className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
                             activeMenu === "Logout"
                                 ? "bg-rose-50 text-rose-600"
                                 : "text-slate-500 hover:bg-rose-50 hover:text-rose-600"
