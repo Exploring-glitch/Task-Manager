@@ -1,4 +1,4 @@
-import { LuUserRound } from "react-icons/lu";
+import Avatar from "./ui/Avatar.jsx";
 
 const AvatarGroup = ({ avatars = [], maxVisible = 3 }) => {
     const visibleAvatars = avatars.filter(Boolean);
@@ -6,30 +6,22 @@ const AvatarGroup = ({ avatars = [], maxVisible = 3 }) => {
 
     if (visibleAvatars.length === 0) {
         return (
-            <div
-                className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-slate-100 text-slate-400"
-                title="Unassigned"
-            >
-                <LuUserRound className="text-base" aria-hidden="true" />
-            </div>
+            <span title="Unassigned">
+                <Avatar size="md" ring />
+            </span>
         );
     }
 
     return (
-        <div className="flex items-center">
+        <div className="flex items-center -space-x-2">
             {visibleAvatars.slice(0, maxVisible).map((avatar, index) => (
-                <img
-                    key={`${avatar}-${index}`}
-                    src={avatar}
-                    alt={`Assigned member ${index + 1}`}
-                    className="-ml-3 h-9 w-9 rounded-full border-2 border-white object-cover first:ml-0"
-                />
+                <Avatar key={`${avatar}-${index}`} src={avatar} size="md" ring />
             ))}
 
             {hiddenCount > 0 && (
-                <div className="-ml-3 flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-blue-50 pr-1 text-sm font-medium">
+                <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600 ring-2 ring-white">
                     +{hiddenCount}
-                </div>
+                </span>
             )}
         </div>
     );
