@@ -55,7 +55,7 @@ const AuthLayout = ({ children }) => {
                         <h2 className="mt-6 max-w-md text-4xl font-bold leading-[1.12] text-white xl:text-[44px]">
                             Plan the work.
                             <br />
-                            <span className="text-gradient">Track the progress.</span>
+                            <span className="text-gradient-bright">Track the progress.</span>
                         </h2>
 
                         <p className="mt-5 max-w-md text-sm leading-6 text-slate-300">
