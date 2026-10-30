@@ -16,6 +16,7 @@ const ManageTasks = () => {
         <DashboardLayout activeMenu="Manage Task">
             <TaskListSection
                 title="All tasks"
+                description="Every task across the workspace, grouped by its current status."
                 tasks={tasks}
                 statusSummary={statusSummary}
                 activeStatus={status}
@@ -31,7 +32,11 @@ const ManageTasks = () => {
                     </Link>
                 }
                 headerActions={
-                    <DownloadReportButton fetcher={download_task_report} filename="task-details.xlsx" />
+                    <DownloadReportButton
+                        fetcher={download_task_report}
+                        filename="task-details.xlsx"
+                        label="Export tasks"
+                    />
                 }
             />
         </DashboardLayout>

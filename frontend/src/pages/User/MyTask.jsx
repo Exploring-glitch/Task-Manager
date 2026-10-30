@@ -12,7 +12,8 @@ const MyTask = () => {
     return (
         <DashboardLayout activeMenu="My Tasks">
             <TaskListSection
-                title="My Tasks"
+                title="My tasks"
+                description="Work assigned to you, with the latest status and checklist progress."
                 tasks={tasks}
                 statusSummary={statusSummary}
                 activeStatus={status}
