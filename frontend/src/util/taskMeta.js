@@ -26,12 +26,6 @@ const PRIORITY_DOT_CLASSES = {
     High: "bg-rose-500",
 };
 
-const STATUS_ACCENT_CLASSES = {
-    Pending: "border-amber-400",
-    "In Progress": "border-sky-400",
-    Completed: "border-emerald-400",
-};
-
 const STATUS_PROGRESS_CLASSES = {
     Pending: "bg-amber-500",
     "In Progress": "bg-sky-500",
@@ -49,8 +43,5 @@ export const getPriorityBadgeClasses = (priority) =>
 export const getStatusDotClass = (status) => STATUS_DOT_CLASSES[status] || FALLBACK_DOT;
 
 export const getPriorityDotClass = (priority) => PRIORITY_DOT_CLASSES[priority] || FALLBACK_DOT;
-
-export const getStatusAccentClass = (status) =>
-    STATUS_ACCENT_CLASSES[status] || "border-slate-300";
 
 export const getProgressBarClass = (status) => STATUS_PROGRESS_CLASSES[status] || "bg-primary";
