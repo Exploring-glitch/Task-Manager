@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { LuUser, LuUpload, LuTrash } from "react-icons/lu";
+import { LuTrash, LuUpload } from "react-icons/lu";
+import Avatar from "./ui/Avatar.jsx";
 
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024;
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -48,7 +49,7 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
     };
 
     return (
-        <div className="mb-3 flex justify-center sm:mb-6">
+        <div className="mb-5 flex items-center gap-4 rounded-xl border border-line bg-slate-50/60 p-4">
             <input
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
@@ -57,37 +58,32 @@ const ProfilePhotoSelector = ({ image, setImage }) => {
                 className="hidden"
             />
 
-            {!image ? (
-                <div className="relative flex h-20 w-20 cursor-pointer items-center justify-center rounded-full bg-blue-100">
-                    <LuUser className="text-4xl" aria-hidden="true" />
+            <Avatar src={previewUrl} name="" size="xl" className="ring-4 ring-white" />
 
-                    <button
-                        type="button"
-                        aria-label="Choose a profile photo"
-                        className="absolute bottom-11 left-14 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-blue-800 text-white"
-                        onClick={onChooseFile}
-                    >
-                        <LuUpload />
-                    </button>
-                </div>
-            ) : (
-                <div className="relative">
-                    <img
-                        src={previewUrl}
-                        alt="Profile preview"
-                        className="h-20 w-20 rounded-full object-cover"
-                    />
+            <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-slate-800">
+                    Profile photo <span className="font-normal text-slate-400">(optional)</span>
+                </p>
+                <p className="mt-0.5 text-xs text-slate-500">JPEG, PNG or WebP. Maximum 2 MB.</p>
 
-                    <button
-                        type="button"
-                        aria-label="Remove the selected photo"
-                        className="absolute bottom-11 left-14 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-red-800 text-white"
-                        onClick={handleRemoveImage}
-                    >
-                        <LuTrash />
+                <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                    <button type="button" className="btn btn-secondary btn-sm" onClick={onChooseFile}>
+                        <LuUpload className="text-sm" aria-hidden="true" />
+                        {image ? "Change photo" : "Choose photo"}
                     </button>
+
+                    {image && (
+                        <button
+                            type="button"
+                            className="btn btn-ghost btn-sm text-rose-600 hover:bg-rose-50 hover:text-rose-700"
+                            onClick={handleRemoveImage}
+                        >
+                            <LuTrash className="text-sm" aria-hidden="true" />
+                            Remove
+                        </button>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 };
