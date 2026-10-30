@@ -157,6 +157,13 @@
         color: transparent;
     }
 
+    .text-gradient-bright {
+        background-image: linear-gradient(100deg, #c7d2fe 0%, #e9d5ff 45%, #67e8f9 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+
     .bg-grid {
         background-image:
             linear-gradient(to right, rgb(255 255 255 / 0.06) 1px, transparent 1px),
