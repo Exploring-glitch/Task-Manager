@@ -1,8 +1,21 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import toast from "react-hot-toast";
-import { LuTrash2 } from "react-icons/lu";
+import {
+    LuArrowLeft,
+    LuCalendarDays,
+    LuCircleAlert,
+    LuCircleCheck,
+    LuClipboardList,
+    LuFlag,
+    LuListChecks,
+    LuPaperclip,
+    LuPlus,
+    LuSparkles,
+    LuTrash2,
+    LuUsers,
+} from "react-icons/lu";
 import DashboardLayout from "../../components/layouts/DashboardLayout.jsx";
 import ConfirmationModal from "../../components/ConfirmationModal.jsx";
 import Modal from "../../components/Modal.jsx";
@@ -11,6 +24,10 @@ import SelectDropDown from "../../components/inputs/SelectDropDown.jsx";
 import SelectUsers from "../../components/inputs/SelectUsers.jsx";
 import TodoListInput from "../../components/inputs/TodoListInput.jsx";
 import PageLoader from "../../components/PageLoader.jsx";
+import Button from "../../components/ui/Button.jsx";
+import PageHeader from "../../components/ui/PageHeader.jsx";
+import SectionCard from "../../components/ui/SectionCard.jsx";
+import TaskPriorityBadge from "../../components/badges/TaskPriorityBadge.jsx";
 import { PRIORITY_DATA } from "../../util/data.js";
 import {
     create_task,
@@ -162,148 +179,222 @@ const CreateTask = () => {
         );
     }
 
+    const dueDateLabel =
+        taskData.dueDate && moment(taskData.dueDate).isValid()
+            ? moment(taskData.dueDate).format("D MMM YYYY")
+            : "Not set";
+
     return (
         <DashboardLayout activeMenu={isEditing ? "Manage Task" : "Create Task"}>
-            <div className="mt-5">
-                <form
-                    onSubmit={handleSubmit}
-                    className="mt-4 grid grid-cols-1 rounded-lg border border-gray-200/50 bg-white p-6 shadow-lg shadow-gray-100 md:grid-cols-4"
-                >
-                    <div className="md:col-span-3">
-                        <div className="flex items-center justify-between">
-                            <h2 className="text-xl font-medium">
-                                {isEditing ? "Update Task" : "Create Task"}
-                            </h2>
+            <PageHeader
+                eyebrow={isEditing ? "Task editor" : "New task"}
+                title={isEditing ? "Edit task" : "Create a task"}
+                description={
+                    isEditing
+                        ? "Update the details, checklist or assignees, then save your changes."
+                        : "Give your team clear context, owners and a checklist to work through."
+                }
+                icon={LuClipboardList}
+                actions={
+                    <>
+                        <Link to="/admin/tasks" className="btn btn-secondary">
+                            <LuArrowLeft className="text-base" aria-hidden="true" />
+                            Back to tasks
+                        </Link>
 
-                            {isEditing && (
-                                <button
-                                    type="button"
-                                    className="flex cursor-pointer items-center gap-1.5 rounded border border-rose-100 bg-rose-50 px-2 py-1 text-[13px] font-medium text-rose-500 hover:border-rose-300"
-                                    onClick={() => setOpenDeleteAlert(true)}
-                                >
-                                    <LuTrash2 className="text-base" aria-hidden="true" /> Delete
-                                </button>
-                            )}
+                        {isEditing && (
+                            <Button variant="danger" icon={LuTrash2} onClick={() => setOpenDeleteAlert(true)}>
+                                Delete
+                            </Button>
+                        )}
+                    </>
+                }
+            />
+
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_340px]">
+                <div className="space-y-5">
+                    {error && (
+                        <div
+                            role="alert"
+                            className="flex items-start gap-2.5 rounded-xl border border-rose-200/80 bg-rose-50 px-4 py-3 text-sm text-rose-700"
+                        >
+                            <LuCircleAlert className="mt-0.5 shrink-0 text-base" aria-hidden="true" />
+                            <span className="leading-5">{error}</span>
                         </div>
+                    )}
 
-                        <div className="mt-4">
-                            <label htmlFor="task-title" className="text-xs font-medium text-slate-600">
-                                Task Title
-                            </label>
-
-                            <input
-                                id="task-title"
-                                name="title"
-                                placeholder="Create App UI"
-                                value={taskData.title}
-                                onChange={({ target }) => handleValueChange("title", target.value)}
-                                className="mt-2 w-full rounded-md border border-slate-100 bg-white px-2.5 py-3 text-sm text-black outline-none placeholder:text-gray-500"
-                            />
-                        </div>
-
-                        <div className="mt-3">
-                            <label
-                                htmlFor="task-description"
-                                className="text-xs font-medium text-slate-600"
-                            >
-                                Description
-                            </label>
-
-                            <textarea
-                                id="task-description"
-                                name="description"
-                                placeholder="Describe the task"
-                                value={taskData.description}
-                                rows={4}
-                                onChange={({ target }) => handleValueChange("description", target.value)}
-                                className="mt-2 w-full rounded-md border border-slate-100 bg-white px-2.5 py-3 text-sm text-black outline-none placeholder:text-gray-500"
-                            />
-                        </div>
-
-                        <div className="mt-3 grid grid-cols-12 gap-4">
-                            <div className="col-span-6 md:col-span-4">
-                                <label className="text-xs font-medium text-slate-600">Priority</label>
-
-                                <SelectDropDown
-                                    options={PRIORITY_DATA}
-                                    value={taskData.priority}
-                                    onChange={(value) => handleValueChange("priority", value)}
-                                    placeholder="Select Priority"
-                                />
-                            </div>
-
-                            <div className="col-span-6 md:col-span-4">
-                                <label htmlFor="task-due-date" className="text-xs font-medium text-slate-600">
-                                    Due Date
+                    <SectionCard
+                        title="Task details"
+                        description="The essentials your team needs to start working."
+                    >
+                        <div className="space-y-4">
+                            <div>
+                                <label htmlFor="task-title" className="field-label">
+                                    Task title <span className="text-rose-500">*</span>
                                 </label>
 
                                 <input
-                                    id="task-due-date"
-                                    name="dueDate"
-                                    type="date"
-                                    value={taskData.dueDate}
-                                    onChange={({ target }) => handleValueChange("dueDate", target.value)}
-                                    className="mt-2 w-full rounded-md border border-slate-100 bg-white px-2.5 py-3 text-sm text-black outline-none placeholder:text-gray-500"
+                                    id="task-title"
+                                    name="title"
+                                    placeholder="e.g. Design the onboarding flow"
+                                    value={taskData.title}
+                                    onChange={({ target }) => handleValueChange("title", target.value)}
+                                    className="field-input"
                                 />
                             </div>
 
-                            <div className="col-span-6 md:col-span-4">
-                                <label className="text-xs font-medium text-slate-600">Assign To</label>
+                            <div>
+                                <label htmlFor="task-description" className="field-label">
+                                    Description <span className="text-rose-500">*</span>
+                                </label>
 
-                                <SelectUsers
-                                    selectedUsers={taskData.assignedTo}
-                                    setSelectedUsers={(value) => handleValueChange("assignedTo", value)}
+                                <textarea
+                                    id="task-description"
+                                    name="description"
+                                    placeholder="Describe the goal, context and anything the team should know."
+                                    value={taskData.description}
+                                    rows={4}
+                                    onChange={({ target }) => handleValueChange("description", target.value)}
+                                    className="field-textarea"
                                 />
                             </div>
+
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                                <div>
+                                    <label className="field-label">Priority</label>
+
+                                    <SelectDropDown
+                                        options={PRIORITY_DATA}
+                                        value={taskData.priority}
+                                        onChange={(value) => handleValueChange("priority", value)}
+                                        placeholder="Select priority"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor="task-due-date" className="field-label">
+                                        Due date <span className="text-rose-500">*</span>
+                                    </label>
+
+                                    <input
+                                        id="task-due-date"
+                                        name="dueDate"
+                                        type="date"
+                                        value={taskData.dueDate}
+                                        onChange={({ target }) => handleValueChange("dueDate", target.value)}
+                                        className="field-input"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="field-label">Assign to</label>
+
+                                    <SelectUsers
+                                        selectedUsers={taskData.assignedTo}
+                                        setSelectedUsers={(value) => handleValueChange("assignedTo", value)}
+                                    />
+                                </div>
+                            </div>
                         </div>
+                    </SectionCard>
 
-                        <div className="mt-3">
-                            <label className="text-xs font-medium text-slate-600">TODO Checklist</label>
+                    <SectionCard
+                        title="Checklist"
+                        description="Break the work into steps. Progress updates as items are ticked off."
+                    >
+                        <TodoListInput
+                            todolist={taskData.todoChecklists}
+                            setTodoList={(value) => handleValueChange("todoChecklists", value)}
+                        />
+                    </SectionCard>
 
-                            <TodoListInput
-                                todolist={taskData.todoChecklists}
-                                setTodoList={(value) => handleValueChange("todoChecklists", value)}
+                    <SectionCard
+                        title="Attachments"
+                        description="Link to designs, documents or anything else the team needs."
+                    >
+                        <AddAttachmentInput
+                            attachments={taskData.attachments}
+                            setAttachments={(value) => handleValueChange("attachments", value)}
+                        />
+                    </SectionCard>
+                </div>
+
+                <aside className="space-y-5 lg:sticky lg:top-24 lg:self-start">
+                    <SectionCard title="Task summary" description="A quick check before publishing.">
+                        <div className="divide-y divide-line/70">
+                            <SummaryRow
+                                icon={LuFlag}
+                                label="Priority"
+                                value={<TaskPriorityBadge priority={taskData.priority} />}
+                            />
+                            <SummaryRow icon={LuCalendarDays} label="Due date" value={dueDateLabel} />
+                            <SummaryRow
+                                icon={LuUsers}
+                                label="Assignees"
+                                value={`${taskData.assignedTo.length} selected`}
+                            />
+                            <SummaryRow
+                                icon={LuListChecks}
+                                label="Checklist"
+                                value={`${taskData.todoChecklists.length} steps`}
+                            />
+                            <SummaryRow
+                                icon={LuPaperclip}
+                                label="Attachments"
+                                value={`${taskData.attachments.length} links`}
                             />
                         </div>
 
-                        <div className="mt-3">
-                            <label className="text-xs font-medium text-slate-600">Add Attachments</label>
-
-                            <AddAttachmentInput
-                                attachments={taskData.attachments}
-                                setAttachments={(value) => handleValueChange("attachments", value)}
-                            />
-                        </div>
-
-                        {error && (
-                            <p role="alert" className="mt-5 text-xs font-medium text-red-500">
-                                {error}
-                            </p>
-                        )}
-
-                        <div className="mt-7 flex justify-center">
-                            <button
+                        <div className="mt-5 space-y-2">
+                            <Button
                                 type="submit"
-                                disabled={loading}
-                                className="flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-blue-100 bg-blue-50 px-4 py-2 text-xs font-medium whitespace-nowrap text-primary hover:bg-blue-100 disabled:cursor-not-allowed disabled:opacity-70 md:text-sm"
+                                loading={loading}
+                                icon={isEditing ? LuCircleCheck : LuPlus}
+                                className="w-full"
                             >
-                                {loading ? "Saving..." : isEditing ? "UPDATE TASK" : "CREATE TASK"}
-                            </button>
+                                {loading ? "Saving..." : isEditing ? "Save changes" : "Create task"}
+                            </Button>
+
+                            <Link to="/admin/tasks" className="btn btn-ghost w-full">
+                                Cancel
+                            </Link>
                         </div>
+                    </SectionCard>
+
+                    <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-indigo-600 via-indigo-600 to-violet-600 p-5 text-white shadow-lg shadow-primary/25">
+                        <LuSparkles className="absolute -right-3 -bottom-3 text-7xl text-white/10" aria-hidden="true" />
+
+                        <p className="text-sm font-semibold">Make it actionable</p>
+
+                        <ul className="mt-3 space-y-2 text-xs leading-5 text-indigo-100">
+                            <li className="flex gap-2">
+                                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-indigo-200" />
+                                Keep checklist steps small and specific.
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-indigo-200" />
+                                Assign at least one clear owner.
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-indigo-200" />
+                                Set a realistic due date the team can plan around.
+                            </li>
+                        </ul>
                     </div>
-                </form>
-            </div>
+                </aside>
+            </form>
 
             <Modal
                 isOpen={openDeleteAlert}
                 onClose={() => setOpenDeleteAlert(false)}
-                title="Delete Task"
+                title="Delete task"
+                description="This action cannot be undone."
                 size="lg"
             >
                 <ConfirmationModal
-                    content="Are you sure you want to delete this task?"
+                    content="Are you sure you want to delete this task? All checklist progress will be lost."
                     onConfirm={handleDelete}
-                    btnText="Delete"
+                    btnText="Delete task"
                     onCancel={() => setOpenDeleteAlert(false)}
                 />
             </Modal>
@@ -312,3 +403,16 @@ const CreateTask = () => {
 };
 
 export default CreateTask;
+
+const SummaryRow = ({ icon: Icon, label, value }) => {
+    return (
+        <div className="flex items-center justify-between gap-3 py-2.5 first:pt-0 last:pb-0">
+            <span className="inline-flex items-center gap-2 text-xs text-slate-500">
+                <Icon className="text-sm text-slate-400" aria-hidden="true" />
+                {label}
+            </span>
+
+            <span className="text-right text-xs font-semibold text-slate-800">{value}</span>
+        </div>
+    );
+};
