@@ -20,6 +20,7 @@ const TaskListSection = ({
     headerActions,
     emptyTitle,
     emptyDescription,
+    emptyAction,
     loading,
 }) => {
     const tabs = buildTabs(statusSummary);
@@ -55,7 +56,11 @@ const TaskListSection = ({
                 <PageLoader label="Loading tasks..." />
             ) : tasks.length === 0 ? (
                 <div className="grid grid-cols-1">
-                    <EmptyState title={emptyTitle} description={emptyDescription} />
+                    <EmptyState
+                        title={emptyTitle}
+                        description={emptyDescription}
+                        action={emptyAction}
+                    />
                 </div>
             ) : (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
