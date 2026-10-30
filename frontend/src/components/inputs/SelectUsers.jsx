@@ -140,7 +140,9 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
                     </Button>
 
                     <Button onClick={handleAssign}>
-                        Assign {tempSelectedUsers.length > 0 ? `(${tempSelectedUsers.length})` : ""}
+                        {tempSelectedUsers.length > 0
+                            ? `Assign (${tempSelectedUsers.length})`
+                            : "Assign members"}
                     </Button>
                 </div>
             </Modal>
