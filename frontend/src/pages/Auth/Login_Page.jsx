@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { LuArrowRight, LuEye, LuEyeOff, LuLock, LuMail, LuShieldCheck } from "react-icons/lu";
 import AuthLayout from "../../components/layouts/AuthLayout.jsx";
 import AuthError from "../../components/forms/AuthError.jsx";
+import Button from "../../components/ui/Button.jsx";
 import { login_user } from "../../api/userApi.js";
 import { useUser } from "../../hooks/useUser.js";
 import { getHomeRoute } from "../../routes/homeRoute.js";
@@ -9,6 +11,7 @@ import { getHomeRoute } from "../../routes/homeRoute.js";
 const Login_Page = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -55,79 +58,111 @@ const Login_Page = () => {
 
     return (
         <AuthLayout>
-            <div className="flex h-full w-full flex-col items-center justify-center px-3 md:relative md:z-10">
-                <h1 className="text-4xl font-bold text-[#1D4ED8] lg:mb-1 2xl:text-5xl">Welcome Back</h1>
-
-                <p className="mb-7 text-gray-600 md:text-gray-700 2xl:mt-4 2xl:text-xl">
-                    Please enter your details to login
-                </p>
+            <div className="surface-card p-6 sm:p-8">
+                <div className="mb-7">
+                    <p className="page-eyebrow">Welcome back</p>
+                    <h1 className="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                        Sign in to your workspace
+                    </h1>
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                        Pick up where your team left off and keep every task moving.
+                    </p>
+                </div>
 
                 <AuthError message={error} />
 
-                <form onSubmit={handleSubmit} className="w-full max-w-md">
-                    <div className="mb-4">
-                        <label
-                            className="text-sm font-semibold md:text-base md:text-gray-700 2xl:text-2xl"
-                            htmlFor="email"
-                        >
-                            Enter your email address
+                <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                    <div>
+                        <label className="field-label" htmlFor="email">
+                            Email address
                         </label>
 
-                        <input
-                            id="email"
-                            name="email"
-                            autoComplete="email"
-                            ref={emailRef}
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                            type="email"
-                            placeholder="Example: alex@example.com"
-                            className="mt-2 w-full rounded border-2 border-[#D6E0FF] bg-[#F5F8FF] p-2 text-sm placeholder:text-sm focus:ring-2 focus:ring-[#2979FF] focus:outline-none md:text-base md:placeholder:text-base"
-                        />
+                        <div className="relative">
+                            <LuMail
+                                className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-base text-slate-400"
+                                aria-hidden="true"
+                            />
+
+                            <input
+                                id="email"
+                                name="email"
+                                autoComplete="email"
+                                ref={emailRef}
+                                value={email}
+                                onChange={(event) => setEmail(event.target.value)}
+                                type="email"
+                                placeholder="alex@company.com"
+                                className="field-input pl-10"
+                            />
+                        </div>
                     </div>
 
-                    <div className="mb-4">
-                        <label
-                            className="text-sm font-semibold md:text-base md:text-gray-700 2xl:text-2xl"
-                            htmlFor="password"
-                        >
-                            Enter your password here
+                    <div>
+                        <label className="field-label" htmlFor="password">
+                            Password
                         </label>
 
-                        <input
-                            id="password"
-                            name="password"
-                            autoComplete="current-password"
-                            ref={passRef}
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                            type="password"
-                            placeholder="Minimum 6 characters needed"
-                            className="mt-2 w-full rounded border-2 border-[#D6E0FF] bg-[#F5F8FF] p-2 text-sm placeholder:text-sm focus:ring-2 focus:ring-[#2979FF] focus:outline-none md:text-base md:placeholder:text-base"
-                        />
+                        <div className="relative">
+                            <LuLock
+                                className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-base text-slate-400"
+                                aria-hidden="true"
+                            />
+
+                            <input
+                                id="password"
+                                name="password"
+                                autoComplete="current-password"
+                                ref={passRef}
+                                value={password}
+                                onChange={(event) => setPassword(event.target.value)}
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Enter your password"
+                                className="field-input pr-11 pl-10"
+                            />
+
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword((value) => !value)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                                className="absolute top-1/2 right-2.5 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+                            >
+                                {showPassword ? (
+                                    <LuEyeOff className="text-base" aria-hidden="true" />
+                                ) : (
+                                    <LuEye className="text-base" aria-hidden="true" />
+                                )}
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="mb-3">
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full rounded bg-[#1D4ED8] px-4 py-2 font-semibold text-white transition-colors duration-200 hover:bg-[#1E40AF] focus:shadow-outline focus:outline-none disabled:cursor-not-allowed disabled:opacity-70"
-                        >
-                            {loading ? "Signing in..." : "LOGIN"}
-                        </button>
-                    </div>
+                    <Button
+                        type="submit"
+                        size="lg"
+                        loading={loading}
+                        iconRight={LuArrowRight}
+                        className="w-full"
+                    >
+                        {loading ? "Signing in..." : "Sign in"}
+                    </Button>
                 </form>
 
-                <div className="text-center">
-                    <p className="cursor-pointer text-sm text-gray-600 2xl:text-lg">
-                        Don&apos;t have an account?{" "}
-                        <Link
-                            to="/auth/signup"
-                            className="font-semibold text-[#1E63E6] hover:text-[#1D4ED8]"
-                        >
-                            <u>SignUp</u>
-                        </Link>
-                    </p>
+                <div className="my-6 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                    <span className="h-px flex-1 bg-line" aria-hidden="true" />
+                    New here?
+                    <span className="h-px flex-1 bg-line" aria-hidden="true" />
+                </div>
+
+                <Link
+                    to="/auth/signup"
+                    className="btn btn-secondary w-full"
+                >
+                    Create an account
+                    <LuArrowRight className="text-base" aria-hidden="true" />
+                </Link>
+
+                <div className="mt-6 flex items-start gap-2 rounded-xl bg-slate-50 px-3.5 py-3 text-[11px] leading-5 text-slate-500">
+                    <LuShieldCheck className="mt-0.5 shrink-0 text-sm text-emerald-500" aria-hidden="true" />
+                    Your session is protected with a secure, httpOnly cookie.
                 </div>
             </div>
         </AuthLayout>
