@@ -24,6 +24,19 @@ npm test         # node:test unit tests
 - For production, set `VITE_API_URL` to the deployed API origin. The API must list the frontend
   origin in `CLIENT_URL` for CORS.
 
+## Design system
+
+- **Tokens** live in the `@theme` block of `src/index.css`: indigo primary, slate ink and
+  muted text, a soft surface, hairline borders and two card shadows. Fonts are Inter for UI
+  copy and Plus Jakarta Sans for headings.
+- **Shared classes** cover the common patterns: `page-shell`, `surface-card`, `surface-hover`,
+  `btn` + `btn-primary/secondary/ghost/danger`, `field-label`, `field-input`, `field-textarea`,
+  `page-eyebrow` and `text-gradient`.
+- **Primitives** in `src/components/ui/` are `Avatar` (with an initials fallback), `Button`
+  (variants, sizes, loading state), `PageHeader` and `SectionCard`.
+- **Task colors** are centralized in `src/util/taskMeta.js`. Badges, progress bars and dashboard
+  charts all read from that module, so status and priority stay visually consistent.
+
 ## Structure
 
 | Path | Contents |
