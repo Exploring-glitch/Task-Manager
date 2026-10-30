@@ -12,7 +12,6 @@ import {
 } from "react-icons/lu";
 import DashboardLayout from "../../components/layouts/DashboardLayout.jsx";
 import Avatar from "../../components/ui/Avatar.jsx";
-import AvatarGroup from "../../components/AvatarGroup.jsx";
 import EmptyState from "../../components/EmptyState.jsx";
 import PageLoader from "../../components/PageLoader.jsx";
 import Progress from "../../components/Progress.jsx";
@@ -255,13 +254,6 @@ const ViewTaskDetails = () => {
                                 ))}
                             </div>
                         )}
-
-                        <div className="mt-4 border-t border-line/70 pt-4">
-                            <AvatarGroup
-                                avatars={assignedTo.map((user) => user?.profileImageUrl)}
-                                maxVisible={5}
-                            />
-                        </div>
                     </SectionCard>
                 </aside>
             </div>
