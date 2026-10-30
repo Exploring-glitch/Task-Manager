@@ -33,7 +33,7 @@ const BAR_COLORS = {
 const CustomBarChart = ({ data = [] }) => {
     return (
         <div className="mt-4">
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={360}>
                 <BarChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="4 6" vertical={false} stroke="#eef1f6" />
 
