@@ -37,7 +37,25 @@ const Root = () => {
 function App() {
     return (
         <UserProvider>
-            <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
+            <Toaster
+                position="top-center"
+                gutter={12}
+                toastOptions={{
+                    duration: 3200,
+                    style: {
+                        background: "#ffffff",
+                        color: "#0f172a",
+                        border: "1px solid #e7e9f2",
+                        borderRadius: "12px",
+                        boxShadow: "0 16px 40px -24px rgb(15 23 42 / 0.35)",
+                        fontSize: "14px",
+                        fontWeight: 500,
+                        padding: "10px 14px",
+                    },
+                    success: { iconTheme: { primary: "#10b981", secondary: "#ffffff" } },
+                    error: { iconTheme: { primary: "#f43f5e", secondary: "#ffffff" } },
+                }}
+            />
 
             <Routes>
                 <Route element={<PublicOnlyRoute />}>
