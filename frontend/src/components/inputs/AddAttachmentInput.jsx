@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
-import { HiMiniPlus, HiOutlineTrash } from "react-icons/hi2";
-import { LuPaperclip } from "react-icons/lu";
+import { HiOutlineTrash } from "react-icons/hi2";
+import { LuPaperclip, LuPlus } from "react-icons/lu";
+import Button from "../ui/Button.jsx";
 
 const AddAttachmentInput = ({ attachments = [], setAttachments }) => {
     const inputRef = useRef(null);
@@ -31,51 +32,58 @@ const AddAttachmentInput = ({ attachments = [], setAttachments }) => {
 
     return (
         <div>
-            {attachments.map((item, index) => (
-                <div
-                    key={`${item}-${index}`}
-                    className="mt-2 mb-3 flex justify-between rounded-md border border-gray-100 bg-gray-50 px-3 py-2"
-                >
-                    <div className="flex flex-1 items-center gap-3 border-gray-100">
-                        <LuPaperclip className="text-gray-400" aria-hidden="true" />
-                        <p className="truncate text-xs text-black">{item}</p>
-                    </div>
+            {attachments.length === 0 ? (
+                <p className="rounded-xl border border-dashed border-line bg-slate-50/50 px-4 py-6 text-center text-xs text-slate-500">
+                    No attachments yet. Add a link to a design, document or asset.
+                </p>
+            ) : (
+                <div className="space-y-2">
+                    {attachments.map((item, index) => (
+                        <div
+                            key={`${item}-${index}`}
+                            className="group flex items-center gap-3 rounded-xl border border-line bg-slate-50/60 px-3 py-2.5 transition hover:border-slate-300 hover:bg-white"
+                        >
+                            <span className="icon-tile h-8 w-8 rounded-lg bg-white text-primary ring-1 ring-line">
+                                <LuPaperclip className="text-sm" aria-hidden="true" />
+                            </span>
 
-                    <button
-                        type="button"
-                        aria-label={`Remove attachment ${index + 1}`}
-                        onClick={() => handleDeleteOption(index)}
-                        className="cursor-pointer"
-                    >
-                        <HiOutlineTrash className="text-lg text-red-500" />
-                    </button>
+                            <p className="min-w-0 flex-1 truncate text-xs font-medium text-slate-700">{item}</p>
+
+                            <button
+                                type="button"
+                                aria-label={`Remove attachment ${index + 1}`}
+                                onClick={() => handleDeleteOption(index)}
+                                className="cursor-pointer rounded-lg p-1.5 text-slate-400 transition hover:bg-rose-50 hover:text-rose-500"
+                            >
+                                <HiOutlineTrash className="text-base" aria-hidden="true" />
+                            </button>
+                        </div>
+                    ))}
                 </div>
-            ))}
+            )}
 
-            <div className="mt-4 flex items-center gap-5">
-                <div className="flex flex-1 items-center gap-3 rounded-md border border-gray-100 px-3">
-                    <LuPaperclip className="text-gray-400" aria-hidden="true" />
+            <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+                <div className="relative flex-1">
+                    <LuPaperclip
+                        className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-base text-slate-400"
+                        aria-hidden="true"
+                    />
 
                     <input
                         ref={inputRef}
                         type="url"
-                        placeholder="Add file link"
+                        placeholder="Paste a file link..."
                         value={option}
                         maxLength={2048}
                         onChange={({ target }) => setOption(target.value)}
                         onKeyDown={handleKeyDown}
-                        className="w-full bg-white py-2 text-[13px] text-black outline-none"
+                        className="field-input pl-10"
                     />
                 </div>
 
-                <button
-                    type="button"
-                    onClick={handleAddOption}
-                    className="flex cursor-pointer items-center rounded-lg border border-gray-300/50 bg-gray-50 px-4 py-1.5 text-[12px] font-medium whitespace-nowrap text-gray-700 hover:bg-blue-50 hover:text-primary"
-                >
-                    <HiMiniPlus className="mr-2 text-[16px]" aria-hidden="true" />
-                    <span className="text-[13px]">Add</span>
-                </button>
+                <Button variant="secondary" icon={LuPlus} onClick={handleAddOption}>
+                    Add link
+                </Button>
             </div>
         </div>
     );
