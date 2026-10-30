@@ -7,22 +7,26 @@ const CustomPieChart = ({ data = [], colors = [] }) => {
     const total = data.reduce((sum, item) => sum + item.count, 0);
 
     return (
-        <ResponsiveContainer width="100%" height={380}>
-            <PieChart margin={{ top: 20, bottom: 20 }}>
+        <ResponsiveContainer width="100%" height={360}>
+            <PieChart margin={{ top: 24, bottom: 8 }}>
                 <Pie
                     data={data}
                     dataKey="count"
                     nameKey="status"
                     cx="50%"
-                    cy="50%"
-                    outerRadius={120}
-                    innerRadius={90}
+                    cy="45%"
+                    outerRadius={116}
+                    innerRadius={86}
+                    paddingAngle={4}
+                    cornerRadius={6}
+                    stroke="#ffffff"
+                    strokeWidth={2}
                     labelLine={false}
                 >
                     {data.map((entry, index) => (
                         <Cell
                             key={`cell-${entry.status}-${index}`}
-                            fill={colors[index % colors.length] || "#8D51FF"}
+                            fill={colors[index % colors.length] || "#6366f1"}
                         />
                     ))}
 
@@ -30,7 +34,7 @@ const CustomPieChart = ({ data = [], colors = [] }) => {
                 </Pie>
 
                 <Tooltip content={<CustomToolTip />} />
-                <Legend content={<CustomLegend />} />
+                <Legend content={<CustomLegend />} verticalAlign="bottom" />
             </PieChart>
         </ResponsiveContainer>
     );
