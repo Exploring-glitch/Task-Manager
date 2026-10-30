@@ -10,7 +10,7 @@ const NavBar = ({ activeMenu }) => {
     const [openSideMenu, setOpenSideMenu] = useState(false);
     const { user } = useUser();
 
-    const isAuthPage = pathname.startsWith("/auth");
+    const isAuthPage = pathname === "/auth/login" || pathname === "/auth/signup";
     const showMenuButton = Boolean(user) && !isAuthPage;
     const pageTitle = activeMenu || (pathname === "/auth/signup" ? "Create account" : "Sign in");
     const isLoginPage = pathname === "/auth/login";
