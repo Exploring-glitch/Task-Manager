@@ -23,15 +23,24 @@ const TaskListSection = ({
     loading,
 }) => {
     const tabs = buildTabs(statusSummary);
-    const hasTasks = tabs[0].count > 0;
+    const totalTasks = tabs[0].count;
+    const hasTasks = totalTasks > 0;
 
     return (
-        <div className="my-5">
-            <div className="flex flex-col justify-between gap-3 lg:flex-row lg:items-center">
-                <h2 className="text-lg font-medium md:text-xl">{title}</h2>
+        <div className="animate-fade-in">
+            <div className="flex flex-col justify-between gap-4 pb-6 lg:flex-row lg:items-end">
+                <div>
+                    <p className="page-eyebrow">Task board</p>
+                    <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink sm:text-[28px]">{title}</h1>
+                    <p className="mt-1.5 text-sm leading-6 text-slate-500">
+                        {hasTasks
+                            ? `${totalTasks} task${totalTasks === 1 ? "" : "s"} in this workspace view.`
+                            : "Tasks assigned to you will appear here."}
+                    </p>
+                </div>
 
                 {hasTasks && (
-                    <div className="flex flex-wrap items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-2">
                         <TaskStatusList
                             tabs={tabs}
                             activeTab={activeStatus}
@@ -45,11 +54,11 @@ const TaskListSection = ({
             {loading ? (
                 <PageLoader label="Loading tasks..." />
             ) : tasks.length === 0 ? (
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-3">
+                <div className="grid grid-cols-1">
                     <EmptyState title={emptyTitle} description={emptyDescription} />
                 </div>
             ) : (
-                <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {tasks.map((task) => (
                         <TaskCard
                             key={task._id}
