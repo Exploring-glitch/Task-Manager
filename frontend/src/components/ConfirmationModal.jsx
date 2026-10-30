@@ -1,30 +1,30 @@
-import React from 'react'
+import { LuTriangleAlert } from "react-icons/lu";
+import Button from "./ui/Button.jsx";
 
 const ConfirmationModal = ({ content, onConfirm, btnText, onCancel }) => {
-  return (
-    <div>
-      <p className='text-sm'> {content} </p>
+    return (
+        <div>
+            <div className="flex items-start gap-3 rounded-xl border border-rose-100 bg-rose-50/70 p-4">
+                <span className="icon-tile h-9 w-9 rounded-lg bg-white text-rose-500 ring-1 ring-rose-100">
+                    <LuTriangleAlert className="text-lg" aria-hidden="true" />
+                </span>
 
-      <div className='flex justify-end mt-5 md:mt-3'>
+                <p className="pt-0.5 text-sm leading-6 text-slate-700">{content}</p>
+            </div>
 
-        {onCancel && (
-          <button
-            type='button'
-            onClick={onCancel}
-            className='text-xs md:text-sm text-gray-500 px-3 py-1.5'
-          >
-            Cancel
-          </button>
-        )}
+            <div className="mt-6 flex justify-end gap-2">
+                {onCancel && (
+                    <Button variant="secondary" onClick={onCancel}>
+                        Cancel
+                    </Button>
+                )}
 
-        <button
-          type='button'
-          onClick={onConfirm}
-          className='flex items-center justify-center text-xs md:text-sm font-medium text-rose-500 whitespace-nowrap bg-rose-50 border border-rose-100 rounded-md px-4 py-1.5 cursor-pointer transition hover:border-rose-200 '
-        > {btnText} </button>
-      </div>
-    </div>
-  )
-}
+                <Button variant="danger" onClick={onConfirm}>
+                    {btnText}
+                </Button>
+            </div>
+        </div>
+    );
+};
 
 export default ConfirmationModal;
