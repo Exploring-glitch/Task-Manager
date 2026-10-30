@@ -5,14 +5,14 @@ const Progress = ({ progress = 0, status }) => {
 
     return (
         <div
-            className="h-1.5 w-full rounded-full bg-gray-200"
+            className="h-2 w-full overflow-hidden rounded-full bg-slate-100"
             role="progressbar"
             aria-valuenow={clampedProgress}
             aria-valuemin={0}
             aria-valuemax={100}
         >
             <div
-                className={`h-1.5 rounded-full ${getProgressBarClass(status)}`}
+                className={`h-full rounded-full transition-[width] duration-500 ease-out ${getProgressBarClass(status)}`}
                 style={{ width: `${clampedProgress}%` }}
             />
         </div>
