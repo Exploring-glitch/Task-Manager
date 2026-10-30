@@ -1,10 +1,11 @@
-import { getPriorityBadgeClasses } from "../../util/taskMeta.js";
+import { getPriorityBadgeClasses, getPriorityDotClass } from "../../util/taskMeta.js";
 
-const TaskPriorityBadge = ({ priority, className = "px-3 py-1.5 text-xs" }) => {
+const TaskPriorityBadge = ({ priority, className = "" }) => {
     return (
         <span
-            className={`inline-block rounded border font-medium ${getPriorityBadgeClasses(priority)} ${className}`}
+            className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap ${getPriorityBadgeClasses(priority)} ${className}`}
         >
+            <span className={`status-dot ${getPriorityDotClass(priority)}`} aria-hidden="true" />
             {priority}
         </span>
     );
