@@ -6,7 +6,7 @@ const DashboardLayout = ({ children, activeMenu }) => {
     const { user } = useUser();
 
     return (
-        <div>
+        <div className="min-h-screen">
             <NavBar activeMenu={activeMenu} />
 
             {user && (
@@ -15,9 +15,9 @@ const DashboardLayout = ({ children, activeMenu }) => {
                         <SideMenu activeMenu={activeMenu} />
                     </div>
 
-                    <div className="h-[calc(100vh-52px)] w-screen overflow-x-hidden p-3">
-                        {children}
-                    </div>
+                    <main className="min-w-0 flex-1">
+                        <div className="page-shell animate-fade-in">{children}</div>
+                    </main>
                 </div>
             )}
         </div>
