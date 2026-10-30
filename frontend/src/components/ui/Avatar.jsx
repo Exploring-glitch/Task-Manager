@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LuUserRound } from "react-icons/lu";
 
 const SIZE_CLASSES = {
@@ -21,13 +21,9 @@ const getInitials = (name = "") => {
 };
 
 const Avatar = ({ src, name = "", size = "md", className = "", ring = false }) => {
-    const [failed, setFailed] = useState(false);
+    const [failedSrc, setFailedSrc] = useState(null);
 
-    useEffect(() => {
-        setFailed(false);
-    }, [src]);
-
-    const showImage = Boolean(src) && !failed;
+    const showImage = Boolean(src) && failedSrc !== src;
     const initials = getInitials(name);
 
     return (
@@ -39,7 +35,7 @@ const Avatar = ({ src, name = "", size = "md", className = "", ring = false }) =
                     src={src}
                     alt={name ? `${name} profile` : "Profile image"}
                     className="h-full w-full object-cover"
-                    onError={() => setFailed(true)}
+                    onError={() => setFailedSrc(src)}
                 />
             ) : initials ? (
                 <span aria-hidden="true">{initials}</span>
