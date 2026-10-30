@@ -46,7 +46,7 @@ const ManageUsers = () => {
                     <DownloadReportButton
                         fetcher={download_user_report}
                         filename="user-details.xlsx"
-                        label="Download report"
+                        label="Export team"
                     />
                 }
             />
