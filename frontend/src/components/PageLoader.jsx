@@ -1,13 +1,19 @@
 const PageLoader = ({ label = "Loading..." }) => {
     return (
-        <div className="flex min-h-[40vh] items-center justify-center">
-            <div className="flex items-center gap-3 text-sm text-gray-500">
+        <div
+            className="flex min-h-[40vh] flex-col items-center justify-center gap-4"
+            role="status"
+            aria-live="polite"
+        >
+            <span className="relative inline-flex h-11 w-11 items-center justify-center">
                 <span
-                    className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-primary"
+                    className="absolute inset-0 animate-spin rounded-full border-[3px] border-slate-200 border-t-primary"
                     aria-hidden="true"
                 />
-                {label}
-            </div>
+                <span className="h-4 w-4 rounded-full bg-primary-soft" aria-hidden="true" />
+            </span>
+
+            <span className="text-sm font-medium text-slate-500">{label}</span>
         </div>
     );
 };
