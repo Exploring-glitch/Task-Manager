@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { LuPlus } from "react-icons/lu";
 import DashboardLayout from "../../components/layouts/DashboardLayout.jsx";
 import DownloadReportButton from "../../components/DownloadReportButton.jsx";
 import TaskListSection from "../../components/tasks/TaskListSection.jsx";
@@ -14,7 +15,7 @@ const ManageTasks = () => {
     return (
         <DashboardLayout activeMenu="Manage Task">
             <TaskListSection
-                title="All Tasks"
+                title="All tasks"
                 tasks={tasks}
                 statusSummary={statusSummary}
                 activeStatus={status}
@@ -23,11 +24,14 @@ const ManageTasks = () => {
                 loading={loading}
                 emptyTitle="No tasks yet"
                 emptyDescription="Create a task and assign it to your team members."
+                emptyAction={
+                    <Link to="/admin/create-tasks" className="btn btn-primary">
+                        <LuPlus className="text-base" aria-hidden="true" />
+                        Create your first task
+                    </Link>
+                }
                 headerActions={
-                    <DownloadReportButton
-                        fetcher={download_task_report}
-                        filename="task-details.xlsx"
-                    />
+                    <DownloadReportButton fetcher={download_task_report} filename="task-details.xlsx" />
                 }
             />
         </DashboardLayout>
