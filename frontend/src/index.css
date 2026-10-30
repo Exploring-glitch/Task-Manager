@@ -18,3 +18,48 @@
     --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 16px 40px -24px rgb(15 23 42 / 0.18);
     --shadow-lift: 0 24px 48px -24px rgb(79 70 229 / 0.38);
 }
+
+@layer base {
+    html {
+        font-family: var(--font-sans);
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        background-color: var(--color-surface);
+        background-image:
+            radial-gradient(900px 520px at 8% -8%, rgb(99 102 241 / 0.1), transparent 60%),
+            radial-gradient(760px 460px at 100% 0%, rgb(14 165 233 / 0.08), transparent 55%);
+        color: var(--color-ink);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-display);
+        letter-spacing: -0.02em;
+        color: var(--color-ink);
+    }
+
+    ::selection {
+        background-color: #c7d2fe;
+        color: #1e1b4b;
+    }
+
+    input[type="checkbox"] {
+        accent-color: var(--color-primary);
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        cursor: pointer;
+        opacity: 0.55;
+    }
+}
