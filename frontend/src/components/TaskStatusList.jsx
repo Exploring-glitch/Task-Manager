@@ -1,40 +1,40 @@
-import React from 'react'
-
 const TaskStatusList = ({ tabs, activeTab, setActiveTab }) => {
+    return (
+        <div
+            className="inline-flex flex-wrap items-center gap-1 rounded-xl border border-line bg-white p-1 shadow-sm"
+            role="tablist"
+            aria-label="Filter tasks by status"
+        >
+            {tabs.map((tab) => {
+                const isActive = activeTab === tab.label;
 
-  return (
-    <div className='my-2'>
-      <div className='flex'>
-        {tabs.map((tab) => (
-          <button
-            key={tab.label}
-            onClick={() => setActiveTab(tab.label)}
-            className={`relative px-1 sm:px-2 md:px-4 py-2 text-sm font-medium 
-              ${activeTab === tab.label
-                ? 'text-primary'
-                : 'text-gray-500 hover:text-gray-700'
-              } cursor-pointer 
-            `}
-          >
-            <div className='flex items-center'>
-              <span className='text-xs'> {tab.label} </span>
+                return (
+                    <button
+                        key={tab.label}
+                        type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        onClick={() => setActiveTab(tab.label)}
+                        className={`inline-flex cursor-pointer items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-semibold transition ${
+                            isActive
+                                ? "bg-primary text-white shadow-sm shadow-primary/25"
+                                : "text-slate-500 hover:bg-slate-50 hover:text-slate-700"
+                        }`}
+                    >
+                        {tab.label}
 
-              <span className={`text-xs sm:ml-1 md:ml-2 px-2 py-0.5 rounded-full 
-                ${activeTab === tab.label
-                  ? 'bg-primary text-white'
-                  : 'bg-gray-200/70 text-gray-600'
-                }
-              `}> {tab.count} </span>
-            </div>
-
-            {activeTab === tab.label && (
-              <div className='absolute bottom-1 left-0 w-full h-0.5 bg-primary'></div>
-            )}
-          </button>
-        ))}
-      </div>
-    </div>
-  )
-}
+                        <span
+                            className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold leading-none ${
+                                isActive ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                            }`}
+                        >
+                            {tab.count}
+                        </span>
+                    </button>
+                );
+            })}
+        </div>
+    );
+};
 
 export default TaskStatusList;
