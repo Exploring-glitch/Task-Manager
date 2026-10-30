@@ -63,3 +63,88 @@
         opacity: 0.55;
     }
 }
+
+@layer components {
+    .page-shell {
+        @apply mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8;
+    }
+
+    .page-eyebrow {
+        @apply text-[11px] font-semibold uppercase tracking-[0.18em] text-primary;
+    }
+
+    .surface-card {
+        @apply rounded-2xl border border-line bg-white shadow-card;
+    }
+
+    .surface-hover {
+        @apply transition duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lift;
+    }
+
+    .surface-muted {
+        @apply rounded-xl border border-line/80 bg-slate-50/70;
+    }
+
+    .field-label {
+        @apply mb-1.5 block text-[13px] font-semibold text-slate-700;
+    }
+
+    .field-input {
+        @apply w-full rounded-xl border border-line bg-slate-50/60 px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition;
+        @apply placeholder:text-slate-400 hover:border-slate-300;
+        @apply focus:border-primary/60 focus:bg-white focus:ring-4 focus:ring-primary/10;
+    }
+
+    .field-textarea {
+        @apply w-full rounded-xl border border-line bg-slate-50/60 px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition;
+        @apply placeholder:text-slate-400 hover:border-slate-300;
+        @apply focus:border-primary/60 focus:bg-white focus:ring-4 focus:ring-primary/10;
+        @apply min-h-[120px] resize-y;
+    }
+
+    .field-hint {
+        @apply mt-1.5 text-xs leading-5 text-slate-500;
+    }
+
+    .btn {
+        @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition duration-200;
+        @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2;
+        @apply disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-primary {
+        @apply bg-primary text-white shadow-sm hover:bg-primary-dark;
+    }
+
+    .btn-secondary {
+        @apply border border-line bg-white text-slate-700 shadow-sm hover:border-slate-300 hover:bg-slate-50;
+    }
+
+    .btn-ghost {
+        @apply text-slate-600 hover:bg-slate-100 hover:text-slate-900;
+    }
+
+    .btn-danger {
+        @apply border border-rose-200 bg-rose-50 text-rose-600 hover:border-rose-300 hover:bg-rose-100;
+    }
+
+    .btn-success {
+        @apply border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100;
+    }
+
+    .btn-sm {
+        @apply rounded-lg px-3 py-2 text-xs;
+    }
+
+    .btn-lg {
+        @apply rounded-xl px-5 py-3 text-base;
+    }
+
+    .icon-tile {
+        @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl;
+    }
+
+    .status-dot {
+        @apply inline-block h-1.5 w-1.5 shrink-0 rounded-full;
+    }
+}
