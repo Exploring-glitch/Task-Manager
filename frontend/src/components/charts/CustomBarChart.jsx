@@ -9,43 +9,52 @@ import {
     YAxis,
 } from "recharts";
 
-const CustomToolTip = ({ active, payload }) => {
+const BarTooltip = ({ active, payload }) => {
     if (!active || !payload?.length) return null;
 
     return (
-        <div className="rounded-lg border border-gray-300 bg-white p-2 shadow-md">
-            <p className="mb-1 text-xs font-semibold text-purple-800">
-                {payload[0].payload.priority}
+        <div className="rounded-xl border border-line bg-white/95 px-3.5 py-2.5 shadow-card backdrop-blur">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
+                {payload[0].payload.priority} priority
             </p>
-            <p className="text-sm text-gray-600">
-                Count:{" "}
-                <span className="text-sm font-medium text-gray-900">
-                    {payload[0].payload.count}
-                </span>
+            <p className="mt-1 text-sm text-slate-600">
+                <span className="text-base font-bold text-ink">{payload[0].payload.count}</span> tasks
             </p>
         </div>
     );
 };
 
 const BAR_COLORS = {
-    Low: "#00BC7D",
-    Medium: "#FE9900",
-    High: "#FF1F57",
+    Low: "#10b981",
+    Medium: "#f59e0b",
+    High: "#f43f5e",
 };
 
 const CustomBarChart = ({ data = [] }) => {
     return (
-        <div className="mt-6 bg-white">
+        <div className="mt-4">
             <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={data}>
-                    <CartesianGrid stroke="none" />
+                <BarChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="4 6" vertical={false} stroke="#eef1f6" />
 
-                    <XAxis dataKey="priority" tick={{ fontSize: 12, fill: "#555" }} stroke="none" />
-                    <YAxis tick={{ fontSize: 12, fill: "#555" }} stroke="none" />
+                    <XAxis
+                        dataKey="priority"
+                        tickLine={false}
+                        axisLine={false}
+                        tick={{ fontSize: 12, fill: "#64748b", fontWeight: 500 }}
+                        dy={8}
+                    />
 
-                    <Tooltip content={<CustomToolTip />} cursor={{ fill: "transparent" }} />
+                    <YAxis
+                        allowDecimals={false}
+                        tickLine={false}
+                        axisLine={false}
+                        tick={{ fontSize: 11, fill: "#94a3b8" }}
+                    />
 
-                    <Bar dataKey="count" radius={[10, 10, 0, 0]}>
+                    <Tooltip content={<BarTooltip />} cursor={{ fill: "rgba(99,102,241,0.06)" }} />
+
+                    <Bar dataKey="count" radius={[8, 8, 2, 2]} maxBarSize={56}>
                         {data.map((entry, index) => (
                             <Cell
                                 key={`bar-${entry.priority}-${index}`}
