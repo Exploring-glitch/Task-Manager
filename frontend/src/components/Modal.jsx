@@ -8,7 +8,7 @@ const SIZE_CLASSES = {
     "2xl": "max-w-2xl",
 };
 
-const Modal = ({ children, isOpen, onClose, title, size = "2xl", bodyClassName = "" }) => {
+const Modal = ({ children, isOpen, onClose, title, description, size = "2xl", bodyClassName = "" }) => {
     const dialogRef = useRef(null);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const Modal = ({ children, isOpen, onClose, title, size = "2xl", bodyClassName =
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-gray-950/50 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden bg-slate-950/60 p-4 backdrop-blur-sm"
             onMouseDown={handleBackdropClick}
         >
             <div
@@ -49,23 +49,29 @@ const Modal = ({ children, isOpen, onClose, title, size = "2xl", bodyClassName =
                 tabIndex={-1}
                 className={`relative w-full ${SIZE_CLASSES[size] || SIZE_CLASSES["2xl"]} outline-none`}
             >
-                <div className="relative max-h-[85vh] overflow-y-auto rounded-lg bg-white shadow-lg">
-                    <div className="flex items-center justify-between rounded-t border-b border-gray-200 p-4 md:p-5">
-                        <h3 id="modal-title" className="text-lg text-gray-900">
-                            {title}
-                        </h3>
+                <div className="animate-fade-up relative max-h-[85vh] overflow-y-auto rounded-2xl border border-white/70 bg-white shadow-2xl shadow-slate-950/20">
+                    <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-4">
+                        <div>
+                            <h3 id="modal-title" className="text-base font-semibold text-ink">
+                                {title}
+                            </h3>
+
+                            {description && (
+                                <p className="mt-1 text-xs leading-5 text-slate-500">{description}</p>
+                            )}
+                        </div>
 
                         <button
                             type="button"
                             onClick={onClose}
                             aria-label="Close dialog"
-                            className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+                            className="-mr-1 inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-transparent text-slate-400 transition hover:border-line hover:bg-slate-50 hover:text-slate-700"
                         >
-                            <HiOutlineX className="text-base" />
+                            <HiOutlineX className="text-lg" aria-hidden="true" />
                         </button>
                     </div>
 
-                    <div className={`space-y-4 p-4 md:p-5 ${bodyClassName}`}>{children}</div>
+                    <div className={`px-6 py-5 ${bodyClassName}`}>{children}</div>
                 </div>
             </div>
         </div>
