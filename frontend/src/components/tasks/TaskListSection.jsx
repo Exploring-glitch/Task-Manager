@@ -12,6 +12,7 @@ const buildTabs = (statusSummary = {}) => [
 
 const TaskListSection = ({
     title,
+    description,
     tasks,
     statusSummary,
     activeStatus,
@@ -34,9 +35,10 @@ const TaskListSection = ({
                     <p className="page-eyebrow">Task board</p>
                     <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink sm:text-[28px]">{title}</h1>
                     <p className="mt-1.5 text-sm leading-6 text-slate-500">
-                        {hasTasks
-                            ? `${totalTasks} task${totalTasks === 1 ? "" : "s"} in this workspace view.`
-                            : "Tasks assigned to you will appear here."}
+                        {description ||
+                            (hasTasks
+                                ? `${totalTasks} task${totalTasks === 1 ? "" : "s"} in this workspace view.`
+                                : "Tasks assigned to you will appear here.")}
                     </p>
                 </div>
 
