@@ -6,6 +6,13 @@ import CustomToolTip from "./CustomToolTip.jsx";
 const CustomPieChart = ({ data = [], colors = [] }) => {
     const total = data.reduce((sum, item) => sum + item.count, 0);
 
+    const legendPayload = data.map((entry, index) => ({
+        id: entry.status,
+        value: entry.status,
+        type: "circle",
+        color: colors[index % colors.length] || "#6366f1",
+    }));
+
     return (
         <ResponsiveContainer width="100%" height={360}>
             <PieChart margin={{ top: 24, bottom: 8 }}>
@@ -34,7 +41,11 @@ const CustomPieChart = ({ data = [], colors = [] }) => {
                 </Pie>
 
                 <Tooltip content={<CustomToolTip />} />
-                <Legend content={<CustomLegend />} verticalAlign="bottom" />
+                <Legend
+                    content={<CustomLegend />}
+                    payload={legendPayload}
+                    verticalAlign="bottom"
+                />
             </PieChart>
         </ResponsiveContainer>
     );
