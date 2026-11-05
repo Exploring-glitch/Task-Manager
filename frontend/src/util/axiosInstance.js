@@ -6,7 +6,22 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        const contentType = response.headers?.["content-type"] || "";
+
+        // A misconfigured API base URL usually points at the static frontend,
+        // which answers with index.html. Fail loudly instead of letting pages
+        // render empty data as if the request had succeeded.
+        if (contentType.includes("text/html")) {
+            const configurationError = new Error(
+                "The API returned a web page instead of data. Check that VITE_API_URL points to the backend."
+            );
+            configurationError.status = response.status;
+            return Promise.reject(configurationError);
+        }
+
+        return response;
+    },
     (error) => {
         const status = error.response?.status;
         const data = error.response?.data;
