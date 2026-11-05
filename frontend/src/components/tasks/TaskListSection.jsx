@@ -27,6 +27,16 @@ const TaskListSection = ({
     const tabs = buildTabs(statusSummary);
     const totalTasks = tabs[0].count;
     const hasTasks = totalTasks > 0;
+    const isFilteredView = Boolean(activeStatus) && activeStatus !== "All";
+    const isFilteredEmpty = !loading && tasks.length === 0 && hasTasks && isFilteredView;
+
+    // When a filter hides every task, an "empty workspace" message and a
+    // create button are misleading. Explain the filter instead.
+    const resolvedEmptyTitle = isFilteredEmpty ? `No ${activeStatus.toLowerCase()} tasks` : emptyTitle;
+    const resolvedEmptyDescription = isFilteredEmpty
+        ? "Nothing is in this view right now. Pick another status to see the rest of the board."
+        : emptyDescription;
+    const resolvedEmptyAction = isFilteredEmpty ? null : emptyAction;
 
     return (
         <div className="animate-fade-in">
@@ -59,9 +69,9 @@ const TaskListSection = ({
             ) : tasks.length === 0 ? (
                 <div className="grid grid-cols-1">
                     <EmptyState
-                        title={emptyTitle}
-                        description={emptyDescription}
-                        action={emptyAction}
+                        title={resolvedEmptyTitle}
+                        description={resolvedEmptyDescription}
+                        action={resolvedEmptyAction}
                     />
                 </div>
             ) : (
