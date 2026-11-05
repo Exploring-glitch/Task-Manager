@@ -4,6 +4,7 @@ import { countUsersByIds } from "../dao/userDao.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { badRequest, forbidden, notFound } from "../utils/errors.js";
 import { canAccessTask } from "../utils/taskAccess.js";
+import { applyTaskStatus } from "../utils/taskStatus.js";
 import {
     assertChecklistStructureUnchanged,
     parseChecklistPayload,
@@ -123,14 +124,7 @@ export const updateTaskStatusById = asyncHandler(async (req, res) => {
 
     const status = parseStatusPayload(req.body);
 
-    task.status = status;
-
-    if (status === "Completed") {
-        task.setChecklistCompletion(true);
-    } else {
-        // Do not wipe the checklist when a task is reopened, only recalculate.
-        task.recalculateProgress();
-    }
+    applyTaskStatus(task, status);
 
     await task.save();
 
