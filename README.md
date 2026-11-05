@@ -120,7 +120,17 @@ npm test
 npm run preview
 ```
 
-### 3. First login
+### 3. Deployment checklist
+
+- Set `VITE_API_URL` to the public API origin (for example
+  `https://task-manager-backend-1bvn.onrender.com`) and set the backend `CLIENT_URL` to the
+  frontend origin. Both values must match the deployed hosts, not localhost.
+- Vite inlines `VITE_*` variables at build time. Changing `VITE_API_URL` requires a new frontend
+  build and redeploy; editing the variable in the hosting dashboard alone is not enough.
+- After deploying, check that the served `index.html` references the newest hashed JS bundle. An
+  old bundle can keep outdated auth behaviour even when the API and `main` branch are current.
+
+### 4. First login
 
 1. Open http://localhost:5173/auth/signup
 2. Enter your details and paste `ADMIN_INVITE_TOKEN` to create an admin account
@@ -152,7 +162,7 @@ All routes are prefixed with `/api`. Authentication uses the `token` cookie.
 | `GET` | `/tasks/dashboard-user-data` | signed in |
 | `GET` | `/users` | admin |
 | `GET` | `/users/:id` | admin or self |
-| `GET` | `/reports/tasks` / `/reports/users` | admin |
+| `GET` | `/reports/export/tasks` / `/reports/export/users` | admin |
 
 ---
 
