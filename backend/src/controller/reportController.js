@@ -55,8 +55,10 @@ export const exportTasksReport = asyncHandler(async (req, res) => {
 
 // access: admin
 export const exportUsersReport = asyncHandler(async (req, res) => {
+    // Match the Team Members page and the assignee picker: admin accounts are
+    // not counted as team members even though they can own tasks.
     const [users, tasks] = await Promise.all([
-        User.find().select("name email").lean(),
+        User.find({ role: "member" }).select("name email").lean(),
         Task.find().select("assignedTo status").lean(),
     ]);
 
