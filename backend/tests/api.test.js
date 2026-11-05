@@ -118,6 +118,21 @@ describe("auth validation", () => {
         assert.equal(response.status, 400);
     });
 
+    it("rejects a supplied but invalid admin invite token", async () => {
+        const response = await fetch(`${baseUrl}/api/auth/signup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: "Someone",
+                email: "someone@example.com",
+                password: "secret123",
+                adminInviteToken: "definitely-not-the-invite-token",
+            }),
+        });
+
+        assert.equal(response.status, 403);
+    });
+
     it("protects the image upload endpoint", async () => {
         const response = await fetch(`${baseUrl}/api/auth/upload-image`, { method: "POST" });
 
