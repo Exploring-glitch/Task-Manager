@@ -10,12 +10,19 @@ const SIZE_CLASSES = {
 
 const Modal = ({ children, isOpen, onClose, title, description, size = "2xl", bodyClassName = "" }) => {
     const dialogRef = useRef(null);
+    const onCloseRef = useRef(onClose);
+
+    // Keep the latest handler without restarting the effect on every render,
+    // which would steal focus from inputs inside the dialog.
+    useEffect(() => {
+        onCloseRef.current = onClose;
+    }, [onClose]);
 
     useEffect(() => {
         if (!isOpen) return undefined;
 
         const handleKeyDown = (event) => {
-            if (event.key === "Escape") onClose?.();
+            if (event.key === "Escape") onCloseRef.current?.();
         };
 
         const previousOverflow = document.body.style.overflow;
@@ -28,7 +35,7 @@ const Modal = ({ children, isOpen, onClose, title, description, size = "2xl", bo
             document.body.style.overflow = previousOverflow;
             document.removeEventListener("keydown", handleKeyDown);
         };
-    }, [isOpen, onClose]);
+    }, [isOpen]);
 
     if (!isOpen) return null;
 
