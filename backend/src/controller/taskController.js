@@ -5,6 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { badRequest, forbidden, notFound } from "../utils/errors.js";
 import { canAccessTask } from "../utils/taskAccess.js";
 import {
+    assertChecklistStructureUnchanged,
     parseChecklistPayload,
     parseStatusPayload,
     parseTaskCreatePayload,
@@ -148,7 +149,13 @@ export const updateTaskChecklist = asyncHandler(async (req, res) => {
         throw forbidden("You do not have access to this task");
     }
 
-    task.todoCheckLists = parseChecklistPayload(req.body);
+    const checklist = parseChecklistPayload(req.body);
+
+    if (req.user.role !== "admin") {
+        assertChecklistStructureUnchanged(task.todoCheckLists, checklist);
+    }
+
+    task.todoCheckLists = checklist;
     task.syncProgress();
 
     await task.save();

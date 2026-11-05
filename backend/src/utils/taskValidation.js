@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { TASK_PRIORITIES, TASK_STATUSES } from "../dao/taskStatsDao.js";
-import { badRequest } from "./errors.js";
+import { badRequest, forbidden } from "./errors.js";
 import {
     optionalString,
     requireArray,
@@ -99,6 +99,23 @@ export const parseChecklistPayload = (body) => {
     }
 
     return parseChecklist(body.todoCheckLists);
+};
+
+/**
+ * Members may tick checklist items off, but the checklist itself belongs to the
+ * task definition. Reject renamed, reordered, added or removed items so the
+ * member endpoint cannot silently rewrite the task.
+ */
+export const assertChecklistStructureUnchanged = (current, incoming) => {
+    const currentTexts = (current || []).map((item) => item.text);
+    const incomingTexts = incoming.map((item) => item.text);
+
+    if (
+        currentTexts.length !== incomingTexts.length ||
+        currentTexts.some((text, index) => text !== incomingTexts[index])
+    ) {
+        throw forbidden("You can only update checklist completion");
+    }
 };
 
 export const parseStatusPayload = (body) => {
