@@ -29,6 +29,7 @@ import PageHeader from "../../components/ui/PageHeader.jsx";
 import SectionCard from "../../components/ui/SectionCard.jsx";
 import TaskPriorityBadge from "../../components/badges/TaskPriorityBadge.jsx";
 import { PRIORITY_DATA } from "../../util/data.js";
+import { formatDueDate, toDueDateInputValue, toDueDateISOString } from "../../util/dueDate.js";
 import {
     create_task,
     delete_task,
@@ -105,7 +106,7 @@ const CreateTask = () => {
                 title: taskData.title,
                 description: taskData.description,
                 priority: taskData.priority,
-                dueDate: moment(taskData.dueDate, "YYYY-MM-DD", true).toISOString(),
+                dueDate: toDueDateISOString(taskData.dueDate),
                 assignedTo: taskData.assignedTo,
                 attachments: taskData.attachments,
                 todoCheckLists: buildChecklistPayload(),
@@ -160,7 +161,7 @@ const CreateTask = () => {
                     title: task.title || "",
                     description: task.description || "",
                     priority: task.priority || "Medium",
-                    dueDate: task.dueDate ? moment(task.dueDate).format("YYYY-MM-DD") : "",
+                    dueDate: toDueDateInputValue(task.dueDate),
                     assignedTo: (task.assignedTo || []).map((user) => user?._id).filter(Boolean),
                     todoChecklists: (task.todoCheckLists || []).map((item) => item.text),
                     attachments: task.attachments || [],
@@ -188,10 +189,7 @@ const CreateTask = () => {
         );
     }
 
-    const dueDateLabel =
-        taskData.dueDate && moment(taskData.dueDate).isValid()
-            ? moment(taskData.dueDate).format("D MMM YYYY")
-            : "Not set";
+    const dueDateLabel = formatDueDate(taskData.dueDate, "D MMM YYYY") || "Not set";
 
     return (
         <DashboardLayout activeMenu={isEditing ? "Manage Task" : "Create Task"}>

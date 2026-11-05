@@ -12,12 +12,31 @@ export const sendWorkbook = async (res, workbook, filename) => {
     res.end();
 };
 
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * Date-only values may be stored at UTC midnight (current writes) or at the
+ * creator's local midnight (older writes). Snapping to the nearest UTC midnight
+ * recovers the calendar day the user picked for both.
+ */
+export const toDateOnly = (value) => {
+    if (!value) return null;
+
+    const date = value instanceof Date ? value : new Date(value);
+
+    if (Number.isNaN(date.getTime())) return null;
+
+    const time = date.getTime();
+    const startOfDay = Math.floor(time / DAY_IN_MS) * DAY_IN_MS;
+    const endOfDay = startOfDay + DAY_IN_MS;
+
+    return new Date(time - startOfDay < endOfDay - time ? startOfDay : endOfDay);
+};
+
 export const formatDateOnly = (value) => {
-    if (!value) return "N/A";
+    const date = toDateOnly(value);
 
-    const date = new Date(value);
-
-    if (Number.isNaN(date.getTime())) return "N/A";
+    if (!date) return "N/A";
 
     return date.toISOString().split("T")[0];
 };

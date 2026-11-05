@@ -4,6 +4,7 @@ import Progress from "../Progress.jsx";
 import AvatarGroup from "../AvatarGroup.jsx";
 import TaskPriorityBadge from "../badges/TaskPriorityBadge.jsx";
 import TaskStatusBadge from "../badges/TaskStatusBadge.jsx";
+import { formatDueDate } from "../../util/dueDate.js";
 
 const formatDate = (value) => (value && moment(value).isValid() ? moment(value).format("Do MMM YYYY") : "N/A");
 
@@ -86,7 +87,9 @@ const TaskCard = ({
                     <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-400">
                         Due
                     </p>
-                    <p className="mt-0.5 text-xs font-semibold text-slate-700">{formatDate(dueDate)}</p>
+                    <p className="mt-0.5 text-xs font-semibold text-slate-700">
+                        {formatDueDate(dueDate) || "N/A"}
+                    </p>
                 </div>
             </div>
 

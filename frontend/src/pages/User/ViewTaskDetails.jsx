@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import moment from "moment";
 import toast from "react-hot-toast";
 import {
     LuArrowLeft,
@@ -19,6 +18,7 @@ import SectionCard from "../../components/ui/SectionCard.jsx";
 import TaskStatusBadge from "../../components/badges/TaskStatusBadge.jsx";
 import TaskPriorityBadge from "../../components/badges/TaskPriorityBadge.jsx";
 import { get_task_details_by_id, update_todoCheckLists } from "../../api/tasksApi.js";
+import { formatDueDate } from "../../util/dueDate.js";
 
 const ViewTaskDetails = () => {
     const { id } = useParams();
@@ -129,7 +129,7 @@ const ViewTaskDetails = () => {
 
                 <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-slate-500">
                     <LuCalendarDays className="text-sm text-slate-400" aria-hidden="true" />
-                    Due {task.dueDate ? moment(task.dueDate).format("Do MMM YYYY") : "date not set"}
+                    Due {formatDueDate(task.dueDate) || "date not set"}
                 </p>
             </div>
 
@@ -216,9 +216,7 @@ const ViewTaskDetails = () => {
                             <InfoRow
                                 icon={LuCalendarDays}
                                 label="Due date"
-                                value={
-                                    task.dueDate ? moment(task.dueDate).format("Do MMM YYYY") : "Not set"
-                                }
+                                value={formatDueDate(task.dueDate) || "Not set"}
                             />
                             <InfoRow
                                 icon={LuListChecks}
