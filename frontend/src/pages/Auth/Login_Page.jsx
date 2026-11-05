@@ -25,7 +25,9 @@ const Login_Page = () => {
         event.preventDefault();
         setError("");
 
-        if (!email.trim()) {
+        const trimmedEmail = email.trim();
+
+        if (!trimmedEmail) {
             setError("Please enter your email");
             emailRef.current?.focus();
             return;
@@ -37,7 +39,7 @@ const Login_Page = () => {
             return;
         }
 
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
             setError("Please enter a valid email address");
             return;
         }
@@ -45,7 +47,7 @@ const Login_Page = () => {
         setLoading(true);
 
         try {
-            const response = await login_user(email, password);
+            const response = await login_user(trimmedEmail, password);
             const user = response?.user;
 
             // Never redirect without a session user; that leaves the app on a

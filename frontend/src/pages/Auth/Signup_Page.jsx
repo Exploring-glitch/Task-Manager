@@ -39,18 +39,18 @@ const Signup_Page = () => {
     const { updateUser } = useUser();
     const navigate = useNavigate();
 
-    const validate = () => {
+    const validate = (trimmedEmail) => {
         if (!fullName.trim()) {
             nameRef.current?.focus();
             return "Please enter your full name";
         }
 
-        if (!email.trim()) {
+        if (!trimmedEmail) {
             emailRef.current?.focus();
             return "Please enter your email";
         }
 
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
             return "Please enter a valid email address";
         }
 
@@ -70,7 +70,9 @@ const Signup_Page = () => {
         event.preventDefault();
         setError("");
 
-        const validationError = validate();
+        const trimmedEmail = email.trim();
+        const validationError = validate(trimmedEmail);
+
         if (validationError) {
             setError(validationError);
             return;
@@ -81,7 +83,13 @@ const Signup_Page = () => {
         try {
             // The account has to exist before an image can be uploaded, because
             // the upload endpoint requires an authenticated session.
-            const response = await signup_user(fullName, email, password, "", adminInviteToken);
+            const response = await signup_user(
+                fullName,
+                trimmedEmail,
+                password,
+                "",
+                adminInviteToken
+            );
             const user = response?.user;
 
             // Do not treat an empty response as a successful signup: without a
