@@ -53,15 +53,18 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
         setIsModalOpen(false);
     };
 
-    const selectedUserAvatars = allUsers
-        .filter((user) => selectedUsers.includes(user._id))
-        .map((user) => user.profileImageUrl);
+    // Keep one slot per selected member. Members without a profile picture
+    // used to disappear here, which made the trigger look unselected.
+    const selectedUserAvatars = selectedUsers.map(
+        (userId) => allUsers.find((user) => user._id === userId)?.profileImageUrl
+    );
+    const hasSelectedUsers = selectedUsers.length > 0;
 
     const closeModal = () => setIsModalOpen(false);
 
     return (
         <div>
-            {selectedUserAvatars.length === 0 ? (
+            {!hasSelectedUsers ? (
                 <button
                     type="button"
                     onClick={openModal}
