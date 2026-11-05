@@ -50,6 +50,7 @@ const validateTask = (taskData) => {
     if (!taskData.title.trim()) return "Title is required.";
     if (!taskData.description.trim()) return "Description is required.";
     if (!taskData.dueDate) return "Due date is required.";
+    if (!moment(taskData.dueDate, "YYYY-MM-DD", true).isValid()) return "Enter a valid due date.";
     if (taskData.assignedTo.length === 0) return "Assign the task to at least one member.";
     if (taskData.todoChecklists.length === 0) return "Add at least one checklist item.";
 
@@ -76,8 +77,14 @@ const CreateTask = () => {
     const buildChecklistPayload = () => {
         const previousItems = currentTask?.todoCheckLists || [];
 
-        return taskData.todoChecklists.map((text) => {
-            const previousItem = previousItems.find((item) => item.text === text);
+        return taskData.todoChecklists.map((text, index) => {
+            // Prefer the item at the same position so duplicate labels keep
+            // their own completion state, then fall back to a text match.
+            const previousItem =
+                previousItems[index]?.text === text
+                    ? previousItems[index]
+                    : previousItems.find((item) => item.text === text);
+
             return { text, completed: previousItem?.completed ?? false };
         });
     };
@@ -91,17 +98,19 @@ const CreateTask = () => {
 
         setLoading(true);
 
-        const payload = {
-            title: taskData.title,
-            description: taskData.description,
-            priority: taskData.priority,
-            dueDate: new Date(taskData.dueDate).toISOString(),
-            assignedTo: taskData.assignedTo,
-            attachments: taskData.attachments,
-            todoCheckLists: buildChecklistPayload(),
-        };
-
         try {
+            // Build the payload inside the try block so an unexpected value can
+            // never throw before the error handling and loading reset run.
+            const payload = {
+                title: taskData.title,
+                description: taskData.description,
+                priority: taskData.priority,
+                dueDate: moment(taskData.dueDate, "YYYY-MM-DD", true).toISOString(),
+                assignedTo: taskData.assignedTo,
+                attachments: taskData.attachments,
+                todoCheckLists: buildChecklistPayload(),
+            };
+
             if (isEditing) {
                 await update_task(taskId, payload);
                 toast.success("Task updated successfully");
