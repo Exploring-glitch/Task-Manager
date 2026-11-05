@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { findUserById } from "../dao/userDao.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { forbidden, unauthorized } from "../utils/errors.js";
@@ -11,7 +12,22 @@ export const authMiddleware = asyncHandler(async (req, res, next) => {
         throw unauthorized("Please sign in to continue");
     }
 
-    const userId = verifyToken(token);
+    let userId;
+
+    try {
+        userId = verifyToken(token);
+    } catch {
+        // An invalid or expired token is an authentication failure, not a
+        // malformed request.
+        throw unauthorized("Your session has expired, please sign in again");
+    }
+
+    // A signed token with a missing or malformed id must not reach the database:
+    // Mongoose would turn it into a 400 CastError instead of a 401.
+    if (!userId || !mongoose.isValidObjectId(userId)) {
+        throw unauthorized("Your session has expired, please sign in again");
+    }
+
     const user = await findUserById(userId);
 
     if (!user) {
