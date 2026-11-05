@@ -46,9 +46,16 @@ const Login_Page = () => {
 
         try {
             const response = await login_user(email, password);
+            const user = response?.user;
 
-            updateUser(response.user);
-            navigate(getHomeRoute(response.user?.role));
+            // Never redirect without a session user; that leaves the app on a
+            // protected route with no way to recover.
+            if (!user) {
+                throw new Error("Login succeeded, but the session could not be started. Please try again.");
+            }
+
+            updateUser(user);
+            navigate(getHomeRoute(user.role));
         } catch (loginError) {
             setError(loginError.message || "Login failed. Please check your credentials.");
         } finally {
