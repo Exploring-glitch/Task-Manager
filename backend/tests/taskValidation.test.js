@@ -24,8 +24,14 @@ describe("checklist structure guard", () => {
         ];
 
         for (const incoming of [
-            [{ text: "Renamed", completed: false }, { text: "Second step", completed: false }],
-            [{ text: "Second step", completed: false }, { text: "First step", completed: false }],
+            [
+                { text: "Renamed", completed: false },
+                { text: "Second step", completed: false },
+            ],
+            [
+                { text: "Second step", completed: false },
+                { text: "First step", completed: false },
+            ],
             [{ text: "First step", completed: false }],
             [
                 { text: "First step", completed: false },
