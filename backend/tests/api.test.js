@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { after, before, describe, it } from "node:test";
+import jsonwebtoken from "jsonwebtoken";
 
 // The app refuses to start without a JWT secret, and the CORS checks below
 // expect a known origin. Provide both before the app module is evaluated so the
@@ -39,6 +40,15 @@ describe("api basics", () => {
 
     it("rejects anonymous access to protected routes", async () => {
         const response = await fetch(`${baseUrl}/api/tasks`);
+
+        assert.equal(response.status, 401);
+    });
+
+    it("treats a token with a malformed user id as unauthorized", async () => {
+        const token = jsonwebtoken.sign({ id: "not-a-user-id" }, process.env.JWT_SECRET);
+        const response = await fetch(`${baseUrl}/api/tasks`, {
+            headers: { Cookie: `token=${token}` },
+        });
 
         assert.equal(response.status, 401);
     });
