@@ -8,7 +8,7 @@ import {
 } from "../dao/userDao.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { deleteCloudinaryImage } from "../utils/cloudinaryHelpers.js";
-import { AppError, badRequest, notFound, unauthorized } from "../utils/errors.js";
+import { AppError, badRequest, forbidden, notFound, unauthorized } from "../utils/errors.js";
 import { signToken } from "../utils/helper.js";
 import {
     optionalString,
@@ -31,16 +31,25 @@ export const userSignup = asyncHandler(async (req, res) => {
         max: 2048,
     });
 
+    // Only the holder of the invite token can register as an admin. A supplied
+    // but wrong token is an error, never a silent downgrade to member.
+    const inviteToken =
+        typeof req.body.adminInviteToken === "string" ? req.body.adminInviteToken.trim() : "";
+    const expectedInviteToken = (env.adminInviteToken || "").trim();
+    let role = "member";
+
+    if (inviteToken) {
+        if (!expectedInviteToken || inviteToken !== expectedInviteToken) {
+            throw forbidden("The admin invite token is not valid");
+        }
+
+        role = "admin";
+    }
+
     const userExist = await findUserByEmail(email);
     if (userExist) {
         throw new AppError("An account with this email already exists", 409);
     }
-
-    // Only the holder of the invite token can register as an admin.
-    const role =
-        req.body.adminInviteToken && req.body.adminInviteToken === env.adminInviteToken
-            ? "admin"
-            : "member";
 
     const newUser = await createNewUser(name, email, password, profileImageUrl, role);
     startSession(req, res, newUser);
