@@ -82,7 +82,17 @@ const Signup_Page = () => {
             // The account has to exist before an image can be uploaded, because
             // the upload endpoint requires an authenticated session.
             const response = await signup_user(fullName, email, password, "", adminInviteToken);
-            updateUser(response.user);
+            const user = response?.user;
+
+            // Do not treat an empty response as a successful signup: without a
+            // user the app cannot start a session and would silently redirect.
+            if (!user) {
+                throw new Error(
+                    "Your account may have been created, but the session could not be started. Please sign in."
+                );
+            }
+
+            updateUser(user);
 
             if (profilePic) {
                 try {
@@ -90,14 +100,15 @@ const Signup_Page = () => {
 
                     if (imageUrl) {
                         const updated = await update_profile({ profileImageUrl: imageUrl });
-                        updateUser(updated.user);
+                        if (updated?.user) updateUser(updated.user);
                     }
                 } catch {
                     toast.error("Account created, but the profile photo could not be uploaded");
                 }
             }
 
-            navigate(getHomeRoute(response.user?.role));
+            toast.success("Account created successfully");
+            navigate(getHomeRoute(user.role));
         } catch (signupError) {
             setError(signupError.message || "Signup failed. Please try again.");
         } finally {
