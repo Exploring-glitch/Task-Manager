@@ -1,10 +1,12 @@
 import Avatar from "./ui/Avatar.jsx";
 
 const AvatarGroup = ({ avatars = [], maxVisible = 3 }) => {
-    const visibleAvatars = avatars.filter(Boolean);
-    const hiddenCount = visibleAvatars.length - maxVisible;
+    // Every entry represents a person. Missing profile pictures still get a
+    // placeholder avatar instead of silently reducing the group size.
+    const visibleAvatars = avatars.slice(0, maxVisible);
+    const hiddenCount = avatars.length - visibleAvatars.length;
 
-    if (visibleAvatars.length === 0) {
+    if (avatars.length === 0) {
         return (
             <span title="Unassigned">
                 <Avatar size="md" ring />
