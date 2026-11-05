@@ -12,8 +12,13 @@ export const SESSION_DURATION_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
  * Vercel, ...).
  */
 export const getCookieOptions = (req) => {
-    const isSecure =
-        isProduction || req?.secure === true || req?.headers?.["x-forwarded-proto"] === "https";
+    // Proxies may append to X-Forwarded-Proto (for example "https, http"), so
+    // only the first value describes the connection from the browser.
+    const forwardedProto = String(req?.headers?.["x-forwarded-proto"] || "")
+        .split(",")[0]
+        .trim()
+        .toLowerCase();
+    const isSecure = isProduction || req?.secure === true || forwardedProto === "https";
 
     return {
         httpOnly: true,
