@@ -13,6 +13,8 @@ export const useTasks = (status) => {
         let isActive = true;
 
         const load = async () => {
+            setLoading(true);
+
             try {
                 const response = await get_all_tasks({
                     status: status === "All" ? undefined : status,
@@ -23,7 +25,12 @@ export const useTasks = (status) => {
                 setTasks(response?.tasks || []);
                 setStatusSummary(response?.statusSummary || EMPTY_SUMMARY);
             } catch (error) {
-                if (isActive) toast.error(error.message || "Could not load tasks");
+                if (isActive) {
+                    // Do not leave tasks from the previous filter on screen when
+                    // the new request fails.
+                    setTasks([]);
+                    toast.error(error.message || "Could not load tasks");
+                }
             } finally {
                 if (isActive) setLoading(false);
             }
