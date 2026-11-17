@@ -63,7 +63,7 @@ const NavBar = ({ activeMenu }) => {
                             Already a member?
                         </span>
 
-                        <Link to="/auth/login" className="btn btn-auth btn-sm">
+                        <Link to="/auth/login" className="btn btn-primary btn-sm">
                             Sign in
                         </Link>
                     </div>
