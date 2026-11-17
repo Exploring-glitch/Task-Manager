@@ -57,14 +57,14 @@ const NavBar = ({ activeMenu }) => {
                     </Link>
                 </div>
 
-                {isAuthPage ? (
+                {isLoginPage ? null : isAuthPage ? (
                     <div className="flex items-center gap-2.5">
                         <span className="hidden text-xs font-medium text-slate-500 sm:block">
-                            {isLoginPage ? "New here?" : "Already a member?"}
+                            Already a member?
                         </span>
 
-                        <Link to={isLoginPage ? "/auth/signup" : "/auth/login"} className="btn btn-primary btn-sm">
-                            {isLoginPage ? "Create account" : "Sign in"}
+                        <Link to="/auth/login" className="btn btn-primary btn-sm">
+                            Sign in
                         </Link>
                     </div>
                 ) : (
