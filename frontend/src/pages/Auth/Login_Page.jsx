@@ -190,7 +190,7 @@ const Login_Page = () => {
                         size="lg"
                         loading={loading}
                         iconRight={LuArrowRight}
-                        className="btn-auth mt-1 w-full hover:shadow-lg hover:shadow-emerald-600/25"
+                        className="mt-1 w-full shadow-sm hover:shadow-lift"
                     >
                         {loading ? "Signing in..." : "Sign in"}
                     </Button>
@@ -200,7 +200,7 @@ const Login_Page = () => {
                     New to TaskManager?{" "}
                     <Link
                         to="/auth/signup"
-                        className="inline-flex items-center gap-1 font-semibold text-emerald-700 transition hover:text-emerald-800 hover:underline"
+                        className="inline-flex items-center gap-1 font-semibold text-primary transition hover:text-primary-dark hover:underline"
                     >
                         Create an account
                         <LuArrowRight className="text-xs" aria-hidden="true" />
