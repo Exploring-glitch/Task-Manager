@@ -67,14 +67,18 @@ const Login_Page = () => {
 
     return (
         <AuthLayout variant="login">
-            <div className="surface-card p-6 sm:p-8">
+            <div className="login-card">
                 <div className="mb-7">
+                    <span className="icon-tile mb-5 h-11 w-11 rounded-2xl bg-linear-to-br from-indigo-600 to-violet-600 text-white shadow-md shadow-primary/25">
+                        <LuShieldCheck className="text-lg" aria-hidden="true" />
+                    </span>
+
                     <p className="page-eyebrow">Welcome back</p>
-                    <h1 className="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+                    <h1 className="mt-2 text-[26px] leading-tight font-bold tracking-tight text-ink sm:text-3xl">
                         Sign in to your workspace
                     </h1>
                     <p className="mt-2 text-sm leading-6 text-slate-500">
-                        Pick up where your team left off and keep every task moving.
+                        Enter your credentials to pick up where your team left off.
                     </p>
                 </div>
 
@@ -169,8 +173,8 @@ const Login_Page = () => {
                     <LuArrowRight className="text-base" aria-hidden="true" />
                 </Link>
 
-                <div className="mt-6 flex items-start gap-2 rounded-xl bg-slate-50 px-3.5 py-3 text-[11px] leading-5 text-slate-500">
-                    <LuShieldCheck className="mt-0.5 shrink-0 text-sm text-emerald-500" aria-hidden="true" />
+                <div className="login-security-note">
+                    <LuShieldCheck className="shrink-0 text-sm text-emerald-500" aria-hidden="true" />
                     Your session is protected with a secure, httpOnly cookie.
                 </div>
             </div>
