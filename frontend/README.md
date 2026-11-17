@@ -34,6 +34,8 @@ npm test         # node:test unit tests
   `page-eyebrow` and `text-gradient`.
 - **Primitives** in `src/components/ui/` are `Avatar` (with an initials fallback), `Button`
   (variants, sizes, loading state), `PageHeader` and `SectionCard`.
+- **Auth variants:** `AuthLayout` renders the product showcase for `variant="login"` and keeps
+  the marketing panel for signup.
 - **Task colors** are centralized in `src/util/taskMeta.js`. Badges, progress bars and dashboard
   charts all read from that module, so status and priority stay visually consistent.
 
