@@ -85,6 +85,29 @@
         @apply rounded-xl border border-line/80 bg-slate-50/70;
     }
 
+    .login-shell {
+        background-color: #fbfbfd;
+        background-image:
+            radial-gradient(720px 420px at 10% 0%, rgb(79 70 229 / 0.08), transparent 62%),
+            radial-gradient(640px 400px at 90% 100%, rgb(14 165 233 / 0.06), transparent 60%);
+    }
+
+    .login-main {
+        background-image: radial-gradient(560px 360px at 50% 28%, rgb(255 255 255 / 0.85), transparent 72%);
+    }
+
+    .login-card {
+        @apply rounded-[24px] border border-line/90 bg-white/90 p-6 shadow-card backdrop-blur-sm sm:p-8;
+    }
+
+    .login-field-error {
+        @apply mt-1.5 flex items-start gap-1.5 text-xs leading-5 text-rose-600;
+    }
+
+    .login-security-note {
+        @apply mt-6 flex items-center justify-center gap-2 text-center text-[11px] leading-5 text-slate-400;
+    }
+
     .field-label {
         @apply mb-1.5 block text-[13px] font-semibold text-slate-700;
     }
