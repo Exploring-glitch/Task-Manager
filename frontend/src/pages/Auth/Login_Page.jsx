@@ -89,7 +89,7 @@ const Login_Page = () => {
 
                 <AuthError message={error} />
 
-                <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                <form onSubmit={handleSubmit} className="space-y-5" noValidate aria-busy={loading}>
                     <div>
                         <label className="field-label" htmlFor="email">
                             Email address
@@ -105,6 +105,7 @@ const Login_Page = () => {
                                 id="email"
                                 name="email"
                                 autoComplete="email"
+                                autoFocus
                                 ref={emailRef}
                                 value={email}
                                 onChange={(event) => {
@@ -113,12 +114,14 @@ const Login_Page = () => {
                                 }}
                                 type="email"
                                 placeholder="alex@company.com"
+                                aria-invalid={fieldErrors.email ? "true" : undefined}
+                                aria-describedby={fieldErrors.email ? "email-error" : undefined}
                                 className="field-input pl-10"
                             />
                         </div>
 
                         {fieldErrors.email && (
-                            <p id="email-error" className="login-field-error">
+                            <p id="email-error" className="login-field-error" role="alert">
                                 <LuCircleAlert className="mt-0.5 shrink-0 text-xs" aria-hidden="true" />
                                 {fieldErrors.email}
                             </p>
@@ -148,6 +151,8 @@ const Login_Page = () => {
                                 }}
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Enter your password"
+                                aria-invalid={fieldErrors.password ? "true" : undefined}
+                                aria-describedby={fieldErrors.password ? "password-error" : undefined}
                                 className="field-input pr-11 pl-10"
                             />
 
@@ -166,7 +171,7 @@ const Login_Page = () => {
                         </div>
 
                         {fieldErrors.password && (
-                            <p id="password-error" className="login-field-error">
+                            <p id="password-error" className="login-field-error" role="alert">
                                 <LuCircleAlert className="mt-0.5 shrink-0 text-xs" aria-hidden="true" />
                                 {fieldErrors.password}
                             </p>
