@@ -46,13 +46,8 @@ const NavBar = ({ activeMenu }) => {
                             <LuCheckCheck className="text-lg" aria-hidden="true" />
                         </span>
 
-                        <span className="flex flex-col leading-none">
-                            <span className="text-[15px] font-bold tracking-tight text-ink sm:text-base">
-                                Task<span className="text-primary">Manager</span>
-                            </span>
-                            <span className="mt-0.5 hidden text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 sm:block">
-                                Team workspace
-                            </span>
+                        <span className="text-[15px] font-bold tracking-tight text-ink sm:text-base">
+                            Task<span className="text-primary">Manager</span>
                         </span>
                     </Link>
                 </div>
