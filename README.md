@@ -68,7 +68,7 @@ Task-Manager/
 ## Getting started
 
 ### Requirements
-- Node.js 20+
+- Node.js 26+
 - A MongoDB database (local or Atlas)
 - A Cloudinary account (only needed for profile photo uploads)
 
