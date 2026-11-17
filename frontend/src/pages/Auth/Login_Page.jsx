@@ -190,7 +190,7 @@ const Login_Page = () => {
                         size="lg"
                         loading={loading}
                         iconRight={LuArrowRight}
-                        className="mt-1 w-full shadow-sm hover:shadow-lift"
+                        className="btn-auth mt-1 w-full hover:shadow-lg hover:shadow-emerald-600/25"
                     >
                         {loading ? "Signing in..." : "Sign in"}
                     </Button>
