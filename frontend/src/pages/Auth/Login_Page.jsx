@@ -200,7 +200,7 @@ const Login_Page = () => {
                     New to TaskManager?{" "}
                     <Link
                         to="/auth/signup"
-                        className="inline-flex items-center gap-1 font-semibold text-primary transition hover:text-primary-dark hover:underline"
+                        className="inline-flex items-center gap-1 font-semibold text-emerald-700 transition hover:text-emerald-800 hover:underline"
                     >
                         Create an account
                         <LuArrowRight className="text-xs" aria-hidden="true" />
