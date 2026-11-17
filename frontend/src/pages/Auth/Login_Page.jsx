@@ -1,12 +1,21 @@
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LuArrowRight, LuEye, LuEyeOff, LuLock, LuMail, LuShieldCheck } from "react-icons/lu";
+import {
+    LuArrowRight,
+    LuCircleAlert,
+    LuEye,
+    LuEyeOff,
+    LuLock,
+    LuMail,
+    LuShieldCheck,
+} from "react-icons/lu";
 import AuthLayout from "../../components/layouts/AuthLayout.jsx";
 import AuthError from "../../components/forms/AuthError.jsx";
 import Button from "../../components/ui/Button.jsx";
 import { login_user } from "../../api/userApi.js";
 import { useUser } from "../../hooks/useUser.js";
 import { getHomeRoute } from "../../routes/homeRoute.js";
+import { validateLoginFields } from "../../util/loginValidation.js";
 
 const Login_Page = () => {
     const [email, setEmail] = useState("");
@@ -14,6 +23,7 @@ const Login_Page = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [fieldErrors, setFieldErrors] = useState({});
 
     const emailRef = useRef(null);
     const passRef = useRef(null);
@@ -21,33 +31,28 @@ const Login_Page = () => {
     const { updateUser } = useUser();
     const navigate = useNavigate();
 
+    const clearFieldError = (field) => {
+        setFieldErrors((current) => (current[field] ? { ...current, [field]: "" } : current));
+        if (error) setError("");
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        const errors = validateLoginFields(email, password);
+        setFieldErrors(errors);
+
+        if (errors.email || errors.password) {
+            setError("");
+            (errors.email ? emailRef : passRef).current?.focus();
+            return;
+        }
+
         setError("");
-
-        const trimmedEmail = email.trim();
-
-        if (!trimmedEmail) {
-            setError("Please enter your email");
-            emailRef.current?.focus();
-            return;
-        }
-
-        if (!password.trim()) {
-            setError("Please enter your password");
-            passRef.current?.focus();
-            return;
-        }
-
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-            setError("Please enter a valid email address");
-            return;
-        }
-
         setLoading(true);
 
         try {
-            const response = await login_user(trimmedEmail, password);
+            const response = await login_user(email.trim(), password);
             const user = response?.user;
 
             // Never redirect without a session user; that leaves the app on a
@@ -102,12 +107,22 @@ const Login_Page = () => {
                                 autoComplete="email"
                                 ref={emailRef}
                                 value={email}
-                                onChange={(event) => setEmail(event.target.value)}
+                                onChange={(event) => {
+                                    setEmail(event.target.value);
+                                    clearFieldError("email");
+                                }}
                                 type="email"
                                 placeholder="alex@company.com"
                                 className="field-input pl-10"
                             />
                         </div>
+
+                        {fieldErrors.email && (
+                            <p id="email-error" className="login-field-error">
+                                <LuCircleAlert className="mt-0.5 shrink-0 text-xs" aria-hidden="true" />
+                                {fieldErrors.email}
+                            </p>
+                        )}
                     </div>
 
                     <div>
@@ -127,7 +142,10 @@ const Login_Page = () => {
                                 autoComplete="current-password"
                                 ref={passRef}
                                 value={password}
-                                onChange={(event) => setPassword(event.target.value)}
+                                onChange={(event) => {
+                                    setPassword(event.target.value);
+                                    clearFieldError("password");
+                                }}
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Enter your password"
                                 className="field-input pr-11 pl-10"
@@ -146,6 +164,13 @@ const Login_Page = () => {
                                 )}
                             </button>
                         </div>
+
+                        {fieldErrors.password && (
+                            <p id="password-error" className="login-field-error">
+                                <LuCircleAlert className="mt-0.5 shrink-0 text-xs" aria-hidden="true" />
+                                {fieldErrors.password}
+                            </p>
+                        )}
                     </div>
 
                     <Button
