@@ -196,19 +196,16 @@ const Login_Page = () => {
                     </Button>
                 </form>
 
-                <div className="my-6 flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
-                    <span className="h-px flex-1 bg-line" aria-hidden="true" />
-                    New here?
-                    <span className="h-px flex-1 bg-line" aria-hidden="true" />
+                <div className="mt-6 border-t border-line/80 pt-5 text-center text-sm text-slate-500">
+                    New to TaskManager?{" "}
+                    <Link
+                        to="/auth/signup"
+                        className="inline-flex items-center gap-1 font-semibold text-primary transition hover:text-primary-dark hover:underline"
+                    >
+                        Create an account
+                        <LuArrowRight className="text-xs" aria-hidden="true" />
+                    </Link>
                 </div>
-
-                <Link
-                    to="/auth/signup"
-                    className="btn btn-secondary w-full"
-                >
-                    Create an account
-                    <LuArrowRight className="text-base" aria-hidden="true" />
-                </Link>
 
                 <div className="login-security-note">
                     <LuShieldCheck className="shrink-0 text-sm text-emerald-500" aria-hidden="true" />
