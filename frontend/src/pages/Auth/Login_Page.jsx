@@ -66,7 +66,7 @@ const Login_Page = () => {
     };
 
     return (
-        <AuthLayout>
+        <AuthLayout variant="login">
             <div className="surface-card p-6 sm:p-8">
                 <div className="mb-7">
                     <p className="page-eyebrow">Welcome back</p>
