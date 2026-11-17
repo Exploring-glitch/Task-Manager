@@ -95,9 +95,11 @@ const Login_Page = () => {
                             Email address
                         </label>
 
-                        <div className="relative">
+                        <div className="group relative">
                             <LuMail
-                                className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-base text-slate-400"
+                                className={`pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-base transition-colors ${
+                                    fieldErrors.email ? "text-rose-400" : "text-slate-400 group-focus-within:text-primary"
+                                }`}
                                 aria-hidden="true"
                             />
 
@@ -116,7 +118,7 @@ const Login_Page = () => {
                                 placeholder="alex@company.com"
                                 aria-invalid={fieldErrors.email ? "true" : undefined}
                                 aria-describedby={fieldErrors.email ? "email-error" : undefined}
-                                className="field-input pl-10"
+                                className={`field-input pl-10 ${fieldErrors.email ? "border-rose-300" : ""}`}
                             />
                         </div>
 
@@ -133,9 +135,13 @@ const Login_Page = () => {
                             Password
                         </label>
 
-                        <div className="relative">
+                        <div className="group relative">
                             <LuLock
-                                className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-base text-slate-400"
+                                className={`pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-base transition-colors ${
+                                    fieldErrors.password
+                                        ? "text-rose-400"
+                                        : "text-slate-400 group-focus-within:text-primary"
+                                }`}
                                 aria-hidden="true"
                             />
 
@@ -153,14 +159,15 @@ const Login_Page = () => {
                                 placeholder="Enter your password"
                                 aria-invalid={fieldErrors.password ? "true" : undefined}
                                 aria-describedby={fieldErrors.password ? "password-error" : undefined}
-                                className="field-input pr-11 pl-10"
+                                className={`field-input pr-11 pl-10 ${fieldErrors.password ? "border-rose-300" : ""}`}
                             />
 
                             <button
                                 type="button"
                                 onClick={() => setShowPassword((value) => !value)}
                                 aria-label={showPassword ? "Hide password" : "Show password"}
-                                className="absolute top-1/2 right-2.5 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+                                aria-pressed={showPassword}
+                                className="absolute top-1/2 right-2.5 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 transition hover:bg-primary-soft hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
                             >
                                 {showPassword ? (
                                     <LuEyeOff className="text-base" aria-hidden="true" />
@@ -183,7 +190,7 @@ const Login_Page = () => {
                         size="lg"
                         loading={loading}
                         iconRight={LuArrowRight}
-                        className="w-full"
+                        className="mt-1 w-full shadow-sm hover:shadow-lift"
                     >
                         {loading ? "Signing in..." : "Sign in"}
                     </Button>
