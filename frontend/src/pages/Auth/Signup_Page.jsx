@@ -266,7 +266,7 @@ const Signup_Page = () => {
                         size="lg"
                         loading={loading}
                         iconRight={LuArrowRight}
-                        className="btn-auth mt-1 w-full hover:shadow-lg hover:shadow-emerald-600/25"
+                        className="mt-1 w-full"
                     >
                         {loading ? "Creating account..." : "Create account"}
                     </Button>
